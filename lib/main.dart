@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hil_mobile/login_page.dart';
 import 'package:hil_mobile/welcome_page.dart';
 
 void main() {
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: WelcomePage()
     );
   }
 }

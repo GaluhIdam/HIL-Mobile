@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/task_to_do_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,20 +9,20 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const Image(
+          Image(
             image: AssetImage('assets/login.png'),
           ),
-          const SizedBox(
+          SizedBox(
             height: 30,
           ),
           Container(
-            padding: const EdgeInsets.all(25),
+            padding: EdgeInsets.all(25),
             child: Column(
               children: [
                 Container(
-                    color: const Color(0x00016299),
+                    color: Color(0x00016299),
                     width: double.infinity,
-                    child: const Text(
+                    child: Text(
                       'Log in HIL GMF',
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -30,16 +31,16 @@ class LoginPage extends StatelessWidget {
                         color: Color.fromRGBO(1, 98, 153, 1),
                       ),
                     )),
-                const SizedBox(
+                SizedBox(
                   height: 20,
                 ),
-                const Text(
+                Text(
                   'Please enter your Employee ID and Registered Password to access the system',
                   style: TextStyle(
                       fontSize: 14,
                       color: Color.fromRGBO(1, 98, 153, 1)),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 35,
                 ),
                 TextField(
@@ -48,14 +49,14 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                             color: Color.fromRGBO(1, 98, 153, 1)),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      contentPadding: const EdgeInsets.all(15),
+                      contentPadding: EdgeInsets.all(15),
                       hintText: 'Employee ID'),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 25,
                 ),
                 TextField(
@@ -65,20 +66,20 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                             color: Color.fromRGBO(1, 98, 153, 1)),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      contentPadding: const EdgeInsets.all(15),
+                      contentPadding: EdgeInsets.all(15),
                       hintText: 'Password'),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
                 Container(
-                    color: const Color(0x00016299),
+                    color: Color(0x00016299),
                     width: double.infinity,
-                    child: const Text(
+                    child: Text(
                       'Forgot password?',
                       textAlign: TextAlign.right,
                       style: TextStyle(
@@ -86,17 +87,21 @@ class LoginPage extends StatelessWidget {
                         color: Color.fromRGBO(1, 98, 153, 1),
                       ),
                     )),
-                const SizedBox(
+                SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: const Color.fromRGBO(1, 98, 153, 1),
-                      minimumSize: const Size.fromHeight(50),
+                      primary: Color.fromRGBO(1, 98, 153, 1),
+                      minimumSize: Size.fromHeight(50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
-                  onPressed: () {},
-                  child: const Text(
+                  onPressed: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                      return TaskToDoPage();
+                    }));
+                  },
+                  child: Text(
                     'Log in',
                     style: TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w600),
