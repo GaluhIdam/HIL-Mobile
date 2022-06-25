@@ -62,6 +62,11 @@ flutter:
     - assets/welcome.png
     - assets/title.png
     - assets/login.png
+    - assets/login.png
+    - assets/task_to_do.png
+    - assets/task_to_do_active.png
+    - assets/hil_management.png
+    - assets/hil_management_active.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
