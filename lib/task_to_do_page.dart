@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hil_mobile/filter_modal.dart';
+import 'package:hil_mobile/task_details_page.dart';
 
 class TaskToDoPage extends StatefulWidget {
   const TaskToDoPage({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+          padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
           child: ListView(
             children: [
               Container(
@@ -487,159 +488,166 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 15, 0, 5),
-            child: Row(
-              children: [
-                Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(51, 51, 51, 1),
-                        border: Border.all(
-                            color: Color.fromRGBO(51, 51, 51, 1)),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        ' D ',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
-                      ),
-                    )),
-                Container(
-                    margin: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                    decoration: BoxDecoration(
-                        color: label_color,
-                        border: Border.all(color: label_color),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        label_text,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
-                      ),
-                    )),
-              ],
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return TaskDetailsPage();
+          }));
+        },
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(15, 15, 0, 5),
+              child: Row(
+                children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(51, 51, 51, 1),
+                          border: Border.all(
+                              color: Color.fromRGBO(51, 51, 51, 1)),
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          ' D ',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        ),
+                      )),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                      decoration: BoxDecoration(
+                          color: label_color,
+                          border: Border.all(color: label_color),
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          label_text,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        ),
+                      )),
+                ],
+              ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-            child: Row(
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Text(
-                    '|',
+            Container(
+              padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+              child: Row(
+                children: [
+                  Text(
+                    title,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w200,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
                   ),
-                ),
-                Text(
-                  code,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                  Container(
+                    margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Text(
+                      '|',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w200,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(15, 5, 0, 5),
-            child: Text(
-              info,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color.fromRGBO(1, 98, 153, 1),
+                  Text(
+                    code,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-            child: Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Due: ',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        due_date,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(224, 13, 13, 1),
-                        ),
-                      ),
-                    ],
-                  ),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.fromLTRB(15, 5, 0, 5),
+              child: Text(
+                info,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromRGBO(1, 98, 153, 1),
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Issue: ',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        issue_date,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(15, 5, 0, 15),
-            child: Text(
-              description,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
               ),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 40, 0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Due: ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          due_date,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(224, 13, 13, 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Issue: ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          issue_date,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(15, 5, 0, 15),
+              child: Text(
+                description,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
