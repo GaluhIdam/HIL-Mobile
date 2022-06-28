@@ -20,7 +20,6 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                    color: Color(0x00016299),
                     width: double.infinity,
                     child: Text(
                       'Log in HIL GMF',
