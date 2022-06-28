@@ -3,9 +3,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:hil_mobile/filter_modal.dart';
 
-class TaskToDoPage extends StatelessWidget {
+class TaskToDoPage extends StatefulWidget {
   const TaskToDoPage({Key? key}) : super(key: key);
+
+  @override
+  State<TaskToDoPage> createState() => _TaskToDoPageState();
+}
+
+enum SortBy { due, issue }
+
+class _TaskToDoPageState extends State<TaskToDoPage> {
+  SortBy? _value = SortBy.due;
 
   @override
   Widget build(BuildContext context) {
@@ -93,31 +103,8 @@ class TaskToDoPage extends StatelessWidget {
                           contentPadding: EdgeInsets.all(14),
                           hintText: 'Masukan kata kunci'),
                     )),
-                    Container(
-                        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.filter_alt_outlined,
-                            size: 30,
-                            color: Color.fromRGBO(1, 98, 153, 1),
-                          ),
-                        )),
-                    Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.sort_by_alpha,
-                            size: 30,
-                            color: Color.fromRGBO(1, 98, 153, 1),
-                          ),
-                        )),
+                    filterData(context),
+                    sortData(context),
                   ],
                 ),
               ),
@@ -175,6 +162,319 @@ class TaskToDoPage extends StatelessWidget {
         ],
         selectedItemColor: Color.fromRGBO(1, 98, 153, 1),
       ),
+    );
+  }
+
+  GestureDetector filterData(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return StatefulBuilder(
+                  builder: (BuildContext context, setState) {
+                return Container(
+                  height: 700,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                            child: Text('Filter',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color:
+                                      Color.fromRGBO(1, 98, 153, 1),
+                                )),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 25, 25, 0),
+                                child: Icon(Icons.close)),
+                          )
+                        ],
+                      ),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(25, 20, 0, 10),
+                          width: double.infinity,
+                          child: Text(
+                            'Priority',
+                            style: TextStyle(fontSize: 14),
+                          )),
+                      Container(
+                        height: 40.0,
+                        margin: EdgeInsets.fromLTRB(25, 0, 0, 10),
+                        width: double.infinity,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            FilterModal(
+                              filterLabel: 'High',
+                              backgroundColor:
+                                  Color.fromRGBO(181, 12, 12, 1),
+                              selectedColor:
+                                  Color.fromRGBO(181, 12, 12, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'Low',
+                              backgroundColor:
+                                  Color.fromRGBO(255, 200, 16, 1),
+                              selectedColor:
+                                  Color.fromRGBO(255, 200, 16, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'Non',
+                              backgroundColor:
+                                  Color.fromRGBO(159, 159, 159, 1),
+                              selectedColor:
+                                  Color.fromRGBO(159, 159, 159, 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(25, 15, 0, 10),
+                          width: double.infinity,
+                          child: Text(
+                            'A/C Registration',
+                            style: TextStyle(fontSize: 14),
+                          )),
+                      Container(
+                        height: 30.0,
+                        margin: EdgeInsets.fromLTRB(25, 0, 0, 10),
+                        width: double.infinity,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            FilterModal(
+                              filterLabel: 'PK-GJJ',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'PK-GWL',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'PK-JJK',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'PK-WWG',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'PK-AJJ',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(25, 15, 0, 10),
+                          width: double.infinity,
+                          child: Text(
+                            'Subject',
+                            style: TextStyle(fontSize: 14),
+                          )),
+                      Container(
+                        height: 30.0,
+                        margin: EdgeInsets.fromLTRB(25, 0, 0, 10),
+                        width: double.infinity,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            FilterModal(
+                              filterLabel: 'Light',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'Equipment & Furnishing',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                            FilterModal(
+                              filterLabel: 'Cabin',
+                              selectedColor:
+                                  Color.fromRGBO(1, 98, 153, 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary:
+                                    Color.fromRGBO(66, 66, 66, 1),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(8))),
+                            onPressed: () {},
+                            child: Text(
+                              'Reset',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(25),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(1, 98, 153, 1),
+                              minimumSize: Size.fromHeight(45),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(10))),
+                          onPressed: () {},
+                          child: Text(
+                            'Save',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              });
+            });
+      },
+      child: Container(
+          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(12)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.filter_alt_outlined,
+              size: 30,
+              color: Color.fromRGBO(1, 98, 153, 1),
+            ),
+          )),
+    );
+  }
+
+  GestureDetector sortData(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return StatefulBuilder(
+                  builder: (BuildContext context, setState) {
+                return Container(
+                  height: 320,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(25, 25, 0, 10),
+                            child: Text('Sort',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color:
+                                      Color.fromRGBO(1, 98, 153, 1),
+                                )),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 25, 25, 10),
+                                child: Icon(Icons.close)),
+                          )
+                        ],
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: Column(
+                          children: [
+                            RadioListTile<SortBy>(
+                              title: const Text('By Due Date'),
+                              value: SortBy.due,
+                              groupValue: _value,
+                              onChanged: (SortBy? value) {
+                                setState(() {
+                                  _value = value;
+                                });
+                              },
+                            ),
+                            RadioListTile<SortBy>(
+                              title: const Text('By Issue Date'),
+                              value: SortBy.issue,
+                              groupValue: _value,
+                              onChanged: (SortBy? value) {
+                                setState(() {
+                                  _value = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(25),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(1, 98, 153, 1),
+                              minimumSize: Size.fromHeight(45),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(10))),
+                          onPressed: () {},
+                          child: Text(
+                            'Save',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              });
+            });
+      },
+      child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(12)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.sort_by_alpha,
+              size: 30,
+              color: Color.fromRGBO(1, 98, 153, 1),
+            ),
+          )),
     );
   }
 
