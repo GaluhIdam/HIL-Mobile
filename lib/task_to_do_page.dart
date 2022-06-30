@@ -23,7 +23,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+          padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
           child: ListView(
             children: [
               Container(
@@ -393,7 +393,8 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                             MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.fromLTRB(25, 25, 0, 10),
+                            margin:
+                                EdgeInsets.fromLTRB(25, 25, 0, 10),
                             child: Text('Sort',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -407,8 +408,8 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               Navigator.pop(context);
                             },
                             child: Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(0, 25, 25, 10),
+                                margin: EdgeInsets.fromLTRB(
+                                    0, 25, 25, 10),
                                 child: Icon(Icons.close)),
                           )
                         ],
@@ -490,7 +491,8 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       ),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
             return TaskDetailsPage();
           }));
         },
