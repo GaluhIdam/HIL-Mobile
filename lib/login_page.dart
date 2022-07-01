@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         contentPadding: EdgeInsets.all(15),
-                        hintText: 'Employee ID'),
+                        labelText: 'Employee ID'),
                   ),
                   SizedBox(
                     height: 25,
@@ -72,7 +72,7 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         contentPadding: EdgeInsets.all(15),
-                        hintText: 'Password'),
+                        labelText: 'Password'),
                   ),
                   SizedBox(
                     height: 10,

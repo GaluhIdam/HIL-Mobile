@@ -23,7 +23,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+          padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
           child: ListView(
             children: [
               Container(
@@ -183,7 +183,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                             MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                            margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
                             child: Text('Filter',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -198,13 +198,13 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                             },
                             child: Container(
                                 margin:
-                                    EdgeInsets.fromLTRB(0, 25, 25, 0),
+                                    EdgeInsets.fromLTRB(0, 15, 15, 0),
                                 child: Icon(Icons.close)),
                           )
                         ],
                       ),
                       Container(
-                          margin: EdgeInsets.fromLTRB(25, 20, 0, 10),
+                          margin: EdgeInsets.fromLTRB(15, 20, 0, 10),
                           width: double.infinity,
                           child: Text(
                             'Priority',
@@ -212,7 +212,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           )),
                       Container(
                         height: 40.0,
-                        margin: EdgeInsets.fromLTRB(25, 0, 0, 10),
+                        margin: EdgeInsets.fromLTRB(15, 0, 0, 10),
                         width: double.infinity,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -242,7 +242,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                          margin: EdgeInsets.fromLTRB(25, 15, 0, 10),
+                          margin: EdgeInsets.fromLTRB(15, 15, 0, 10),
                           width: double.infinity,
                           child: Text(
                             'A/C Registration',
@@ -250,7 +250,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           )),
                       Container(
                         height: 30.0,
-                        margin: EdgeInsets.fromLTRB(25, 0, 0, 10),
+                        margin: EdgeInsets.fromLTRB(15, 0, 0, 10),
                         width: double.infinity,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -284,7 +284,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                          margin: EdgeInsets.fromLTRB(25, 15, 0, 10),
+                          margin: EdgeInsets.fromLTRB(15, 15, 0, 10),
                           width: double.infinity,
                           child: Text(
                             'Subject',
@@ -292,7 +292,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           )),
                       Container(
                         height: 30.0,
-                        margin: EdgeInsets.fromLTRB(25, 0, 0, 10),
+                        margin: EdgeInsets.fromLTRB(15, 0, 0, 10),
                         width: double.infinity,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -316,7 +316,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                        margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: ElevatedButton(
@@ -337,7 +337,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(25),
+                        margin: EdgeInsets.all(15),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Color.fromRGBO(1, 98, 153, 1),
@@ -345,7 +345,9 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(10))),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: Text(
                             'Save',
                             style: TextStyle(
@@ -361,7 +363,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
             });
       },
       child: Container(
-          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
           decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(12)),
@@ -394,7 +396,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         children: [
                           Container(
                             margin:
-                                EdgeInsets.fromLTRB(25, 25, 0, 10),
+                                EdgeInsets.fromLTRB(15, 15, 0, 10),
                             child: Text('Sort',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -409,7 +411,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                             },
                             child: Container(
                                 margin: EdgeInsets.fromLTRB(
-                                    0, 25, 25, 10),
+                                    0, 15, 15, 10),
                                 child: Icon(Icons.close)),
                           )
                         ],
@@ -442,7 +444,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(25),
+                        margin: EdgeInsets.all(15),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Color.fromRGBO(1, 98, 153, 1),
@@ -450,7 +452,9 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(10))),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: Text(
                             'Save',
                             style: TextStyle(
