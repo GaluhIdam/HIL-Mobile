@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:hil_mobile/follow_on_list_page.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   const TaskDetailsPage({Key? key}) : super(key: key);
@@ -595,7 +596,12 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     minimumSize: Size.fromHeight(45),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return FollowOnListPage();
+                      }));
+                },
                 child: Text(
                   'Check Date Follow On',
                   style: TextStyle(
