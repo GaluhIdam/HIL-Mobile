@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/task_to_do_page.dart';
+import 'package:hil_mobile/navigation_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -100,7 +101,7 @@ class LoginPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
-                        return TaskToDoPage();
+                        return NavigationPage();
                       }));
                     },
                     child: Text(

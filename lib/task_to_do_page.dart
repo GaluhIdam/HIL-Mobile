@@ -143,26 +143,6 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image(
-              image: AssetImage('assets/task_to_do_active.png'),
-              width: 35,
-              height: 40,
-            ),
-            label: 'Task To Do',
-          ),
-          BottomNavigationBarItem(
-            icon: Image(
-              image: AssetImage('assets/hil_management.png'),
-              width: 35,
-            ),
-            label: 'HIL Management',
-          ),
-        ],
-        selectedItemColor: Color.fromRGBO(1, 98, 153, 1),
-      ),
     );
   }
 
