@@ -41,7 +41,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     ];
     return menuStation;
   }
-  
+
   List<DropdownMenuItem<String>> get dropdownOption {
     List<DropdownMenuItem<String>> menuOption = [
       DropdownMenuItem(child: Text("Open"), value: "Open"),
@@ -56,9 +56,114 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     return menuOption;
   }
 
+  List<DropdownMenuItem<String>> get dropdownReason {
+    List<DropdownMenuItem<String>> menuReason = [
+      DropdownMenuItem(child: Text("Open"), value: "Open"),
+      DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
+      DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
+      DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
+      DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
+      DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
+      DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
+      DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+    ];
+    return menuReason;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownNextUnit {
+    List<DropdownMenuItem<String>> menuNextUnit = [
+      DropdownMenuItem(child: Text("Open"), value: "Open"),
+      DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
+      DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
+      DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
+      DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
+      DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
+      DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
+      DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+    ];
+    return menuNextUnit;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownPartName {
+    List<DropdownMenuItem<String>> menuPartName = [
+      DropdownMenuItem(child: Text("Open"), value: "Open"),
+      DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
+      DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
+      DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
+      DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
+      DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
+      DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
+      DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+    ];
+    return menuPartName;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownPartNumber {
+    List<DropdownMenuItem<String>> menuPartNumber = [
+      DropdownMenuItem(child: Text("Open"), value: "Open"),
+      DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
+      DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
+      DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
+      DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
+      DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
+      DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
+      DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+    ];
+    return menuPartNumber;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownSNIn {
+    List<DropdownMenuItem<String>> menuSNIn = [
+      DropdownMenuItem(child: Text("Open"), value: "Open"),
+      DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
+      DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
+      DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
+      DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
+      DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
+      DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
+      DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+    ];
+    return menuSNIn;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownSNOut {
+    List<DropdownMenuItem<String>> menuSNOut = [
+      DropdownMenuItem(child: Text("Open"), value: "Open"),
+      DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
+      DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
+      DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
+      DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
+      DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
+      DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
+      DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+    ];
+    return menuSNOut;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownFollowOnStatus {
+    List<DropdownMenuItem<String>> menuFollowOnStatus = [
+      DropdownMenuItem(child: Text("Open"), value: "Open"),
+      DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
+      DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
+      DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
+      DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
+      DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
+      DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
+      DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+    ];
+    return menuFollowOnStatus;
+  }
+
   String selectedStatus = "Open";
   String selectedStation = "Open";
   String selectedOption = "Open";
+  String selectedReason = "Open";
+  String selectedNextUnit = "Open";
+  String selectedPartName = "Open";
+  String selectedPartNumber = "Open";
+  String selectedSNIn = "Open";
+  String selectedSNOut = "Open";
+  String selectedFollowOnStatus = "Open";
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -609,7 +714,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     minimumSize: Size.fromHeight(45),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10))),
-                onPressed: () {},
+                onPressed: () {
+                  addFollowOnModal(context);
+                },
                 child: Text(
                   'Add Follow On',
                   style: TextStyle(
@@ -719,6 +826,336 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         ),
       ),
     );
+  }
+
+  Future<dynamic> addFollowOnModal(BuildContext context) {
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, setState) {
+            return Container(
+              height: 800,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.fromLTRB(15, 15, 0, 10),
+                        child: Text('Add Follow On Job',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(1, 98, 153, 1),
+                            )),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                            margin:
+                                EdgeInsets.fromLTRB(0, 15, 15, 10),
+                            child: Icon(Icons.close)),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                      child: ListView(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(15),
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                child: Text('Maintenance Advise')),
+                            TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 5,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(10),
+                                ),
+                                hintText: 'Type a description',
+                                contentPadding: EdgeInsets.all(15),
+                              ),
+                            ),
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Text('Reason')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(
+                                        226, 234, 239, 1),
+                                    contentPadding:
+                                        EdgeInsets.all(13)),
+                                value: selectedReason,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedReason = newValue!;
+                                  });
+                                },
+                                items: dropdownReason),
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Text('Next Unit')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(
+                                        226, 234, 239, 1),
+                                    contentPadding:
+                                        EdgeInsets.all(13)),
+                                value: selectedNextUnit,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedNextUnit = newValue!;
+                                  });
+                                },
+                                items: dropdownNextUnit),
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Text('Part Name')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(
+                                        226, 234, 239, 1),
+                                    contentPadding:
+                                        EdgeInsets.all(13)),
+                                value: selectedPartName,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedPartName = newValue!;
+                                  });
+                                },
+                                items: dropdownPartName),
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Text('Part Number')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(
+                                        226, 234, 239, 1),
+                                    contentPadding:
+                                        EdgeInsets.all(13)),
+                                value: selectedPartNumber,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedPartNumber = newValue!;
+                                  });
+                                },
+                                items: dropdownPartNumber),
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Text('SN.In')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(
+                                        226, 234, 239, 1),
+                                    contentPadding:
+                                        EdgeInsets.all(13)),
+                                value: selectedSNIn,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedSNIn = newValue!;
+                                  });
+                                },
+                                items: dropdownSNIn),
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Text('SN.Out')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(
+                                        226, 234, 239, 1),
+                                    contentPadding:
+                                        EdgeInsets.all(13)),
+                                value: selectedSNOut,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedSNOut = newValue!;
+                                  });
+                                },
+                                items: dropdownSNOut),
+                            Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Text('Follow On Status')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(
+                                        226, 234, 239, 1),
+                                    contentPadding:
+                                        EdgeInsets.all(13)),
+                                value: selectedFollowOnStatus,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedFollowOnStatus = newValue!;
+                                  });
+                                },
+                                items: dropdownFollowOnStatus)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(15, 15, 15, 50),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(1, 98, 153, 1),
+                              minimumSize: Size.fromHeight(45),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(10))),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Save',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              ),
+            );
+          });
+        });
   }
 
   Future<dynamic> changeStatusModal(BuildContext context) {
