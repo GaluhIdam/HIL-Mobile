@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:hil_mobile/data_chart.dart';
+import 'data_chart.dart' show DataChart;
 import 'package:hil_mobile/data_series.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -18,55 +16,52 @@ class _DashboardPageState extends State<DashboardPage> {
         title: 'A330',
         data: 30,
         barColor: charts.ColorUtil.fromDartColor(
-            Colors.blue)),
+          Colors.blue,
+        )),
     DataSeries(
         title: 'B777',
         data: 44,
-        barColor: charts.ColorUtil.fromDartColor(
-            Colors.red)),
+        barColor: charts.ColorUtil.fromDartColor(Colors.red)),
     DataSeries(
         title: 'B737-800',
         data: 23,
-        barColor: charts.ColorUtil.fromDartColor(
-            Colors.yellow)),
+        barColor: charts.ColorUtil.fromDartColor(Colors.yellow)),
     DataSeries(
         title: 'A320',
         data: 40,
-        barColor: charts.ColorUtil.fromDartColor(
-            Colors.green)),
+        barColor: charts.ColorUtil.fromDartColor(Colors.green)),
     DataSeries(
         title: 'A320',
         data: 30,
-        barColor: charts.ColorUtil.fromDartColor(
-            Colors.purple)),
+        barColor: charts.ColorUtil.fromDartColor(Colors.purple)),
   ];
 
   final List<DataSeries> data2 = [
     DataSeries(
         title: 'PK-GMA',
         data: 3,
-        barColor: charts.ColorUtil.fromDartColor(
-            Color.fromRGBO(1, 98, 153, 1))),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GNA',
         data: 4,
-        barColor: charts.ColorUtil.fromDartColor(
-            Color.fromRGBO(1, 98, 153, 1))),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GNR',
         data: 2,
-        barColor: charts.ColorUtil.fromDartColor(
-            Color.fromRGBO(1, 98, 153, 1))),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GNT',
         data: 3,
-        barColor: charts.ColorUtil.fromDartColor(
-            Color.fromRGBO(1, 98, 153, 1))),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GMC',
         data: 6,
-        barColor: charts.ColorUtil.fromDartColor(
-            Color.fromRGBO(1, 98, 153, 1))),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
   ];
 
   @override
@@ -130,8 +125,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   children: [
                     Text(
                       "HIL Open by Follow On",
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     Expanded(child: DataChart(data: data1))
                   ]),
@@ -144,8 +139,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   children: [
                     Text(
                       "HIL without Follow On",
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     Expanded(child: DataChart(data: data2))
                   ]),

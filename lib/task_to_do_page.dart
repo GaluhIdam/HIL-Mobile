@@ -65,8 +65,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                       width: 9,
                     ),
                     CircleAvatar(
-                      backgroundColor:
-                          Color.fromRGBO(209, 214, 217, 1),
+                      backgroundColor: Color.fromRGBO(209, 214, 217, 1),
                       radius: 3,
                     ),
                     SizedBox(
@@ -91,8 +90,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         child: TextField(
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.search),
-                          prefixIconColor:
-                              Color.fromRGBO(1, 98, 153, 1),
+                          prefixIconColor: Color.fromRGBO(1, 98, 153, 1),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -152,15 +150,13 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
         showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return StatefulBuilder(
-                  builder: (BuildContext context, setState) {
+              return StatefulBuilder(builder: (BuildContext context, setState) {
                 return Container(
                   height: 700,
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
@@ -168,8 +164,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color:
-                                      Color.fromRGBO(1, 98, 153, 1),
+                                  color: Color.fromRGBO(1, 98, 153, 1),
                                 )),
                           ),
                           GestureDetector(
@@ -177,8 +172,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               Navigator.pop(context);
                             },
                             child: Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(0, 15, 15, 0),
+                                margin: EdgeInsets.fromLTRB(0, 15, 15, 0),
                                 child: Icon(Icons.close)),
                           )
                         ],
@@ -199,24 +193,18 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           children: [
                             FilterModal(
                               filterLabel: 'High',
-                              backgroundColor:
-                                  Color.fromRGBO(181, 12, 12, 1),
-                              selectedColor:
-                                  Color.fromRGBO(181, 12, 12, 1),
+                              backgroundColor: Color.fromRGBO(181, 12, 12, 1),
+                              selectedColor: Color.fromRGBO(181, 12, 12, 1),
                             ),
                             FilterModal(
                               filterLabel: 'Low',
-                              backgroundColor:
-                                  Color.fromRGBO(255, 200, 16, 1),
-                              selectedColor:
-                                  Color.fromRGBO(255, 200, 16, 1),
+                              backgroundColor: Color.fromRGBO(255, 200, 16, 1),
+                              selectedColor: Color.fromRGBO(255, 200, 16, 1),
                             ),
                             FilterModal(
                               filterLabel: 'Non',
-                              backgroundColor:
-                                  Color.fromRGBO(159, 159, 159, 1),
-                              selectedColor:
-                                  Color.fromRGBO(159, 159, 159, 1),
+                              backgroundColor: Color.fromRGBO(159, 159, 159, 1),
+                              selectedColor: Color.fromRGBO(159, 159, 159, 1),
                             ),
                           ],
                         ),
@@ -237,28 +225,23 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           children: [
                             FilterModal(
                               filterLabel: 'PK-GJJ',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                             FilterModal(
                               filterLabel: 'PK-GWL',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                             FilterModal(
                               filterLabel: 'PK-JJK',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                             FilterModal(
                               filterLabel: 'PK-WWG',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                             FilterModal(
                               filterLabel: 'PK-AJJ',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                           ],
                         ),
@@ -279,18 +262,15 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           children: [
                             FilterModal(
                               filterLabel: 'Light',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                             FilterModal(
                               filterLabel: 'Equipment & Furnishing',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                             FilterModal(
                               filterLabel: 'Cabin',
-                              selectedColor:
-                                  Color.fromRGBO(1, 98, 153, 1),
+                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                           ],
                         ),
@@ -301,17 +281,14 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           alignment: Alignment.topLeft,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary:
-                                    Color.fromRGBO(66, 66, 66, 1),
+                                primary: Color.fromRGBO(66, 66, 66, 1),
                                 shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(8))),
+                                    borderRadius: BorderRadius.circular(8))),
                             onPressed: () {},
                             child: Text(
                               'Reset',
                               style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600),
+                                  fontSize: 15, fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),
@@ -323,16 +300,14 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               primary: Color.fromRGBO(1, 98, 153, 1),
                               minimumSize: Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(10))),
+                                  borderRadius: BorderRadius.circular(10))),
                           onPressed: () {
                             Navigator.pop(context);
                           },
                           child: Text(
                             'Save',
                             style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600),
+                                fontSize: 15, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -364,25 +339,21 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
         showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return StatefulBuilder(
-                  builder: (BuildContext context, setState) {
+              return StatefulBuilder(builder: (BuildContext context, setState) {
                 return Container(
                   height: 320,
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin:
-                                EdgeInsets.fromLTRB(15, 15, 0, 10),
+                            margin: EdgeInsets.fromLTRB(15, 15, 0, 10),
                             child: Text('Sort',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color:
-                                      Color.fromRGBO(1, 98, 153, 1),
+                                  color: Color.fromRGBO(1, 98, 153, 1),
                                 )),
                           ),
                           GestureDetector(
@@ -390,8 +361,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               Navigator.pop(context);
                             },
                             child: Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    0, 15, 15, 10),
+                                margin: EdgeInsets.fromLTRB(0, 15, 15, 10),
                                 child: Icon(Icons.close)),
                           )
                         ],
@@ -430,16 +400,14 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               primary: Color.fromRGBO(1, 98, 153, 1),
                               minimumSize: Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(10))),
+                                  borderRadius: BorderRadius.circular(10))),
                           onPressed: () {
                             Navigator.pop(context);
                           },
                           child: Text(
                             'Save',
                             style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600),
+                                fontSize: 15, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -464,8 +432,8 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
     );
   }
 
-  Card buildCard(card_background_color, label_color, label_text,
-      title, code, info, due_date, issue_date, description) {
+  Card buildCard(card_background_color, label_color, label_text, title, code,
+      info, due_date, issue_date, description) {
     return Card(
       elevation: 0,
       margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -475,8 +443,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       ),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
             return TaskDetailsPage();
           }));
         },
@@ -490,8 +457,8 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                       margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
                       decoration: BoxDecoration(
                           color: Color.fromRGBO(51, 51, 51, 1),
-                          border: Border.all(
-                              color: Color.fromRGBO(51, 51, 51, 1)),
+                          border:
+                              Border.all(color: Color.fromRGBO(51, 51, 51, 1)),
                           borderRadius: BorderRadius.circular(8)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
