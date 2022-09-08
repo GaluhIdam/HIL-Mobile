@@ -177,7 +177,6 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     final detailTask = snapshot.data!;
-                    print(detailTask);
                     if (snapshot.data == null) {
                       return const Text('Data not available!');
                     } else {
