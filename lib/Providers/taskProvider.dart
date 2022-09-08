@@ -34,7 +34,6 @@ class TaskProvider {
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data'];
-        // Datum jsx = Datum.fromJson(parsed);
         return parsed;
       } else {
         throw Exception('Failed to load task');
