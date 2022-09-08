@@ -7,9 +7,12 @@ import '../models/taskModel.dart';
 
 enum SortBy { due, issue }
 
+// ignore: must_be_immutable
 class TaskToDoPage extends StatelessWidget {
   static const routeName = "/task_to_do_pages";
   SortBy? _value = SortBy.due;
+
+  TaskToDoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
