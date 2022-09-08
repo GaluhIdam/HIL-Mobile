@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hil_mobile/task_details_page.dart';
-import 'package:hil_mobile/task_to_do_page.dart';
+import 'package:hil_mobile/Pages/task_details_page.dart';
+import 'package:hil_mobile/Pages/task_to_do_page.dart';
 import 'package:hil_mobile/welcome_page.dart';
 
 void main() {

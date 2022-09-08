@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Providers/taskProvider.dart';
-import 'package:hil_mobile/Widgets/detailTask.dart';
+import 'package:intl/intl.dart';
+import '../Widgets/detailTask.dart';
 
-import 'models/taskModel.dart';
-
-class TaskDetailsPage extends StatelessWidget {
+class TaskDetailsPage extends StatefulWidget {
+  const TaskDetailsPage({Key? key}) : super(key: key);
   static const routeName = "/task_details_pages";
+  @override
+  State<TaskDetailsPage> createState() => _TaskDetailsPage();
+}
 
+class _TaskDetailsPage extends State<TaskDetailsPage> {
   // TaskDetailsPageState({Key? key}) : super(key: key);
   List<DropdownMenuItem<String>> get dropdownStatus {
     List<DropdownMenuItem<String>> menuStatus = [
@@ -166,18 +170,43 @@ class TaskDetailsPage extends StatelessWidget {
       body: SafeArea(
           child: Container(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-              child: FutureBuilder(
+              child: FutureBuilder<dynamic>(
                 future: TaskProvider.getTaskDetail(idx),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.connectionState == ConnectionState.done) {
-                    Object detailTask = snapshot.data!;
+                    final detailTask = snapshot.data!;
                     print(detailTask);
                     if (snapshot.data == null) {
                       return const Text('Data not available!');
                     } else {
-                      return const Text('data');
+                      return DetailTask(
+                        itemId: detailTask['item_id'],
+                        subject: detailTask['subject'],
+                        flightNumber: detailTask['flight_number'],
+                        aircraftType: detailTask['aircraft_type'],
+                        aircraftRegistration:
+                            detailTask['aircraft_registration'],
+                        station: detailTask['station'],
+                        ata: detailTask['ata'],
+                        sequenceNumber: detailTask['sequence_number'],
+                        dateOccured: detailTask['date_occured'],
+                        dueDate: detailTask['due_date'],
+                        stationCode: detailTask['station_code'],
+                        faultCode: detailTask['fault_code'],
+                        categoryName: detailTask['category_name'],
+                        techlog: detailTask['techlog'],
+                        ref: detailTask['ref'],
+                        refDdg: detailTask['ref_ddg'],
+                        option: detailTask['option'].toString(),
+                        status: detailTask['status'].toString(),
+                        description: detailTask['description'],
+                        partNumber: detailTask['part_number'],
+                        partName: detailTask['part_name'],
+                        statusName: detailTask['status_name'],
+                        optionName: detailTask['option_name'],
+                      );
                     }
                   } else {
                     return const Center(
