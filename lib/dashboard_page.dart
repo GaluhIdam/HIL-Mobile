@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'data_chart.dart' show DataChart;
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:hil_mobile/data_chart.dart';
 import 'package:hil_mobile/data_series.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -15,9 +17,7 @@ class _DashboardPageState extends State<DashboardPage> {
     DataSeries(
         title: 'A330',
         data: 30,
-        barColor: charts.ColorUtil.fromDartColor(
-          Colors.blue,
-        )),
+        barColor: charts.ColorUtil.fromDartColor(Colors.blue)),
     DataSeries(
         title: 'B777',
         data: 44,
@@ -40,28 +40,28 @@ class _DashboardPageState extends State<DashboardPage> {
     DataSeries(
         title: 'PK-GMA',
         data: 3,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GNA',
         data: 4,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GNR',
         data: 2,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GNT',
         data: 3,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(1, 98, 153, 1))),
     DataSeries(
         title: 'PK-GMC',
         data: 6,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(1, 98, 153, 1))),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(1, 98, 153, 1))),
   ];
 
   @override
@@ -69,13 +69,13 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-        padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
+        padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
         child: ListView(
           children: [
             Container(
-                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 width: double.infinity,
-                child: Text(
+                child: const Text(
                   'Sigit Prayoga',
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -85,9 +85,9 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                 )),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+              margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: Row(
-                children: [
+                children: const [
                   Text(
                     '6618819',
                     style: TextStyle(
@@ -118,12 +118,12 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+              margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
               height: 400,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "HIL Open by Follow On",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -132,12 +132,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   ]),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 30, 0, 20),
+              margin: const EdgeInsets.fromLTRB(0, 30, 0, 20),
               height: 400,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "HIL without Follow On",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),

@@ -1,147 +1,151 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:hil_mobile/Providers/taskProvider.dart';
 import 'package:hil_mobile/filter_modal.dart';
-import 'package:hil_mobile/task_details_page.dart';
-
-class TaskToDoPage extends StatefulWidget {
-  const TaskToDoPage({Key? key}) : super(key: key);
-
-  @override
-  State<TaskToDoPage> createState() => _TaskToDoPageState();
-}
+import 'package:intl/intl.dart';
+import 'Widgets/cardTask.dart';
+import 'models/taskModel.dart';
 
 enum SortBy { due, issue }
 
-class _TaskToDoPageState extends State<TaskToDoPage> {
+class TaskToDoPage extends StatelessWidget {
+  static const routeName = "/task_to_do_pages";
   SortBy? _value = SortBy.due;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
-          child: ListView(
-            children: [
-              Container(
-                  width: double.infinity,
-                  child: Text(
-                    'Good Morning,',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(1, 98, 153, 1),
-                    ),
-                  )),
-              Container(
-                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                  width: double.infinity,
-                  child: Text(
-                    'Sigit Prayoga',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromRGBO(1, 98, 153, 1),
-                    ),
-                  )),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: Row(
-                  children: [
-                    Text(
-                      '6618819',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(1, 98, 153, 1),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 9,
-                    ),
-                    CircleAvatar(
-                      backgroundColor: Color.fromRGBO(209, 214, 217, 1),
-                      radius: 3,
-                    ),
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Text(
-                      'TLC-7',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(239, 173, 66, 1),
-                      ),
-                    ),
-                  ],
+        body: SafeArea(
+            child: Container(
+      padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
+      child: Column(
+        children: <Widget>[
+          Container(
+              width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+              child: const Text(
+                'Good Morning,',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromRGBO(1, 98, 153, 1),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                child: Row(
-                  children: [
-                    Flexible(
-                        child: TextField(
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          prefixIconColor: Color.fromRGBO(1, 98, 153, 1),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(1, 98, 153, 1)),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          contentPadding: EdgeInsets.all(14),
-                          hintText: 'Masukan kata kunci'),
-                    )),
-                    filterData(context),
-                    sortData(context),
-                  ],
+              )),
+          Container(
+              margin: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+              width: double.infinity,
+              child: const Text(
+                'Sigit Prayoga',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromRGBO(1, 98, 153, 1),
                 ),
-              ),
-              buildCard(
-                  Color.fromRGBO(255, 239, 239, 1),
-                  Color.fromRGBO(181, 12, 12, 1),
-                  'High',
-                  'PK-GJJ',
-                  '1888239023',
-                  'Equipment & Furnishing',
-                  '3 Days Left',
-                  '10 Dec 2021',
-                  'LOREM IPSUM DOLOR SIT AMET, CONSETETUR SADIPSCING ELITR, SED DIAM NONUMY EIRMOD TEMPOR INVIDUNT UT LABORE ET DOLORE.'),
-              buildCard(
-                  Color.fromRGBO(253, 246, 227, 1),
-                  Color.fromRGBO(255, 200, 16, 1),
-                  'Low | UMR',
-                  'PK-GPW',
-                  '1888239023',
-                  'Lights',
-                  '20 Apr 2022',
-                  '10 Dec 2021',
-                  'LOREM IPSUM DOLOR SIT AMET, CONSETETUR SADIPSCING ELITR, SED DIAM NONUMY EIRMOD TEMPOR INVIDUNT UT LABORE ET DOLORE.'),
-              buildCard(
-                  Color.fromRGBO(242, 242, 242, 1),
-                  Color.fromRGBO(159, 159, 159, 1),
-                  'NON',
-                  'PK-GJJ',
-                  '1888239023',
-                  'Equipment & Furnishing',
-                  '20 Apr 2022',
-                  '10 Dec 2021',
-                  'LOREM IPSUM DOLOR SIT AMET, CONSETETUR SADIPSCING ELITR, SED DIAM NONUMY EIRMOD TEMPOR INVIDUNT UT LABORE ET DOLORE.'),
-            ],
+              )),
+          Container(
+            margin: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+            child: Row(
+              children: const [
+                Text(
+                  '6618819',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromRGBO(1, 98, 153, 1),
+                  ),
+                ),
+                SizedBox(
+                  width: 9,
+                ),
+                CircleAvatar(
+                  backgroundColor: Color.fromRGBO(209, 214, 217, 1),
+                  radius: 3,
+                ),
+                SizedBox(
+                  width: 9,
+                ),
+                Text(
+                  'TLC-7',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromRGBO(239, 173, 66, 1),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: Row(
+              children: [
+                Flexible(
+                    child: TextField(
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.search),
+                      prefixIconColor: const Color.fromRGBO(1, 98, 153, 1),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromRGBO(1, 98, 153, 1)),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: const EdgeInsets.all(14),
+                      hintText: 'Masukan kata kunci'),
+                )),
+                filterData(context),
+                sortData(context),
+              ],
+            ),
+          ),
+          Expanded(
+              child: Container(
+                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+                  child: FutureBuilder<List<Datum>>(
+                      future: TaskProvider.getTask(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          List<Datum> listTask = snapshot.data!;
+                          if (listTask.isEmpty) {
+                            return const Text('Data not available!');
+                          } else {
+                            return ListView.builder(
+                                itemCount: listTask.length,
+                                itemBuilder: (context, index) {
+                                  return TaskCard(
+                                      id: listTask[index].id.toString(),
+                                      cardBackgroundColor:
+                                          listTask[index].optionName,
+                                      labelColor: listTask[index].optionName,
+                                      labelText: listTask[index].optionName,
+                                      title:
+                                          listTask[index].aircraftRegistration,
+                                      code: listTask[index].itemId,
+                                      info: listTask[index].subject,
+                                      dueDate: listTask[index].statusName,
+                                      issueDate: DateFormat.yMd()
+                                          .format(listTask[index].dueDate),
+                                      description: listTask[index].description);
+                                });
+                          }
+                        } else {
+                          return const Center(
+                            child: Text('Connection failed!'),
+                          );
+                        }
+                      })))
+        ],
       ),
-    );
+    )));
   }
 
   GestureDetector filterData(BuildContext context) {
@@ -151,7 +155,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
             context: context,
             builder: (BuildContext context) {
               return StatefulBuilder(builder: (BuildContext context, setState) {
-                return Container(
+                return SizedBox(
                   height: 700,
                   child: Column(
                     children: [
@@ -159,8 +163,8 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
-                            child: Text('Filter',
+                            margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+                            child: const Text('Filter',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -172,25 +176,25 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               Navigator.pop(context);
                             },
                             child: Container(
-                                margin: EdgeInsets.fromLTRB(0, 15, 15, 0),
-                                child: Icon(Icons.close)),
+                                margin: const EdgeInsets.fromLTRB(0, 15, 15, 0),
+                                child: const Icon(Icons.close)),
                           )
                         ],
                       ),
                       Container(
-                          margin: EdgeInsets.fromLTRB(15, 20, 0, 10),
+                          margin: const EdgeInsets.fromLTRB(15, 20, 0, 10),
                           width: double.infinity,
-                          child: Text(
+                          child: const Text(
                             'Priority',
                             style: TextStyle(fontSize: 14),
                           )),
                       Container(
                         height: 40.0,
-                        margin: EdgeInsets.fromLTRB(15, 0, 0, 10),
+                        margin: const EdgeInsets.fromLTRB(15, 0, 0, 10),
                         width: double.infinity,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: [
+                          children: const [
                             FilterModal(
                               filterLabel: 'High',
                               backgroundColor: Color.fromRGBO(181, 12, 12, 1),
@@ -210,19 +214,19 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                          margin: EdgeInsets.fromLTRB(15, 15, 0, 10),
+                          margin: const EdgeInsets.fromLTRB(15, 15, 0, 10),
                           width: double.infinity,
-                          child: Text(
+                          child: const Text(
                             'A/C Registration',
                             style: TextStyle(fontSize: 14),
                           )),
                       Container(
                         height: 30.0,
-                        margin: EdgeInsets.fromLTRB(15, 0, 0, 10),
+                        margin: const EdgeInsets.fromLTRB(15, 0, 0, 10),
                         width: double.infinity,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: [
+                          children: const [
                             FilterModal(
                               filterLabel: 'PK-GJJ',
                               selectedColor: Color.fromRGBO(1, 98, 153, 1),
@@ -247,19 +251,19 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                          margin: EdgeInsets.fromLTRB(15, 15, 0, 10),
+                          margin: const EdgeInsets.fromLTRB(15, 15, 0, 10),
                           width: double.infinity,
-                          child: Text(
+                          child: const Text(
                             'Subject',
                             style: TextStyle(fontSize: 14),
                           )),
                       Container(
                         height: 30.0,
-                        margin: EdgeInsets.fromLTRB(15, 0, 0, 10),
+                        margin: const EdgeInsets.fromLTRB(15, 0, 0, 10),
                         width: double.infinity,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: [
+                          children: const [
                             FilterModal(
                               filterLabel: 'Light',
                               selectedColor: Color.fromRGBO(1, 98, 153, 1),
@@ -276,16 +280,16 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
+                        margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Color.fromRGBO(66, 66, 66, 1),
+                                primary: const Color.fromRGBO(66, 66, 66, 1),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'Reset',
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.w600),
@@ -294,17 +298,17 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Color.fromRGBO(1, 98, 153, 1),
-                              minimumSize: Size.fromHeight(45),
+                              primary: const Color.fromRGBO(1, 98, 153, 1),
+                              minimumSize: const Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(
+                          child: const Text(
                             'Save',
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
@@ -318,12 +322,12 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
             });
       },
       child: Container(
-          margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+          margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(12)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.filter_alt_outlined,
               size: 30,
@@ -348,8 +352,8 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.fromLTRB(15, 15, 0, 10),
-                            child: Text('Sort',
+                            margin: const EdgeInsets.fromLTRB(15, 15, 0, 10),
+                            child: const Text('Sort',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -361,12 +365,13 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                               Navigator.pop(context);
                             },
                             child: Container(
-                                margin: EdgeInsets.fromLTRB(0, 15, 15, 10),
-                                child: Icon(Icons.close)),
+                                margin:
+                                    const EdgeInsets.fromLTRB(0, 15, 15, 10),
+                                child: const Icon(Icons.close)),
                           )
                         ],
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Column(
                           children: [
@@ -394,17 +399,17 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Color.fromRGBO(1, 98, 153, 1),
-                              minimumSize: Size.fromHeight(45),
+                              primary: const Color.fromRGBO(1, 98, 153, 1),
+                              minimumSize: const Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(
+                          child: const Text(
                             'Save',
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
@@ -421,187 +426,14 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
           decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(12)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.sort_by_alpha,
               size: 30,
               color: Color.fromRGBO(1, 98, 153, 1),
             ),
           )),
-    );
-  }
-
-  Card buildCard(card_background_color, label_color, label_text, title, code,
-      info, due_date, issue_date, description) {
-    return Card(
-      elevation: 0,
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      color: card_background_color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return TaskDetailsPage();
-          }));
-        },
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(15, 15, 0, 5),
-              child: Row(
-                children: [
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(51, 51, 51, 1),
-                          border:
-                              Border.all(color: Color.fromRGBO(51, 51, 51, 1)),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          ' D ',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white),
-                        ),
-                      )),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                      decoration: BoxDecoration(
-                          color: label_color,
-                          border: Border.all(color: label_color),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          label_text,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-              child: Row(
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: Text(
-                      '|',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w200,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    code,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.fromLTRB(15, 5, 0, 5),
-              child: Text(
-                info,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Color.fromRGBO(1, 98, 153, 1),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Due: ',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          due_date,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(224, 13, 13, 1),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Issue: ',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          issue_date,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(15, 5, 0, 15),
-              child: Text(
-                description,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
