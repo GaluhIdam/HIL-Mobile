@@ -12,17 +12,17 @@ class LoginPage extends StatelessWidget {
       children: [
         Column(
           children: [
-            Image(
+            const Image(
               image: AssetImage('assets/login.png'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Container(
-              padding: EdgeInsets.all(25),
+              padding: const EdgeInsets.all(25),
               child: Column(
                 children: [
-                  Container(
+                  const SizedBox(
                       width: double.infinity,
                       child: Text(
                         'Log in HIL GMF',
@@ -33,16 +33,15 @@ class LoginPage extends StatelessWidget {
                           color: Color.fromRGBO(1, 98, 153, 1),
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Please enter your Employee ID and Registered Password to access the system',
                     style: TextStyle(
-                        fontSize: 14,
-                        color: Color.fromRGBO(1, 98, 153, 1)),
+                        fontSize: 14, color: Color.fromRGBO(1, 98, 153, 1)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 35,
                   ),
                   TextField(
@@ -51,14 +50,14 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                               color: Color.fromRGBO(1, 98, 153, 1)),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        contentPadding: EdgeInsets.all(15),
+                        contentPadding: const EdgeInsets.all(15),
                         labelText: 'Employee ID'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   TextField(
@@ -68,20 +67,20 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                               color: Color.fromRGBO(1, 98, 153, 1)),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        contentPadding: EdgeInsets.all(15),
+                        contentPadding: const EdgeInsets.all(15),
                         labelText: 'Password'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
-                      color: Color(0x00016299),
+                      color: const Color(0x00016299),
                       width: double.infinity,
-                      child: Text(
+                      child: const Text(
                         'Forgot password?',
                         textAlign: TextAlign.right,
                         style: TextStyle(
@@ -89,25 +88,25 @@ class LoginPage extends StatelessWidget {
                           color: Color.fromRGBO(1, 98, 153, 1),
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(1, 98, 153, 1),
-                        minimumSize: Size.fromHeight(45),
+                        primary: const Color.fromRGBO(1, 98, 153, 1),
+                        minimumSize: const Size.fromHeight(45),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
-                        return NavigationPage();
+                        return const NavigationPage();
                       }));
                     },
-                    child: Text(
+                    child: const Text(
                       'Log in',
-                      style: TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],

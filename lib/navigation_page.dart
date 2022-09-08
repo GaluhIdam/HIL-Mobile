@@ -24,7 +24,7 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   void initState() {
     super.initState();
-    _page1 = const TaskToDoPage();
+    _page1 = TaskToDoPage();
     _page2 = const DashboardPage();
     _pages = [_page1, _page2];
     _currentIndex = 0;
@@ -67,8 +67,7 @@ class _NavigationPageState extends State<NavigationPage> {
                   width: 35,
                 ),
                 activeIcon: Image(
-                  image:
-                      AssetImage('assets/hil_management_active.png'),
+                  image: AssetImage('assets/hil_management_active.png'),
                   width: 35,
                   height: 40,
                 )),
