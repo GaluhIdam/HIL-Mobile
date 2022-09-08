@@ -1,6 +1,56 @@
 import 'package:flutter/material.dart';
 
 class DetailTask extends StatelessWidget {
+  final String itemId,
+      subject,
+      flightNumber,
+      aircraftType,
+      aircraftRegistration,
+      station,
+      ata,
+      sequenceNumber,
+      dateOccured,
+      dueDate,
+      stationCode,
+      faultCode,
+      categoryName,
+      techlog,
+      ref,
+      refDdg,
+      option,
+      status,
+      description,
+      partNumber,
+      partName,
+      statusName,
+      optionName;
+
+  const DetailTask({
+    required this.itemId,
+    required this.subject,
+    required this.flightNumber,
+    required this.aircraftType,
+    required this.aircraftRegistration,
+    required this.station,
+    required this.ata,
+    required this.sequenceNumber,
+    required this.dateOccured,
+    required this.dueDate,
+    required this.stationCode,
+    required this.faultCode,
+    required this.categoryName,
+    required this.techlog,
+    required this.ref,
+    required this.refDdg,
+    required this.option,
+    required this.status,
+    required this.description,
+    required this.partNumber,
+    required this.partName,
+    required this.statusName,
+    required this.optionName,
+  });
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -22,10 +72,10 @@ class DetailTask extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width / 2.5,
+                width: MediaQuery.of(context).size.width / 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: <Widget>[
                     Text(
                       'Item ID',
                     ),
@@ -33,7 +83,7 @@ class DetailTask extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      '1888239023',
+                      itemId,
                       style: TextStyle(fontSize: 24),
                     ),
                     SizedBox(
@@ -43,7 +93,7 @@ class DetailTask extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width / 2.5,
+                width: MediaQuery.of(context).size.width / 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -56,7 +106,8 @@ class DetailTask extends StatelessWidget {
                     Row(
                       children: [
                         Column(
-                          children: [
+                          children: <Widget> [
+                           optionName == 'Urgent' ?
                             Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                 decoration: BoxDecoration(
@@ -64,6 +115,107 @@ class DetailTask extends StatelessWidget {
                                     border: Border.all(
                                         color: const Color.fromRGBO(
                                             181, 12, 12, 1)),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    ' H ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                )) : 
+                                optionName == 'Important' ?
+                                Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 253, 255, 239),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(255, 253, 255, 239),),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    ' H ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                )) : 
+                                optionName == 'Urgent & Important' ?
+                                Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 255, 241, 234),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(255, 255, 241, 234),),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    ' H ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                )) :
+                                optionName == 'Important' ?
+                                Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 255, 253, 239),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(255, 255, 253, 239),),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    ' H ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                )) :
+                                optionName == 'Normal' ?
+                                Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 238, 239, 255),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(255, 238, 239, 255),),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    ' H ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                )) :
+                                optionName == '-' ?
+                                Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 233, 233, 233),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(255, 233, 233, 233),),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    ' H ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                )) :
+                                Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 233, 233, 233),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(255, 233, 233, 233),),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: const Padding(
                                   padding: EdgeInsets.all(5.0),
@@ -81,18 +233,18 @@ class DetailTask extends StatelessWidget {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: <Widget>[
                             Text(
-                              '3 Days Left',
+                              statusName,
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 19,
                                   color: Color.fromRGBO(181, 12, 12, 1)),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             Text(
-                              'on 22 Apr 2022',
+                              dueDate,
                               style: TextStyle(
                                   color: Color.fromRGBO(181, 12, 12, 1)),
                             ),
@@ -114,13 +266,13 @@ class DetailTask extends StatelessWidget {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: <Widget>[
               Text('Subject'),
               SizedBox(
                 height: 7,
               ),
               Text(
-                'Equipment & Furnishing',
+                subject,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -132,13 +284,13 @@ class DetailTask extends StatelessWidget {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: <Widget>[
               Text('Flight Number'),
               SizedBox(
                 height: 7,
               ),
               Text(
-                'QG975',
+                flightNumber,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -155,13 +307,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('A/C Type'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        'A320-C',
+                        aircraftType,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -171,13 +323,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Date Occur'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '-',
+                        dateOccured,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -196,13 +348,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('A/C Registration'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        'PK-GJJ',
+                        aircraftRegistration,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -212,13 +364,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Due Date'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '2022-04-22, 00:00 WIB',
+                        dueDate,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -237,13 +389,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Station'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        'CGK',
+                        station,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -253,13 +405,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Station Code'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '-',
+                        stationCode,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -278,13 +430,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('ATA'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '23',
+                        ata,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -294,13 +446,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Fault.Code'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '51',
+                        faultCode,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -319,13 +471,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Seq. Number'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '68',
+                        sequenceNumber,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -335,13 +487,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Category'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '-',
+                        categoryName,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -360,13 +512,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('TECHLOG'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        'TLI0304681',
+                        techlog,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -376,13 +528,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Option Status'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        '-',
+                        option + '-' + status,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -396,13 +548,13 @@ class DetailTask extends StatelessWidget {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: <Widget>[
               Text('REF'),
               SizedBox(
                 height: 7,
               ),
               Text(
-                'AML',
+                ref,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -414,13 +566,13 @@ class DetailTask extends StatelessWidget {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: <Widget>[
               Text('REF.DDG'),
               SizedBox(
                 height: 7,
               ),
               Text(
-                '23-52-05A',
+                refDdg,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -435,13 +587,13 @@ class DetailTask extends StatelessWidget {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: <Widget>[
               Text('Description'),
               SizedBox(
                 height: 7,
               ),
               Text(
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut',
+                description,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -462,13 +614,13 @@ class DetailTask extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Part Number'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        'ACP2345234A',
+                        partNumber,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -478,13 +630,13 @@ class DetailTask extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: <Widget>[
                       Text('Part Name'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        'AUDIO CONTROL PANEL',
+                        partName,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
