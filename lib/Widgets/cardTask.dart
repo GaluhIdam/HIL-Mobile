@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../task_details_page.dart';
+import '../Pages/task_details_page.dart';
 
 class TaskCard extends StatelessWidget {
-  final String 
-      id,
+  final String id,
       cardBackgroundColor,
       labelColor,
       labelText,
@@ -264,7 +263,7 @@ class TaskCard extends StatelessWidget {
                               Text(
                                 issueDate,
                                 style: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                 ),
@@ -303,11 +302,11 @@ class TaskCard extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TaskDetailsPage.routeName,
-                  arguments: id,
-                );
+                    Navigator.pushNamed(
+                      context,
+                      TaskDetailsPage.routeName,
+                      arguments: id,
+                    );
                   },
                   child: Column(
                     children: [
@@ -534,7 +533,7 @@ class TaskCard extends StatelessWidget {
                                   Text(
                                     issueDate,
                                     style: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black,
                                     ),
@@ -573,11 +572,11 @@ class TaskCard extends StatelessWidget {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TaskDetailsPage.routeName,
-                  arguments: id,
-                );
+                        Navigator.pushNamed(
+                          context,
+                          TaskDetailsPage.routeName,
+                          arguments: id,
+                        );
                       },
                       child: Column(
                         children: [
@@ -814,7 +813,7 @@ class TaskCard extends StatelessWidget {
                                       Text(
                                         issueDate,
                                         style: const TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                         ),
@@ -853,11 +852,11 @@ class TaskCard extends StatelessWidget {
                         ),
                         child: GestureDetector(
                           onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TaskDetailsPage.routeName,
-                  arguments: id,
-                );
+                            Navigator.pushNamed(
+                              context,
+                              TaskDetailsPage.routeName,
+                              arguments: id,
+                            );
                           },
                           child: Column(
                             children: [
@@ -1103,7 +1102,7 @@ class TaskCard extends StatelessWidget {
                                           Text(
                                             issueDate,
                                             style: const TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                             ),
@@ -1143,11 +1142,11 @@ class TaskCard extends StatelessWidget {
                             ),
                             child: GestureDetector(
                               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TaskDetailsPage.routeName,
-                  arguments: id,
-                );
+                                Navigator.pushNamed(
+                                  context,
+                                  TaskDetailsPage.routeName,
+                                  arguments: id,
+                                );
                               },
                               child: Column(
                                 children: [
@@ -1401,7 +1400,7 @@ class TaskCard extends StatelessWidget {
                                               Text(
                                                 issueDate,
                                                 style: const TextStyle(
-                                                  fontSize: 14,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                 ),
@@ -1441,11 +1440,11 @@ class TaskCard extends StatelessWidget {
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TaskDetailsPage.routeName,
-                  arguments: id,
-                );
+                                    Navigator.pushNamed(
+                                      context,
+                                      TaskDetailsPage.routeName,
+                                      arguments: id,
+                                    );
                                   },
                                   child: Column(
                                     children: [
@@ -1707,7 +1706,7 @@ class TaskCard extends StatelessWidget {
                                                   Text(
                                                     issueDate,
                                                     style: const TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color: Colors.black,
@@ -1747,11 +1746,11 @@ class TaskCard extends StatelessWidget {
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TaskDetailsPage.routeName,
-                  arguments: id,
-                );
+                                    Navigator.pushNamed(
+                                      context,
+                                      TaskDetailsPage.routeName,
+                                      arguments: id,
+                                    );
                                   },
                                   child: Column(
                                     children: [
@@ -2013,7 +2012,7 @@ class TaskCard extends StatelessWidget {
                                                   Text(
                                                     issueDate,
                                                     style: const TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color: Colors.black,
