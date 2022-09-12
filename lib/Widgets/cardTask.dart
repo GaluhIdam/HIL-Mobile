@@ -27,7 +27,7 @@ class TaskCard extends StatelessWidget {
       required this.description});
   @override
   Widget build(BuildContext context) {
-    return cardBackgroundColor == 'Urgent'
+    return cardBackgroundColor == 'High'
         ? Card(
             elevation: 0,
             margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -292,7 +292,7 @@ class TaskCard extends StatelessWidget {
               ),
             ),
           )
-        : cardBackgroundColor == 'Important'
+        : cardBackgroundColor == 'Low'
             ? Card(
                 elevation: 0,
                 margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -1740,7 +1740,7 @@ class TaskCard extends StatelessWidget {
                             : Card(
                                 elevation: 0,
                                 margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                color: const Color.fromARGB(255, 255, 0, 0),
+                                color: Color.fromARGB(255, 239, 239, 239),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -1905,9 +1905,13 @@ class TaskCard extends StatelessWidget {
                                                                         style: const TextStyle(
                                                                             fontSize:
                                                                                 14,
-                                                                            fontWeight:
-                                                                                FontWeight.w700,
-                                                                            color: Colors.white),
+                                                                            fontWeight: FontWeight
+                                                                                .w700,
+                                                                            color: Color.fromARGB(
+                                                                                255,
+                                                                                255,
+                                                                                0,
+                                                                                0)),
                                                                       ),
                                                                     )),
                                           ],
