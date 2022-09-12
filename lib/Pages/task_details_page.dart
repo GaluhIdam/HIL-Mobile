@@ -180,32 +180,33 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                     if (snapshot.data == null) {
                       return const Text('Data not available!');
                     } else {
-                      return DetailTask(
-                        itemId: detailTask['item_id'],
-                        subject: detailTask['subject'],
-                        flightNumber: detailTask['flight_number'],
-                        aircraftType: detailTask['aircraft_type'],
-                        aircraftRegistration:
-                            detailTask['aircraft_registration'],
-                        station: detailTask['station'],
-                        ata: detailTask['ata'],
-                        sequenceNumber: detailTask['sequence_number'],
-                        dateOccured: detailTask['date_occured'],
-                        dueDate: detailTask['due_date'],
-                        stationCode: detailTask['station_code'],
-                        faultCode: detailTask['fault_code'],
-                        categoryName: detailTask['category_name'],
-                        techlog: detailTask['techlog'],
-                        ref: detailTask['ref'],
-                        refDdg: detailTask['ref_ddg'],
-                        option: detailTask['option'].toString(),
-                        status: detailTask['status'].toString(),
-                        description: detailTask['description'],
-                        partNumber: detailTask['part_number'],
-                        partName: detailTask['part_name'],
-                        statusName: detailTask['status_name'],
-                        optionName: detailTask['option_name'],
-                      );
+                      return Text('detail');
+                      //   DetailTask(
+                      //     itemId: detailTask['item_id'],
+                      //     subject: detailTask['subject'],
+                      //     flightNumber: detailTask['flight_number'],
+                      //     aircraftType: detailTask['aircraft_type'],
+                      //     aircraftRegistration:
+                      //         detailTask['aircraft_registration'],
+                      //     station: detailTask['station'],
+                      //     ata: detailTask['ata'],
+                      //     sequenceNumber: detailTask['sequence_number'],
+                      //     dateOccured: detailTask['date_occured'],
+                      //     dueDate: detailTask['due_date'],
+                      //     stationCode: detailTask['station_code'],
+                      //     faultCode: detailTask['fault_code'],
+                      //     categoryName: detailTask['category_name'],
+                      //     techlog: detailTask['techlog'],
+                      //     ref: detailTask['ref'],
+                      //     refDdg: detailTask['ref_ddg'],
+                      //     option: detailTask['option'].toString(),
+                      //     status: detailTask['status'].toString(),
+                      //     description: detailTask['description'],
+                      //     partNumber: detailTask['part_number'],
+                      //     partName: detailTask['part_name'],
+                      //     statusName: detailTask['status_name'],
+                      //     optionName: detailTask['option_name'],
+                      //   );
                     }
                   } else {
                     return const Center(

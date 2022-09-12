@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Providers/taskProvider.dart';
 import 'package:hil_mobile/filter_modal.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import '../Widgets/cardTask.dart';
 import '../models/taskModel.dart';
@@ -123,21 +122,21 @@ class TaskToDoPage extends StatelessWidget {
                             return const Text('Data not available!');
                           } else {
                             return ListView.builder(
-                                itemCount: listTask.length,
+                                itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
                                   return TaskCard(
-                                      id: listTask[index].id.toString(),
-                                      cardBackgroundColor:
-                                          listTask[index].optionName,
-                                      labelColor: listTask[index].optionName,
-                                      labelText: listTask[index].optionName,
-                                      title:
-                                          listTask[index].aircraftRegistration,
-                                      code: listTask[index].itemId,
+                                      id: listTask[index].itemId.toString(),
+                                      cardBackgroundColor: 'Unknown',
+                                      labelColor: 'Unknown',
+                                      labelText: 'Unknown',
+                                      title: listTask[index].acreg,
+                                      code: listTask[index].itemId.isEmpty
+                                          ? '-'
+                                          : listTask[index].itemId,
                                       info: listTask[index].subject,
-                                      dueDate: listTask[index].statusName,
-                                      issueDate: DateFormat.yMd()
-                                          .format(listTask[index].dueDate),
+                                      dueDate: 'Unknown',
+                                      issueDate: DateFormat('d MMM y')
+                                          .format(listTask[index].dateInsert),
                                       description: listTask[index].description);
                                 });
                           }

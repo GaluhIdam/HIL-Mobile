@@ -11,18 +11,19 @@ class TaskProvider {
 
   //Get All Data to be List
   static Future<List<Datum>> getTask() async {
-    String urlTask = getURL() + 'task';
+    String urlTask = getURL() + 'task-list';
     try {
       final response = await http.get(Uri.parse(urlTask));
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
-        final parsed = json['data']['data'].cast<Map<String, dynamic>>();
+        final parsed = json['data'].cast<Map<String, dynamic>>();
+        print(parsed);
         return parsed.map<Datum>((json) => Datum.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load task');
+        return [];
       }
     } catch (e) {
-      throw Exception('Error to load task');
+      return [];
     }
   }
 
