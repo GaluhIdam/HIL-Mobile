@@ -17,7 +17,6 @@ class TaskProvider {
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data'].cast<Map<String, dynamic>>();
-        print(parsed);
         return parsed.map<Datum>((json) => Datum.fromJson(json)).toList();
       } else {
         return [];
@@ -29,7 +28,7 @@ class TaskProvider {
 
 //Get Detail Data
   static Future getTaskDetail(String id) async {
-    String urlTask = getURL() + 'task/';
+    String urlTask = getURL() + 'task-detail/';
     try {
       final response = await http.get(Uri.parse(urlTask + id));
       if (response.statusCode == 200) {
