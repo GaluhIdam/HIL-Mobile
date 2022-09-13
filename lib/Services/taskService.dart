@@ -1,35 +1,36 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:hil_mobile/Providers/config.dart';
+import 'package:hil_mobile/Services/config.dart';
 import 'package:hil_mobile/models/taskModel.dart';
 import 'package:http/http.dart' as http;
 
-class TaskProvider {
+import '../Models/optionModel.dart';
+
+class TaskService {
   static getURL() {
     return Config.baseURL;
   }
 
   //Get All Data to be List
-  static Future<List<Datum>> getTask() async {
+  static Future<List<Task>> getTask() async {
     String urlTask = getURL() + 'task-list';
     try {
       final response = await http.get(Uri.parse(urlTask));
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data'].cast<Map<String, dynamic>>();
-        print(parsed);
-        return parsed.map<Datum>((json) => Datum.fromJson(json)).toList();
+        return parsed.map<Task>((json) => Task.fromJson(json)).toList();
       } else {
-        return [];
+        throw Exception('Failed to load task');
       }
     } catch (e) {
-      return [];
+      throw Exception('Error to load task');
     }
   }
 
 //Get Detail Data
   static Future getTaskDetail(String id) async {
-    String urlTask = getURL() + 'task/';
+    String urlTask = getURL() + 'task-detail/';
     try {
       final response = await http.get(Uri.parse(urlTask + id));
       if (response.statusCode == 200) {

@@ -4,12 +4,13 @@
 
 import 'dart:convert';
 
-Task taskFromJson(String str) => Task.fromJson(json.decode(str));
+TaskResponse taskFromJson(String str) =>
+    TaskResponse.fromJson(json.decode(str));
 
-String taskToJson(Task data) => json.encode(data.toJson());
+String taskToJson(TaskResponse data) => json.encode(data.toJson());
 
-class Task {
-  Task({
+class TaskResponse {
+  TaskResponse({
     required this.currentPage,
     required this.data,
     required this.firstPageUrl,
@@ -26,7 +27,7 @@ class Task {
   });
 
   int currentPage;
-  List<Datum> data;
+  List<Task> data;
   String firstPageUrl;
   int from;
   int lastPage;
@@ -39,9 +40,9 @@ class Task {
   int to;
   int total;
 
-  factory Task.fromJson(Map<String, dynamic> json) => Task(
+  factory TaskResponse.fromJson(Map<String, dynamic> json) => TaskResponse(
         currentPage: json["current_page"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: List<Task>.from(json["data"].map((x) => Task.fromJson(x))),
         firstPageUrl: json["first_page_url"],
         from: json["from"],
         lastPage: json["last_page"],
@@ -72,8 +73,8 @@ class Task {
       };
 }
 
-class Datum {
-  Datum({
+class Task {
+  Task({
     required this.itemId,
     required this.subject,
     required this.description,
@@ -93,7 +94,7 @@ class Datum {
   DateTime dueDate;
   DateTime dateClose;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Task.fromJson(Map<String, dynamic> json) => Task(
         itemId: json["itemID"],
         subject: json["Subject"],
         description: json["Description"],
