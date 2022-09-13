@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hil_mobile/Providers/taskProvider.dart';
+import 'package:hil_mobile/Services/taskService.dart';
 import 'package:hil_mobile/filter_modal.dart';
 import 'package:intl/intl.dart';
 import '../Widgets/cardTask.dart';
@@ -107,8 +107,8 @@ class TaskToDoPage extends StatelessWidget {
           Expanded(
               child: Container(
                   padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-                  child: FutureBuilder<List<Datum>>(
-                      future: TaskProvider.getTask(),
+                  child: FutureBuilder<List<Task>>(
+                      future: TaskService.getTask(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -117,9 +117,11 @@ class TaskToDoPage extends StatelessWidget {
                           );
                         } else if (snapshot.connectionState ==
                             ConnectionState.done) {
-                          List<Datum> listTask = snapshot.data!;
+                          List<Task> listTask = snapshot.data!;
                           if (listTask.isEmpty) {
-                            return const Text('Data not available!');
+                            return const Center(
+                              child: Text('Data not available!'),
+                            );
                           } else {
                             return ListView.builder(
                                 itemCount: snapshot.data!.length,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hil_mobile/Providers/taskProvider.dart';
+import 'package:hil_mobile/Services/taskService.dart';
+import 'package:hil_mobile/Widgets/optionChange.dart';
 import 'package:intl/intl.dart';
 import '../Widgets/detailTask.dart';
 
@@ -14,140 +15,140 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
   // TaskDetailsPageState({Key? key}) : super(key: key);
   List<DropdownMenuItem<String>> get dropdownStatus {
     List<DropdownMenuItem<String>> menuStatus = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuStatus;
   }
 
   List<DropdownMenuItem<String>> get dropdownStation {
     List<DropdownMenuItem<String>> menuStation = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuStation;
   }
 
   List<DropdownMenuItem<String>> get dropdownOption {
     List<DropdownMenuItem<String>> menuOption = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuOption;
   }
 
   List<DropdownMenuItem<String>> get dropdownReason {
     List<DropdownMenuItem<String>> menuReason = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuReason;
   }
 
   List<DropdownMenuItem<String>> get dropdownNextUnit {
     List<DropdownMenuItem<String>> menuNextUnit = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuNextUnit;
   }
 
   List<DropdownMenuItem<String>> get dropdownPartName {
     List<DropdownMenuItem<String>> menuPartName = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuPartName;
   }
 
   List<DropdownMenuItem<String>> get dropdownPartNumber {
     List<DropdownMenuItem<String>> menuPartNumber = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuPartNumber;
   }
 
   List<DropdownMenuItem<String>> get dropdownSNIn {
     List<DropdownMenuItem<String>> menuSNIn = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuSNIn;
   }
 
   List<DropdownMenuItem<String>> get dropdownSNOut {
     List<DropdownMenuItem<String>> menuSNOut = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuSNOut;
   }
 
   List<DropdownMenuItem<String>> get dropdownFollowOnStatus {
     List<DropdownMenuItem<String>> menuFollowOnStatus = [
-      const DropdownMenuItem(child: Text("Open"), value: "Open"),
-      const DropdownMenuItem(child: Text("Option 1"), value: "Option1"),
-      const DropdownMenuItem(child: Text("Option 2"), value: "Option2"),
-      const DropdownMenuItem(child: Text("Option 3"), value: "Option3"),
-      const DropdownMenuItem(child: Text("Option 4"), value: "Option4"),
-      const DropdownMenuItem(child: Text("Option 5"), value: "Option5"),
-      const DropdownMenuItem(child: Text("Option 6"), value: "Option6"),
-      const DropdownMenuItem(child: Text("Option 7"), value: "Option7"),
+      const DropdownMenuItem(value: "Open", child: Text("Open")),
+      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
+      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
+      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
+      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
+      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
+      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
+      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
     ];
     return menuFollowOnStatus;
   }
@@ -171,14 +172,16 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
           child: Container(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
               child: FutureBuilder<dynamic>(
-                future: TaskProvider.getTaskDetail(idx),
+                future: TaskService.getTaskDetail(idx),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     // final detailTask = snapshot.data!;
                     if (snapshot.data == null) {
-                      return const Text('Data not available!');
+                      return const Center(
+                        child: Text('Data not available!'),
+                      );
                     } else {
                       return Text('detail');
                       //   DetailTask(
@@ -256,7 +259,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                   onPressed: () {
-                    changeOptionModal(context);
+                    OptionChange.changeOptionModal(context);
+                    print('option');
                   },
                   child: const Text(
                     'Change Option',
@@ -690,100 +694,6 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                               });
                             },
                             items: dropdownStation)
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(15),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: const Color.fromRGBO(1, 98, 153, 1),
-                          minimumSize: const Size.fromHeight(45),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          });
-        });
-  }
-
-  Future<dynamic> changeOptionModal(BuildContext context) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (BuildContext context, setState) {
-            return SizedBox(
-              height: 310,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(15, 15, 0, 10),
-                        child: const Text('Change HIL Option',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(1, 98, 153, 1),
-                            )),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                            margin: const EdgeInsets.fromLTRB(0, 15, 15, 10),
-                            child: const Icon(Icons.close)),
-                      )
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(15),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: const Text('Change Option to')),
-                        DropdownButtonFormField(
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(226, 234, 239, 1),
-                                      width: 2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(226, 234, 239, 1),
-                                      width: 2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                                fillColor:
-                                    const Color.fromRGBO(226, 234, 239, 1),
-                                contentPadding: const EdgeInsets.all(13)),
-                            value: selectedOption,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedOption = newValue!;
-                              });
-                            },
-                            items: dropdownOption),
                       ],
                     ),
                   ),
