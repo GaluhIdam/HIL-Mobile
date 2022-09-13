@@ -260,7 +260,6 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                           borderRadius: BorderRadius.circular(10))),
                   onPressed: () {
                     OptionChange.changeOptionModal(context);
-                    print('option');
                   },
                   child: const Text(
                     'Change Option',
