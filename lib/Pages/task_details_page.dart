@@ -1,5 +1,3 @@
-// ignore_for_file: no_logic_in_create_state
-
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Models/taskdetailModel.dart';
 import 'package:hil_mobile/Services/optionService.dart';
@@ -573,5 +571,300 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
         ),
       ),
     );
+  }
+
+  Future<dynamic> addFollowOnModal(BuildContext context) {
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(builder: (BuildContext context, setState) {
+            return SizedBox(
+              height: 800,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(15, 15, 0, 10),
+                        child: const Text('Add Follow On Job',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(1, 98, 153, 1),
+                            )),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                            margin: const EdgeInsets.fromLTRB(0, 15, 15, 10),
+                            child: const Icon(Icons.close)),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                      child: ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(15),
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                child: const Text('Maintenance Advise')),
+                            TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 5,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                hintText: 'Type a description',
+                                contentPadding: const EdgeInsets.all(15),
+                              ),
+                            ),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Reason')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                value: selectedReason,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedReason = newValue!;
+                                  });
+                                },
+                                items: dropdownReason),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Next Unit')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                value: selectedNextUnit,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedNextUnit = newValue!;
+                                  });
+                                },
+                                items: dropdownNextUnit),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Part Name')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                value: selectedPartName,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedPartName = newValue!;
+                                  });
+                                },
+                                items: dropdownPartName),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Part Number')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                value: selectedPartNumber,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedPartNumber = newValue!;
+                                  });
+                                },
+                                items: dropdownPartNumber),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('SN.In')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                value: selectedSNIn,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedSNIn = newValue!;
+                                  });
+                                },
+                                items: dropdownSNIn),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('SN.Out')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                value: selectedSNOut,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedSNOut = newValue!;
+                                  });
+                                },
+                                items: dropdownSNOut),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Follow On Status')),
+                            DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                value: selectedFollowOnStatus,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedFollowOnStatus = newValue!;
+                                  });
+                                },
+                                items: dropdownFollowOnStatus)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(15, 15, 15, 50),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: const Color.fromRGBO(1, 98, 153, 1),
+                              minimumSize: const Size.fromHeight(45),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            'Save',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              ),
+            );
+          });
+        });
   }
 }
