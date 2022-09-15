@@ -275,7 +275,7 @@ class TaskCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      margin: const EdgeInsets.fromLTRB(15, 5, 0, 15),
+                      margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
@@ -545,7 +545,7 @@ class TaskCard extends StatelessWidget {
                         ),
                       ),
                       Container(
-                          margin: const EdgeInsets.fromLTRB(15, 5, 0, 15),
+                          margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
@@ -825,7 +825,7 @@ class TaskCard extends StatelessWidget {
                             ),
                           ),
                           Container(
-                              margin: const EdgeInsets.fromLTRB(15, 5, 0, 15),
+                              margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -1115,7 +1115,7 @@ class TaskCard extends StatelessWidget {
                               ),
                               Container(
                                   margin:
-                                      const EdgeInsets.fromLTRB(15, 5, 0, 15),
+                                      const EdgeInsets.fromLTRB(15, 5, 15, 20),
                                   child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
@@ -1413,7 +1413,7 @@ class TaskCard extends StatelessWidget {
                                   ),
                                   Container(
                                       margin: const EdgeInsets.fromLTRB(
-                                          15, 5, 0, 15),
+                                          15, 5, 15, 20),
                                       child: Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
@@ -1720,7 +1720,7 @@ class TaskCard extends StatelessWidget {
                                       ),
                                       Container(
                                           margin: const EdgeInsets.fromLTRB(
-                                              15, 5, 0, 15),
+                                              15, 5, 15, 20),
                                           child: Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
@@ -2030,7 +2030,7 @@ class TaskCard extends StatelessWidget {
                                       ),
                                       Container(
                                           margin: const EdgeInsets.fromLTRB(
-                                              15, 5, 0, 15),
+                                              15, 5, 15, 20),
                                           child: Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/Models/taskdetailModel.dart';
 import 'package:hil_mobile/Services/taskService.dart';
 import 'package:hil_mobile/Widgets/optionChange.dart';
 import 'package:intl/intl.dart';
@@ -166,50 +167,53 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final idx = ModalRoute.of(context)?.settings.arguments as String;
+    final id = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       body: SafeArea(
           child: Container(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-              child: FutureBuilder<dynamic>(
-                future: TaskService.getTaskDetail(idx),
+              child: FutureBuilder<List<TaskDetailData>>(
+                future: TaskService.getTaskDetail(id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.connectionState == ConnectionState.done) {
-                    // final detailTask = snapshot.data!;
+                    List<TaskDetailData> detailTask = snapshot.data!;
+                    print(snapshot.data);
                     if (snapshot.data == null) {
                       return const Center(
                         child: Text('Data not available!'),
                       );
                     } else {
-                      return Text('detail');
-                      //   DetailTask(
-                      //     itemId: detailTask['item_id'],
-                      //     subject: detailTask['subject'],
-                      //     flightNumber: detailTask['flight_number'],
-                      //     aircraftType: detailTask['aircraft_type'],
-                      //     aircraftRegistration:
-                      //         detailTask['aircraft_registration'],
-                      //     station: detailTask['station'],
-                      //     ata: detailTask['ata'],
-                      //     sequenceNumber: detailTask['sequence_number'],
-                      //     dateOccured: detailTask['date_occured'],
-                      //     dueDate: detailTask['due_date'],
-                      //     stationCode: detailTask['station_code'],
-                      //     faultCode: detailTask['fault_code'],
-                      //     categoryName: detailTask['category_name'],
-                      //     techlog: detailTask['techlog'],
-                      //     ref: detailTask['ref'],
-                      //     refDdg: detailTask['ref_ddg'],
-                      //     option: detailTask['option'].toString(),
-                      //     status: detailTask['status'].toString(),
-                      //     description: detailTask['description'],
-                      //     partNumber: detailTask['part_number'],
-                      //     partName: detailTask['part_name'],
-                      //     statusName: detailTask['status_name'],
-                      //     optionName: detailTask['option_name'],
-                      //   );
+                      return DetailTask(
+                        itemId: detailTask[0].itemId.toString(),
+                        subject: detailTask[0].subject.toString(),
+                        flightNumber: detailTask[0].flightNumber.toString(),
+                        aircraftType: detailTask[0].aCType.toString(),
+                        aircraftRegistration:
+                            detailTask[0].aCRegistration.toString(),
+                        station: detailTask[0].station.toString(),
+                        ata: detailTask[0].ata.toString(),
+                        sequenceNumber: detailTask[0].seqNumber.toString(),
+                        dateOccured: DateFormat.yMMMd()
+                            .format(detailTask[0].dateOccur)
+                            .toString(),
+                        dueDate: DateFormat.yMMMd()
+                            .format(detailTask[0].dueDate)
+                            .toString(),
+                        stationCode: detailTask[0].stationCode.toString(),
+                        faultCode: detailTask[0].faultCode.toString(),
+                        categoryName: detailTask[0].category.toString(),
+                        techlog: detailTask[0].techlog.toString(),
+                        ref: detailTask[0].ref.toString(),
+                        refDdg: detailTask[0].refDdg.toString(),
+                        optionStatus: detailTask[0].optionStatus.toString(),
+                        description: detailTask[0].description.toString(),
+                        partNumber: detailTask[0].partNumber.toString(),
+                        partName: detailTask[0].partName.toString(),
+                        statusName: detailTask[0].itemId.toString(),
+                        optionName: detailTask[0].itemId.toString(),
+                      );
                     }
                   } else {
                     return const Center(

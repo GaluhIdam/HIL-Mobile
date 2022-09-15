@@ -1,16 +1,42 @@
-// To parse this JSON data, do
+// To parserequired this JSON data, do
 //
-//     final task = taskFromJson(jsonString);
+//     final taskListResponse = taskListResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-TaskResponse taskFromJson(String str) =>
-    TaskResponse.fromJson(json.decode(str));
+TaskListResponse taskListResponseFromJson(String str) =>
+    TaskListResponse.fromJson(json.decode(str));
 
-String taskToJson(TaskResponse data) => json.encode(data.toJson());
+String taskListResponseToJson(TaskListResponse data) =>
+    json.encode(data.toJson());
 
-class TaskResponse {
-  TaskResponse({
+class TaskListResponse {
+  TaskListResponse({
+    required this.status,
+    required this.message,
+    required this.data,
+  });
+
+  String status;
+  String message;
+  Data data;
+
+  factory TaskListResponse.fromJson(Map<String, dynamic> json) =>
+      TaskListResponse(
+        status: json["status"],
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data.toJson(),
+      };
+}
+
+class Data {
+  Data({
     required this.currentPage,
     required this.data,
     required this.firstPageUrl,
@@ -27,7 +53,7 @@ class TaskResponse {
   });
 
   int currentPage;
-  List<Task> data;
+  List<Map<String, String>> data;
   String firstPageUrl;
   int from;
   int lastPage;
@@ -40,9 +66,10 @@ class TaskResponse {
   int to;
   int total;
 
-  factory TaskResponse.fromJson(Map<String, dynamic> json) => TaskResponse(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         currentPage: json["current_page"],
-        data: List<Task>.from(json["data"].map((x) => Task.fromJson(x))),
+        data: List<Map<String, String>>.from(json["data"].map((x) => Map.from(x)
+            .map((k, v) => MapEntry<String, String>(k, v == null ? null : v)))),
         firstPageUrl: json["first_page_url"],
         from: json["from"],
         lastPage: json["last_page"],
@@ -58,7 +85,8 @@ class TaskResponse {
 
   Map<String, dynamic> toJson() => {
         "current_page": currentPage,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data.map((x) => Map.from(x).map(
+            (k, v) => MapEntry<String, dynamic>(k, v == null ? null : v)))),
         "first_page_url": firstPageUrl,
         "from": from,
         "last_page": lastPage,
@@ -70,50 +98,6 @@ class TaskResponse {
         "prev_page_url": prevPageUrl,
         "to": to,
         "total": total,
-      };
-}
-
-class Task {
-  Task({
-    required this.itemId,
-    required this.subject,
-    required this.description,
-    required this.acreg,
-    required this.dateOccur,
-    required this.dateInsert,
-    required this.dueDate,
-    required this.dateClose,
-  });
-
-  String itemId;
-  String subject;
-  String description;
-  String acreg;
-  DateTime dateOccur;
-  DateTime dateInsert;
-  DateTime dueDate;
-  DateTime dateClose;
-
-  factory Task.fromJson(Map<String, dynamic> json) => Task(
-        itemId: json["itemID"],
-        subject: json["Subject"],
-        description: json["Description"],
-        acreg: json["acreg"],
-        dateOccur: DateTime.parse(json["DateOccur"]),
-        dateInsert: DateTime.parse(json["DateInsert"]),
-        dueDate: DateTime.parse(json["DueDate"]),
-        dateClose: DateTime.parse(json["DateClose"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "itemID": itemId,
-        "Subject": subject,
-        "Description": description,
-        "acreg": acreg,
-        "DateOccur": dateOccur.toIso8601String(),
-        "DateInsert": dateInsert.toIso8601String(),
-        "DueDate": dueDate.toIso8601String(),
-        "DateClose": dateClose.toIso8601String(),
       };
 }
 
@@ -138,5 +122,110 @@ class Link {
         "url": url == null ? null : url,
         "label": label,
         "active": active,
+      };
+}
+
+TaskList taskListFromJson(String str) => TaskList.fromJson(json.decode(str));
+
+String taskListToJson(TaskList data) => json.encode(data.toJson());
+
+class TaskList {
+  TaskList({
+    required this.data,
+  });
+
+  List<TaskListData> data;
+
+  factory TaskList.fromJson(Map<String, dynamic> json) => TaskList(
+        data: List<TaskListData>.from(
+            json["data"].map((x) => TaskListData.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
+}
+
+class TaskListData {
+  TaskListData({
+    required this.itemId,
+    required this.acreg,
+    required this.acType,
+    required this.statusNo,
+    required this.statusDesc,
+    required this.dateOccur,
+    required this.dueDate,
+    required this.seqNo,
+    required this.sta,
+    required this.dateClose,
+    required this.ataNo,
+    required this.subject,
+    required this.description,
+    required this.category,
+    required this.subAta,
+    required this.dateInsert,
+    required this.insertProblem,
+    required this.techlog,
+  });
+
+  String itemId;
+  String acreg;
+  String acType;
+  String statusNo;
+  String statusDesc;
+  DateTime dateOccur;
+  DateTime dueDate;
+  String seqNo;
+  String sta;
+  DateTime dateClose;
+  String ataNo;
+  String subject;
+  String description;
+  dynamic category;
+  String subAta;
+  DateTime dateInsert;
+  dynamic insertProblem;
+  String techlog;
+
+  factory TaskListData.fromJson(Map<String, dynamic> json) => TaskListData(
+        itemId: json["itemID"],
+        acreg: json["acreg"],
+        acType: json["ACType"],
+        statusNo: json["StatusNo"],
+        statusDesc: json["StatusDesc"],
+        dateOccur: DateTime.parse(json["DateOccur"]),
+        dueDate: DateTime.parse(json["DueDate"]),
+        seqNo: json["SeqNo"],
+        sta: json["sta"],
+        dateClose: DateTime.parse(json["DateClose"]),
+        ataNo: json["ATANo"],
+        subject: json["Subject"],
+        description: json["Description"],
+        category: json["Category"],
+        subAta: json["sub_ata"],
+        dateInsert: DateTime.parse(json["DateInsert"]),
+        insertProblem: json["InsertProblem"],
+        techlog: json["TECHLOG"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "itemID": itemId,
+        "acreg": acreg,
+        "ACType": acType,
+        "StatusNo": statusNo,
+        "StatusDesc": statusDesc,
+        "DateOccur": dateOccur.toIso8601String(),
+        "DueDate": dueDate.toIso8601String(),
+        "SeqNo": seqNo,
+        "sta": sta,
+        "DateClose": dateClose.toIso8601String(),
+        "ATANo": ataNo,
+        "Subject": subject,
+        "Description": description,
+        "Category": category,
+        "sub_ata": subAta,
+        "DateInsert": dateInsert.toIso8601String(),
+        "InsertProblem": insertProblem,
+        "TECHLOG": techlog,
       };
 }
