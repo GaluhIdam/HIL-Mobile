@@ -13,7 +13,7 @@
             buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
-               BuildableIdentifier = "primary"
+               BuildableIdentifier = "backgroundColor"
                BlueprintIdentifier = "33CC10EC2044A3C60003C045"
                BuildableName = "hil_mobile.app"
                BlueprintName = "Runner"
@@ -29,7 +29,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <MacroExpansion>
          <BuildableReference
-            BuildableIdentifier = "primary"
+            BuildableIdentifier = "backgroundColor"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
             BuildableName = "hil_mobile.app"
             BlueprintName = "Runner"
@@ -52,7 +52,7 @@
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
-            BuildableIdentifier = "primary"
+            BuildableIdentifier = "backgroundColor"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
             BuildableName = "hil_mobile.app"
             BlueprintName = "Runner"
@@ -69,7 +69,7 @@
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
-            BuildableIdentifier = "primary"
+            BuildableIdentifier = "backgroundColor"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
             BuildableName = "hil_mobile.app"
             BlueprintName = "Runner"

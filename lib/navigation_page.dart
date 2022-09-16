@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:hil_mobile/dashboard_page.dart';
+import 'package:hil_mobile/Pages/dashboard_page.dart';
 import 'package:hil_mobile/Pages/task_to_do_page.dart';
 
 const String page1 = "Task To Do";
@@ -25,7 +25,7 @@ class _NavigationPageState extends State<NavigationPage> {
   void initState() {
     super.initState();
     _page1 = TaskToDoPage();
-    _page2 = const DashboardPage();
+    _page2 = DashboardPage();
     _pages = [_page1, _page2];
     _currentIndex = 0;
     _currentPage = _page1;
