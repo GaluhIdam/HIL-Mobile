@@ -17,8 +17,7 @@ class DetailTask extends StatelessWidget {
       techlog,
       ref,
       refDdg,
-      option,
-      status,
+      optionStatus,
       description,
       partNumber,
       partName,
@@ -42,8 +41,7 @@ class DetailTask extends StatelessWidget {
     required this.techlog,
     required this.ref,
     required this.refDdg,
-    required this.option,
-    required this.status,
+    required this.optionStatus,
     required this.description,
     required this.partNumber,
     required this.partName,
@@ -534,7 +532,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        option + '-' + status,
+                        optionStatus,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),

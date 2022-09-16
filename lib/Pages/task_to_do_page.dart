@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/Models/taskModel.dart';
 import 'package:hil_mobile/Services/taskService.dart';
 import 'package:hil_mobile/filter_modal.dart';
 import 'package:intl/intl.dart';
 import '../Widgets/cardTask.dart';
-import '../models/taskModel.dart';
+// import '../models/taskModel.dart';
 
 enum SortBy { due, issue }
 
@@ -107,7 +108,7 @@ class TaskToDoPage extends StatelessWidget {
           Expanded(
               child: Container(
                   padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-                  child: FutureBuilder<List<Task>>(
+                  child: FutureBuilder<List<TaskListData>>(
                       future: TaskService.getTask(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -117,7 +118,7 @@ class TaskToDoPage extends StatelessWidget {
                           );
                         } else if (snapshot.connectionState ==
                             ConnectionState.done) {
-                          List<Task> listTask = snapshot.data!;
+                          List<TaskListData> listTask = snapshot.data!;
                           if (listTask.isEmpty) {
                             return const Center(
                               child: Text('Data not available!'),
@@ -128,15 +129,17 @@ class TaskToDoPage extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return TaskCard(
                                       id: listTask[index].itemId.toString(),
-                                      cardBackgroundColor: 'Unknown',
-                                      labelColor: 'Unknown',
-                                      labelText: 'Unknown',
+                                      cardBackgroundColor:
+                                          listTask[index].statusDesc,
+                                      labelColor: listTask[index].statusDesc,
+                                      labelText: listTask[index].statusDesc,
                                       title: listTask[index].acreg,
                                       code: listTask[index].itemId.isEmpty
                                           ? '-'
                                           : listTask[index].itemId,
                                       info: listTask[index].subject,
-                                      dueDate: 'Unknown',
+                                      dueDate: DateFormat('d MMM y')
+                                          .format(listTask[index].dueDate),
                                       issueDate: DateFormat('d MMM y')
                                           .format(listTask[index].dateInsert),
                                       description: listTask[index].description);

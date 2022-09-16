@@ -1,9 +1,13 @@
+// To parserequired this JSON data, do
+//
+//     final optionResponse = optionResponseFromJson(jsonString);
+
 import 'dart:convert';
 
-OptionResponse taskFromJson(String str) =>
+OptionResponse optionResponseFromJson(String str) =>
     OptionResponse.fromJson(json.decode(str));
 
-String taskToJson(OptionResponse data) => json.encode(data.toJson());
+String optionResponseToJson(OptionResponse data) => json.encode(data.toJson());
 
 class OptionResponse {
   OptionResponse({
@@ -31,20 +35,24 @@ class OptionResponse {
 
 class Option {
   Option({
-    required this.statusNo,
-    required this.statusDesc,
+    required this.optionId,
+    required this.shortName,
+    required this.longName,
   });
 
-  String statusNo;
-  String statusDesc;
+  String optionId;
+  String shortName;
+  String longName;
 
   factory Option.fromJson(Map<String, dynamic> json) => Option(
-        statusNo: json["StatusNo"],
-        statusDesc: json["StatusDesc"],
+        optionId: json["optionID"],
+        shortName: json["short_name"],
+        longName: json["long_name"],
       );
 
   Map<String, dynamic> toJson() => {
-        "StatusNo": statusNo,
-        "StatusDesc": statusDesc,
+        "optionID": optionId,
+        "short_name": shortName,
+        "long_name": longName,
       };
 }

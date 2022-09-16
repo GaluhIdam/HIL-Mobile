@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/Models/taskdetailModel.dart';
+import 'package:hil_mobile/Services/optionService.dart';
+import 'package:hil_mobile/Services/statusService.dart';
 import 'package:hil_mobile/Services/taskService.dart';
 import 'package:hil_mobile/Widgets/optionChange.dart';
 import 'package:intl/intl.dart';
@@ -12,49 +15,6 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPage extends State<TaskDetailsPage> {
-  // TaskDetailsPageState({Key? key}) : super(key: key);
-  List<DropdownMenuItem<String>> get dropdownStatus {
-    List<DropdownMenuItem<String>> menuStatus = [
-      const DropdownMenuItem(value: "Open", child: Text("Open")),
-      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
-      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
-      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
-      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
-      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
-      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
-      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
-    ];
-    return menuStatus;
-  }
-
-  List<DropdownMenuItem<String>> get dropdownStation {
-    List<DropdownMenuItem<String>> menuStation = [
-      const DropdownMenuItem(value: "Open", child: Text("Open")),
-      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
-      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
-      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
-      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
-      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
-      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
-      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
-    ];
-    return menuStation;
-  }
-
-  List<DropdownMenuItem<String>> get dropdownOption {
-    List<DropdownMenuItem<String>> menuOption = [
-      const DropdownMenuItem(value: "Open", child: Text("Open")),
-      const DropdownMenuItem(value: "Option1", child: Text("Option 1")),
-      const DropdownMenuItem(value: "Option2", child: Text("Option 2")),
-      const DropdownMenuItem(value: "Option3", child: Text("Option 3")),
-      const DropdownMenuItem(value: "Option4", child: Text("Option 4")),
-      const DropdownMenuItem(value: "Option5", child: Text("Option 5")),
-      const DropdownMenuItem(value: "Option6", child: Text("Option 6")),
-      const DropdownMenuItem(value: "Option7", child: Text("Option 7")),
-    ];
-    return menuOption;
-  }
-
   List<DropdownMenuItem<String>> get dropdownReason {
     List<DropdownMenuItem<String>> menuReason = [
       const DropdownMenuItem(value: "Open", child: Text("Open")),
@@ -166,50 +126,52 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final idx = ModalRoute.of(context)?.settings.arguments as String;
+    final itemid = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       body: SafeArea(
           child: Container(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-              child: FutureBuilder<dynamic>(
-                future: TaskService.getTaskDetail(idx),
+              child: FutureBuilder<List<TaskDetailData>>(
+                future: TaskService.getTaskDetail(itemid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.connectionState == ConnectionState.done) {
-                    // final detailTask = snapshot.data!;
+                    List<TaskDetailData> detailTask = snapshot.data!;
                     if (snapshot.data == null) {
                       return const Center(
                         child: Text('Data not available!'),
                       );
                     } else {
-                      return Text('detail');
-                      //   DetailTask(
-                      //     itemId: detailTask['item_id'],
-                      //     subject: detailTask['subject'],
-                      //     flightNumber: detailTask['flight_number'],
-                      //     aircraftType: detailTask['aircraft_type'],
-                      //     aircraftRegistration:
-                      //         detailTask['aircraft_registration'],
-                      //     station: detailTask['station'],
-                      //     ata: detailTask['ata'],
-                      //     sequenceNumber: detailTask['sequence_number'],
-                      //     dateOccured: detailTask['date_occured'],
-                      //     dueDate: detailTask['due_date'],
-                      //     stationCode: detailTask['station_code'],
-                      //     faultCode: detailTask['fault_code'],
-                      //     categoryName: detailTask['category_name'],
-                      //     techlog: detailTask['techlog'],
-                      //     ref: detailTask['ref'],
-                      //     refDdg: detailTask['ref_ddg'],
-                      //     option: detailTask['option'].toString(),
-                      //     status: detailTask['status'].toString(),
-                      //     description: detailTask['description'],
-                      //     partNumber: detailTask['part_number'],
-                      //     partName: detailTask['part_name'],
-                      //     statusName: detailTask['status_name'],
-                      //     optionName: detailTask['option_name'],
-                      //   );
+                      return DetailTask(
+                        itemId: detailTask[0].itemId.toString(),
+                        subject: detailTask[0].subject.toString(),
+                        flightNumber: detailTask[0].flightNumber.toString(),
+                        aircraftType: detailTask[0].aCType.toString(),
+                        aircraftRegistration:
+                            detailTask[0].aCRegistration.toString(),
+                        station: detailTask[0].station.toString(),
+                        ata: detailTask[0].ata.toString(),
+                        sequenceNumber: detailTask[0].seqNumber.toString(),
+                        dateOccured: DateFormat.yMMMd()
+                            .format(detailTask[0].dateOccur)
+                            .toString(),
+                        dueDate: DateFormat.yMMMd()
+                            .format(detailTask[0].dueDate)
+                            .toString(),
+                        stationCode: detailTask[0].stationCode.toString(),
+                        faultCode: detailTask[0].faultCode.toString(),
+                        categoryName: detailTask[0].category.toString(),
+                        techlog: detailTask[0].techlog.toString(),
+                        ref: detailTask[0].ref.toString(),
+                        refDdg: detailTask[0].refDdg.toString(),
+                        optionStatus: detailTask[0].optionStatus.toString(),
+                        description: detailTask[0].description.toString(),
+                        partNumber: detailTask[0].partNumber.toString(),
+                        partName: detailTask[0].partName.toString(),
+                        statusName: detailTask[0].itemId.toString(),
+                        optionName: detailTask[0].itemId.toString(),
+                      );
                     }
                   } else {
                     return const Center(
@@ -242,7 +204,314 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                   onPressed: () {
-                    changeStatusModal(context);
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(
+                              builder: (BuildContext context, setState) {
+                            return SizedBox(
+                              height: 600,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            15, 15, 0, 10),
+                                        child: const Text('Change HIL Status',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color:
+                                                  Color.fromRGBO(1, 98, 153, 1),
+                                            )),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 15, 15, 10),
+                                            child: const Icon(Icons.close)),
+                                      )
+                                    ],
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(15),
+                                    width: double.infinity,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 10),
+                                            child: const Text(
+                                                'Change Description')),
+                                        TextField(
+                                          keyboardType: TextInputType.multiline,
+                                          maxLines: 5,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            hintText: 'Type a description',
+                                            contentPadding:
+                                                const EdgeInsets.all(15),
+                                          ),
+                                        ),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child:
+                                                const Text('Change Status to')),
+                                        FutureBuilder<
+                                                List<DropdownMenuItem<String>>>(
+                                            future: StatusService.getStatus(),
+                                            builder: (context, snaphot) {
+                                              if (snaphot.data == null) {
+                                                return DropdownButtonFormField(
+                                                    hint: Text(
+                                                        'Please select status'),
+                                                    decoration: InputDecoration(
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: const Color
+                                                                .fromRGBO(
+                                                            226, 234, 239, 1),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .all(13)),
+                                                    onChanged:
+                                                        (String? newValue) {
+                                                      setState(() {
+                                                        newValue!;
+                                                      });
+                                                    },
+                                                    items: null);
+                                              } else {
+                                                return DropdownButtonFormField(
+                                                    hint: Text(
+                                                        'Please select status'),
+                                                    decoration: InputDecoration(
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: const Color
+                                                                .fromRGBO(
+                                                            226, 234, 239, 1),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .all(13)),
+                                                    onChanged:
+                                                        (String? newValue) {
+                                                      setState(() {
+                                                        newValue!;
+                                                      });
+                                                    },
+                                                    items: snaphot.data!);
+                                              }
+                                            }),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child: const Text('Station Close')),
+                                        FutureBuilder<
+                                                List<DropdownMenuItem<String>>>(
+                                            future: StatusService.getStation(),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.data == null) {
+                                                return DropdownButtonFormField(
+                                                    hint: Text(
+                                                        'Please select station'),
+                                                    decoration: InputDecoration(
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: const Color
+                                                                .fromRGBO(
+                                                            226, 234, 239, 1),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .all(13)),
+                                                    onChanged:
+                                                        (String? newValue) {
+                                                      setState(() {
+                                                        newValue;
+                                                      });
+                                                    },
+                                                    items: null);
+                                              } else {
+                                                return DropdownButtonFormField(
+                                                    hint: Text(
+                                                        'Please select station'),
+                                                    decoration: InputDecoration(
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: const Color
+                                                                .fromRGBO(
+                                                            226, 234, 239, 1),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .all(13)),
+                                                    onChanged:
+                                                        (String? newValue) {
+                                                      setState(() {
+                                                        newValue;
+                                                      });
+                                                    },
+                                                    items: snapshot.data!);
+                                              }
+                                            })
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(15),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: const Color.fromRGBO(
+                                              1, 98, 153, 1),
+                                          minimumSize:
+                                              const Size.fromHeight(45),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10))),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        'Save',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                        });
                   },
                   child: const Text('Change Status')),
             ),
@@ -259,7 +528,21 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                   onPressed: () {
-                    OptionChange.changeOptionModal(context);
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return FutureBuilder<List<DropdownMenuItem<String>>>(
+                              future: OptionService.getOption(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return OptionChange(dataOption: null);
+                                } else {
+                                  return OptionChange(
+                                      dataOption: snapshot.data!);
+                                }
+                              });
+                        });
                   },
                   child: const Text(
                     'Change Option',
@@ -578,142 +861,6 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       ),
                     ],
                   ))
-                ],
-              ),
-            );
-          });
-        });
-  }
-
-  Future<dynamic> changeStatusModal(BuildContext context) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (BuildContext context, setState) {
-            return SizedBox(
-              height: 600,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(15, 15, 0, 10),
-                        child: const Text('Change HIL Status',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(1, 98, 153, 1),
-                            )),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                            margin: const EdgeInsets.fromLTRB(0, 15, 15, 10),
-                            child: const Icon(Icons.close)),
-                      )
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(15),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: const Text('Change Description')),
-                        TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            hintText: 'Type a description',
-                            contentPadding: const EdgeInsets.all(15),
-                          ),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
-                            child: const Text('Change Status to')),
-                        DropdownButtonFormField(
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(226, 234, 239, 1),
-                                      width: 2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(226, 234, 239, 1),
-                                      width: 2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                                fillColor:
-                                    const Color.fromRGBO(226, 234, 239, 1),
-                                contentPadding: const EdgeInsets.all(13)),
-                            value: selectedStatus,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedStatus = newValue!;
-                              });
-                            },
-                            items: dropdownStatus),
-                        Container(
-                            margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
-                            child: const Text('Station Close')),
-                        DropdownButtonFormField(
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(226, 234, 239, 1),
-                                      width: 2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(226, 234, 239, 1),
-                                      width: 2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                                fillColor:
-                                    const Color.fromRGBO(226, 234, 239, 1),
-                                contentPadding: const EdgeInsets.all(13)),
-                            value: selectedStation,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedStation = newValue!;
-                              });
-                            },
-                            items: dropdownStation)
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(15),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: const Color.fromRGBO(1, 98, 153, 1),
-                          minimumSize: const Size.fromHeight(45),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             );
