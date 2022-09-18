@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/Pages/follow_on_list_page.dart';
+import 'package:hil_mobile/Services/followService.dart';
 
 class DetailTask extends StatelessWidget {
   final String itemId,
@@ -104,126 +106,173 @@ class DetailTask extends StatelessWidget {
                     Row(
                       children: [
                         Column(
-                          children: <Widget> [
-                           optionName == 'Urgent' ?
-                            Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(181, 12, 12, 1),
-                                    border: Border.all(
+                          children: <Widget>[
+                            optionName == 'Urgent'
+                                ? Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                    decoration: BoxDecoration(
                                         color: const Color.fromRGBO(
-                                            181, 12, 12, 1)),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    ' H ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )) : 
-                                optionName == 'Important' ?
-                                Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 253, 255, 239),
-                                    border: Border.all(
-                                        color: const Color.fromARGB(255, 253, 255, 239),),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    ' H ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )) : 
-                                optionName == 'Urgent & Important' ?
-                                Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 255, 241, 234),
-                                    border: Border.all(
-                                        color: const Color.fromARGB(255, 255, 241, 234),),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    ' H ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )) :
-                                optionName == 'Important' ?
-                                Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 255, 253, 239),
-                                    border: Border.all(
-                                        color: const Color.fromARGB(255, 255, 253, 239),),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    ' H ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )) :
-                                optionName == 'Normal' ?
-                                Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 238, 239, 255),
-                                    border: Border.all(
-                                        color: const Color.fromARGB(255, 238, 239, 255),),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    ' H ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )) :
-                                optionName == '-' ?
-                                Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 233, 233, 233),
-                                    border: Border.all(
-                                        color: const Color.fromARGB(255, 233, 233, 233),),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    ' H ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )) :
-                                Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 233, 233, 233),
-                                    border: Border.all(
-                                        color: const Color.fromARGB(255, 233, 233, 233),),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    ' H ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )),
+                                            181, 12, 12, 1),
+                                        border: Border.all(
+                                            color: const Color.fromRGBO(
+                                                181, 12, 12, 1)),
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(5.0),
+                                      child: Text(
+                                        ' H ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.white),
+                                      ),
+                                    ))
+                                : optionName == 'Important'
+                                    ? Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 10, 0),
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 253, 255, 239),
+                                            border: Border.all(
+                                              color: const Color.fromARGB(
+                                                  255, 253, 255, 239),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(5.0),
+                                          child: Text(
+                                            ' H ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white),
+                                          ),
+                                        ))
+                                    : optionName == 'Urgent & Important'
+                                        ? Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 0, 10, 0),
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 255, 241, 234),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
+                                                      255, 255, 241, 234),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(5.0),
+                                              child: Text(
+                                                ' H ',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.white),
+                                              ),
+                                            ))
+                                        : optionName == 'Important'
+                                            ? Container(
+                                                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromARGB(255, 255, 253, 239),
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              253,
+                                                              239),
+                                                    ),
+                                                    borderRadius: BorderRadius.circular(8)),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(5.0),
+                                                  child: Text(
+                                                    ' H ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color: Colors.white),
+                                                  ),
+                                                ))
+                                            : optionName == 'Normal'
+                                                ? Container(
+                                                    margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                                    decoration: BoxDecoration(
+                                                        color: const Color.fromARGB(255, 238, 239, 255),
+                                                        border: Border.all(
+                                                          color: const Color
+                                                                  .fromARGB(255,
+                                                              238, 239, 255),
+                                                        ),
+                                                        borderRadius: BorderRadius.circular(8)),
+                                                    child: const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(5.0),
+                                                      child: Text(
+                                                        ' H ',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ))
+                                                : optionName == '-'
+                                                    ? Container(
+                                                        margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                                        decoration: BoxDecoration(
+                                                            color: const Color.fromARGB(255, 233, 233, 233),
+                                                            border: Border.all(
+                                                              color: const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  233,
+                                                                  233,
+                                                                  233),
+                                                            ),
+                                                            borderRadius: BorderRadius.circular(8)),
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  5.0),
+                                                          child: Text(
+                                                            ' H ',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ))
+                                                    : Container(
+                                                        margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                                        decoration: BoxDecoration(
+                                                            color: const Color.fromARGB(255, 233, 233, 233),
+                                                            border: Border.all(
+                                                              color: const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  233,
+                                                                  233,
+                                                                  233),
+                                                            ),
+                                                            borderRadius: BorderRadius.circular(8)),
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  5.0),
+                                                          child: Text(
+                                                            ' H ',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        )),
                             const SizedBox(
                               height: 20,
                             )
@@ -665,12 +714,12 @@ class DetailTask extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(1, 98, 153, 1),
+                backgroundColor: const Color.fromRGBO(1, 98, 153, 1),
                 minimumSize: const Size.fromHeight(45),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
-              // addFollowOnModal(context);
+              addFollowOnModal(context);
             },
             child: const Text(
               'Add Follow On',
@@ -684,14 +733,14 @@ class DetailTask extends StatelessWidget {
             style: ElevatedButton.styleFrom(
                 side: const BorderSide(
                     width: 1, color: Color.fromRGBO(1, 98, 153, 1)),
-                primary: Colors.white,
+                backgroundColor: Colors.white,
                 minimumSize: const Size.fromHeight(45),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   return const FollowOnListPage();
-              // }));
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const FollowOnListPage();
+              }));
             },
             child: const Text(
               'Check Date Follow On',
@@ -704,5 +753,375 @@ class DetailTask extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<dynamic> addFollowOnModal(BuildContext context) {
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(builder: (BuildContext context, setState) {
+            return SizedBox(
+              height: 800,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(10, 20, 0, 10),
+                        child: const Text('Add Follow On Job',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(1, 98, 153, 1),
+                            )),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20, 15, 10),
+                            child: const Icon(Icons.close)),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                      child: ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(15),
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                child: const Text('Maintenance Advise')),
+                            TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 5,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                hintText: 'Type a description',
+                                contentPadding: const EdgeInsets.all(15),
+                              ),
+                            ),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Reason')),
+                            FutureBuilder<List<DropdownMenuItem<String>>>(
+                                future: FollowService.getReason(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.data == null) {
+                                    return DropdownButtonFormField(
+                                        hint: Text('Please select reason'),
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color.fromRGBO(
+                                                226, 234, 239, 1),
+                                            contentPadding:
+                                                const EdgeInsets.all(13)),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            newValue!;
+                                          });
+                                        },
+                                        items: null);
+                                  } else {
+                                    return DropdownButtonFormField(
+                                        hint: Text('Please select reason'),
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color.fromRGBO(
+                                                226, 234, 239, 1),
+                                            contentPadding:
+                                                const EdgeInsets.all(13)),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            newValue!;
+                                          });
+                                        },
+                                        items: snapshot.data!);
+                                  }
+                                }),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Next Unit')),
+                            FutureBuilder<List<DropdownMenuItem<String>>>(
+                                future: FollowService.getUnit(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.data == null) {
+                                    return DropdownButtonFormField(
+                                        hint: Text('Please select unit'),
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color.fromRGBO(
+                                                226, 234, 239, 1),
+                                            contentPadding:
+                                                const EdgeInsets.all(13)),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            newValue!;
+                                          });
+                                        },
+                                        items: null);
+                                  } else {
+                                    return DropdownButtonFormField(
+                                        hint: Text('Please select unit'),
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      226, 234, 239, 1),
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color.fromRGBO(
+                                                226, 234, 239, 1),
+                                            contentPadding:
+                                                const EdgeInsets.all(13)),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            newValue!;
+                                          });
+                                        },
+                                        items: snapshot.data!);
+                                  }
+                                }),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Part Name')),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: 'Please type part name',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Color.fromRGBO(226, 234, 239, 1),
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Color.fromRGBO(226, 234, 239, 1),
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  filled: true,
+                                  fillColor:
+                                      const Color.fromRGBO(226, 234, 239, 1),
+                                  contentPadding: const EdgeInsets.all(13)),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  newValue!;
+                                });
+                              },
+                            ),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Part Number')),
+                            TextFormField(
+                                decoration: InputDecoration(
+                                    hintText: 'Please type part number',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    newValue!;
+                                  });
+                                }),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('SN.In')),
+                            TextField(
+                                decoration: InputDecoration(
+                                    hintText: 'Please type SN.in',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    newValue!;
+                                  });
+                                }),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('SN.Out')),
+                            TextFormField(
+                                decoration: InputDecoration(
+                                    hintText: 'Please type SN.out',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    newValue!;
+                                  });
+                                }),
+                            Container(
+                                margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: const Text('Follow On Status')),
+                            TextFormField(
+                                decoration: InputDecoration(
+                                    hintText: 'Please type follow on status',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              Color.fromRGBO(226, 234, 239, 1),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(226, 234, 239, 1),
+                                    contentPadding: const EdgeInsets.all(13)),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    newValue!;
+                                  });
+                                })
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(15, 15, 15, 50),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromRGBO(1, 98, 153, 1),
+                              minimumSize: const Size.fromHeight(45),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            'Save',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
+                ],
+              ),
+            );
+          });
+        });
   }
 }

@@ -98,7 +98,7 @@ class TaskToDoPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       contentPadding: const EdgeInsets.all(14),
-                      hintText: 'Masukan kata kunci'),
+                      hintText: 'insert keyword'),
                 )),
                 filterData(context),
                 sortData(context),
@@ -293,7 +293,8 @@ class TaskToDoPage extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: const Color.fromRGBO(66, 66, 66, 1),
+                                backgroundColor:
+                                    const Color.fromRGBO(66, 66, 66, 1),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
                             onPressed: () {},
@@ -309,7 +310,8 @@ class TaskToDoPage extends StatelessWidget {
                         margin: const EdgeInsets.all(15),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: const Color.fromRGBO(1, 98, 153, 1),
+                              backgroundColor:
+                                  const Color.fromRGBO(1, 98, 153, 1),
                               minimumSize: const Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),
@@ -410,7 +412,8 @@ class TaskToDoPage extends StatelessWidget {
                         margin: const EdgeInsets.all(15),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: const Color.fromRGBO(1, 98, 153, 1),
+                              backgroundColor:
+                                  const Color.fromRGBO(1, 98, 153, 1),
                               minimumSize: const Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),

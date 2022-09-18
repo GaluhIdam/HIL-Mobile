@@ -6,6 +6,7 @@ import 'package:hil_mobile/data_series.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class DashboardPage extends StatefulWidget {
+  static const routeName = "/dashboard_page";
   const DashboardPage({Key? key}) : super(key: key);
 
   @override
