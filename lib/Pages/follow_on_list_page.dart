@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class FollowOnListPage extends StatelessWidget {
   static const routeName = "/follow_on_list_page";
