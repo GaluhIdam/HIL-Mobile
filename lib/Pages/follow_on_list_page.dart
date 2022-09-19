@@ -75,11 +75,10 @@ class FollowOnListPage extends StatelessWidget {
                                           listFollow[index].unitFo == '   '
                                       ? '-'
                                       : listFollow[index].unitFo.toString(),
-                                  byPerson: listFollow[index].insertFo ==
-                                              null ||
-                                          listFollow[index].insertFo == ''
+                                  byPerson: listFollow[index].nameFo == null ||
+                                          listFollow[index].nameFo == ''
                                       ? '-'
-                                      : listFollow[index].insertFo.toString(),
+                                      : listFollow[index].nameFo.toString(),
                                   nextUnit: listFollow[index].nextFo == null ||
                                           listFollow[index].nextFo == ''
                                       ? '-'
