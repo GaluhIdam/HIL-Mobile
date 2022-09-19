@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/Models/followlistModel.dart';
+import 'package:hil_mobile/Models/taskModel.dart';
+import 'package:hil_mobile/Services/followService.dart';
+import 'package:hil_mobile/Widgets/cardTask.dart';
+import 'package:hil_mobile/Widgets/followlList.dart';
+import 'package:intl/intl.dart';
+
+import '../Services/taskService.dart';
 
 class FollowOnListPage extends StatelessWidget {
   static const routeName = "/follow_on_list_page";
@@ -6,12 +14,13 @@ class FollowOnListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final itemid = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       body: SafeArea(
           child: Container(
-        padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
-        child: ListView(
-          children: [
+        padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+        child: Column(
+          children: <Widget>[
             Container(
               margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
               child: Align(
@@ -27,176 +36,72 @@ class FollowOnListPage extends StatelessWidget {
                           size: 35,
                         ),
                         Text(
-                          ' 1888239023',
+                          itemid,
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize: 20, fontWeight: FontWeight.w600),
                         )
                       ],
                     )),
               ),
             ),
-            buildCard(context, '1'),
-            buildCard(context, '2'),
-            buildCard(context, '3'),
+            Expanded(
+                child: FutureBuilder<List<FollowList>>(
+                    future: FollowService.getFollowList(itemid),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // print(snapshot.data);
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.connectionState ==
+                              ConnectionState.done &&
+                          snapshot.data != null) {
+                        List<FollowList> listFollow = snapshot.data!;
+                        if (snapshot.data == null) {
+                          return const Center(
+                            child: Text('Data not available!'),
+                          );
+                        } else {
+                          return ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                return FollowListCard(
+                                  labelNumber: index + 1,
+                                  dateFO: listFollow[index].dateFo == null ||
+                                          listFollow[index].dateFo == ''
+                                      ? '-'
+                                      : listFollow[index].dateFo.toString(),
+                                  unit: listFollow[index].unitFo == null ||
+                                          listFollow[index].unitFo == '   '
+                                      ? '-'
+                                      : listFollow[index].unitFo.toString(),
+                                  byPerson: listFollow[index].nameFo == null ||
+                                          listFollow[index].nameFo == ''
+                                      ? '-'
+                                      : listFollow[index].nameFo.toString(),
+                                  nextUnit: listFollow[index].nextFo == null ||
+                                          listFollow[index].nextFo == ''
+                                      ? '-'
+                                      : listFollow[index].nextFo.toString(),
+                                  followOn: listFollow[index].follow == null ||
+                                          listFollow[index].follow == ''
+                                      ? '-'
+                                      : listFollow[index].follow.toString(),
+                                );
+                              });
+                        }
+                      } else {
+                        return const Center(
+                          child: Text(
+                            'Connection failed!',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        );
+                      }
+                    }))
           ],
         ),
       )),
-    );
-  }
-
-  Card buildCard(BuildContext context, label_number) {
-    return Card(
-      elevation: 0,
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      color: Color.fromRGBO(237, 247, 253, 1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 15, 0, 5),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(7)),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
-                          child: Text(
-                            label_number,
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w700),
-                          ),
-                        )),
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 16, 0, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          width: MediaQuery.of(context).size.width / 2.5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Date FO',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(134, 134, 134, 1)),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                '2022-09-04',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 2.5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'By',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(134, 134, 134, 1)),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'Vega Rendra Saputra',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          )),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 16, 0, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          width: MediaQuery.of(context).size.width / 2.5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Unit',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(134, 134, 134, 1)),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'TVE',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 2.5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Next Unit',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(134, 134, 134, 1)),
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'TCD',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          )),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Follow On',
-                          style: TextStyle(
-                              color: Color.fromRGBO(134, 134, 134, 1))),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      Text(
-                        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

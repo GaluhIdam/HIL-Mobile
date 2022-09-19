@@ -35,38 +35,82 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       );
                     } else {
                       return DetailTask(
-                        itemId: detailTask[0].itemId.toString(),
-                        subject: detailTask[0].subject.toString(),
-                        flightNumber: detailTask[0].flightNumber.toString(),
-                        aircraftType: detailTask[0].aCType.toString(),
+                        itemId: detailTask[0].itemId == null
+                            ? '-'
+                            : detailTask[0].itemId.toString(),
+                        subject: detailTask[0].subject == null
+                            ? '-'
+                            : detailTask[0].subject.toString(),
+                        flightNumber: detailTask[0].flightNumber == null
+                            ? '-'
+                            : detailTask[0].flightNumber.toString(),
+                        aircraftType: detailTask[0].aCType == null
+                            ? '-'
+                            : detailTask[0].aCType.toString(),
                         aircraftRegistration:
-                            detailTask[0].aCRegistration.toString(),
-                        station: detailTask[0].station.toString(),
-                        ata: detailTask[0].ata.toString(),
-                        sequenceNumber: detailTask[0].seqNumber.toString(),
-                        dateOccured: DateFormat('yyyy-MM-dd, hh:mm a')
-                            .format(detailTask[0].dateOccur)
-                            .toString(),
-                        dueDate: DateFormat('yyyy-MM-dd, hh:mm a')
-                            .format(detailTask[0].dueDate)
-                            .toString(),
-                        stationCode: detailTask[0].stationCode.toString(),
-                        faultCode: detailTask[0].faultCode.toString(),
-                        categoryName: detailTask[0].category.toString(),
-                        techlog: detailTask[0].techlog.toString(),
-                        ref: detailTask[0].ref.toString(),
-                        refDdg: detailTask[0].refDdg.toString(),
-                        optionStatus: detailTask[0].optionStatus.toString(),
-                        description: detailTask[0].description.toString(),
-                        partNumber: detailTask[0].partNumber.toString(),
-                        partName: detailTask[0].partName.toString(),
-                        statusName: detailTask[0].itemId.toString(),
-                        optionName: detailTask[0].itemId.toString(),
+                            detailTask[0].aCRegistration == null
+                                ? '-'
+                                : detailTask[0].aCRegistration.toString(),
+                        station: detailTask[0].station == null
+                            ? '-'
+                            : detailTask[0].station.toString(),
+                        ata: detailTask[0].ata == null
+                            ? '-'
+                            : detailTask[0].ata.toString(),
+                        sequenceNumber: detailTask[0].seqNumber == null
+                            ? '-'
+                            : detailTask[0].seqNumber.toString(),
+                        dateOccured: detailTask[0].dateOccur == null
+                            ? '-'
+                            : DateFormat('yyyy-MM-dd, hh:mm a')
+                                .format(detailTask[0].dateOccur)
+                                .toString(),
+                        dueDate: detailTask[0].dueDate == null
+                            ? '-'
+                            : DateFormat('yyyy-MM-dd, hh:mm a')
+                                .format(detailTask[0].dueDate)
+                                .toString(),
+                        stationCode: detailTask[0].stationCode == null
+                            ? '-'
+                            : detailTask[0].stationCode.toString(),
+                        faultCode: detailTask[0].faultCode == null
+                            ? '-'
+                            : detailTask[0].faultCode.toString(),
+                        categoryName: detailTask[0].category == null
+                            ? '-'
+                            : detailTask[0].category.toString(),
+                        techlog: detailTask[0].techlog == null
+                            ? '-'
+                            : detailTask[0].techlog.toString(),
+                        ref: detailTask[0].ref == null
+                            ? '-'
+                            : detailTask[0].ref.toString(),
+                        refDdg: detailTask[0].refDdg == null
+                            ? '-'
+                            : detailTask[0].refDdg.toString(),
+                        optionStatus: detailTask[0].optionStatus == null
+                            ? '-'
+                            : detailTask[0].optionStatus.toString(),
+                        description: detailTask[0].description == null
+                            ? '-'
+                            : detailTask[0].description.toString(),
+                        partNumber: detailTask[0].partNumber == null
+                            ? '-'
+                            : detailTask[0].partNumber.toString(),
+                        partName: detailTask[0].partName == null
+                            ? '-'
+                            : detailTask[0].partName.toString(),
+                        statusName: detailTask[0].optionStatus == null
+                            ? '-'
+                            : detailTask[0].optionStatus.toString(),
+                        optionName: detailTask[0].optionStatus == null
+                            ? '-'
+                            : detailTask[0].optionStatus.toString(),
                       );
                     }
                   } else {
                     return const Center(
-                      child: Text('Connection Failed!'),
+                      child: Text('Connection failed!'),
                     );
                   }
                 },

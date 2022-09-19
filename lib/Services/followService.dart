@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/Models/followlistModel.dart';
 import 'package:hil_mobile/Services/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -58,26 +59,18 @@ class FollowService {
   }
 
   //Get data part name
-  static Future<List<DropdownMenuItem<String>>> getPartName() async {
-    String urlPartName = getURL() + 'master-unit';
-    try {
-      final response = await http.get(Uri.parse(urlPartName));
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-        final parsed = json['data'].cast<Map<String, dynamic>>();
-        List<DropdownMenuItem<String>> dataPartname = [];
-        // parsed.forEach((element) {
-        //   dataPartname.add(
-        //     DropdownMenuItem(
-        //         value: element['id'], child: Text(element['unit'])),
-        //   );
-        // });
-        return dataPartname;
-      } else {
-        throw Exception('Failed to load units');
-      }
-    } catch (e) {
-      throw Exception('Error to load units');
+  static Future<List<FollowList>> getFollowList(String id) async {
+    String urlPartName = getURL() + 'detail-follow/';
+    final response = await http.get(Uri.parse(urlPartName + id));
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      // print(json);
+      final parsed = json['data'].cast<Map<String, dynamic>>();
+      return parsed
+          .map<FollowList>((json) => FollowList.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load follow list');
     }
   }
 }

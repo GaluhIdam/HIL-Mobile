@@ -222,7 +222,7 @@ class DetailTask extends StatelessWidget {
                                                     ? Container(
                                                         margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                                         decoration: BoxDecoration(
-                                                            color: const Color.fromARGB(255, 233, 233, 233),
+                                                            color: Color.fromARGB(255, 255, 0, 0),
                                                             border: Border.all(
                                                               color: const Color
                                                                       .fromARGB(
@@ -738,9 +738,11 @@ class DetailTask extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const FollowOnListPage();
-              }));
+              Navigator.pushNamed(
+                context,
+                FollowOnListPage.routeName,
+                arguments: itemId,
+              );
             },
             child: const Text(
               'Check Date Follow On',
