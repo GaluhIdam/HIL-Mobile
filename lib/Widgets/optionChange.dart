@@ -75,7 +75,7 @@ class OptionChange extends StatelessWidget {
               margin: const EdgeInsets.all(15),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: const Color.fromRGBO(1, 98, 153, 1),
+                    backgroundColor: const Color.fromRGBO(1, 98, 153, 1),
                     minimumSize: const Size.fromHeight(45),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10))),
