@@ -117,7 +117,8 @@ class TaskToDoPage extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           );
                         } else if (snapshot.connectionState ==
-                            ConnectionState.done) {
+                                ConnectionState.done &&
+                            snapshot.data != null) {
                           List<TaskListData> listTask = snapshot.data!;
                           if (listTask.isEmpty) {
                             return const Center(
@@ -147,7 +148,10 @@ class TaskToDoPage extends StatelessWidget {
                           }
                         } else {
                           return const Center(
-                            child: Text('Connection failed!'),
+                            child: Text(
+                              'Connection failed!',
+                              style: TextStyle(color: Colors.red),
+                            ),
                           );
                         }
                       })))

@@ -12,7 +12,7 @@ class TaskService {
 
   //Get All Data to be List
   static Future<List<TaskListData>> getTask() async {
-    String urlTask = getURL() + 'task-list';
+    String urlTask = getURL() + 'task-list?page';
     try {
       final response = await http.get(Uri.parse(urlTask));
       if (response.statusCode == 200) {
