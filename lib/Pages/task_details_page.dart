@@ -37,6 +37,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       );
                     } else {
                       return DetailTask(
+                        token: token,
                         reason: detailTask[0].reason,
                         itemId: detailTask[0].itemId == null
                             ? '-'
@@ -150,10 +151,10 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                               style: ElevatedButton.styleFrom(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                  backgroundColor: Colors.white,
                                   side: const BorderSide(
                                       width: 2,
                                       color: Color.fromRGBO(239, 173, 66, 1)),
-                                  primary: Colors.white,
                                   minimumSize: const Size.fromHeight(5),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10))),

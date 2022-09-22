@@ -27,7 +27,8 @@ class DetailTask extends StatelessWidget {
       partName,
       statusName,
       optionName,
-      reason;
+      reason,
+      token;
 
   DetailTask({
     super.key,
@@ -54,6 +55,7 @@ class DetailTask extends StatelessWidget {
     required this.statusName,
     required this.optionName,
     required this.reason,
+    required this.token,
   });
 
   final _formKey = GlobalKey<FormState>();
@@ -67,7 +69,6 @@ class DetailTask extends StatelessWidget {
   final TextEditingController _snIn = TextEditingController();
 
   final TextEditingController _snOut = TextEditingController();
-  dynamic token = '2|IBxvlgK2u8OLN57NY0BBpiEuWy2mtZHsIARWg7ss';
   String? nextUnit;
 
   @override
@@ -1464,6 +1465,7 @@ class DetailTask extends StatelessWidget {
                                                                   .routeName,
                                                               arguments: {
                                                             "itemId": itemId,
+                                                            "token": token,
                                                           });
                                                     });
                                                   }
@@ -1505,7 +1507,7 @@ class DetailTask extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 FollowOnListPage.routeName,
-                arguments: itemId,
+                arguments: {'itemid': itemId, 'token': token},
               );
             },
             child: const Text(

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hil_mobile/data_chart.dart';
 import 'package:hil_mobile/data_series.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -77,7 +75,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 width: double.infinity,
                 child: const Text(
-                  'Sigit Prayoga',
+                  'Username',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 24,
@@ -90,7 +88,7 @@ class _DashboardPageState extends State<DashboardPage> {
               child: Row(
                 children: const [
                   Text(
-                    '6618819',
+                    '123456789',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,

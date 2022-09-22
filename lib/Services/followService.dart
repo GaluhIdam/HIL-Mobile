@@ -52,9 +52,10 @@ class FollowService {
   }
 
   //Get data follow list
-  static Future<List<FollowList>> getFollowList(String id) async {
+  static Future<List<FollowList>> getFollowList(String id, token) async {
     String urlPartName = getURL() + 'detail-follow/';
-    final response = await http.get(Uri.parse(urlPartName + id));
+    final response = await http.get(Uri.parse(urlPartName + id),
+        headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       final parsed = json['data'].cast<Map<String, dynamic>>();

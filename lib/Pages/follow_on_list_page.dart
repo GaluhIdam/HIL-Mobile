@@ -12,7 +12,9 @@ class FollowOnListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemid = ModalRoute.of(context)?.settings.arguments as String;
+    final passing = ModalRoute.of(context)?.settings.arguments as Map;
+    final itemid = passing['itemid'];
+    final token = passing['token'];
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -44,7 +46,7 @@ class FollowOnListPage extends StatelessWidget {
             ),
             Expanded(
                 child: FutureBuilder<List<FollowList>>(
-                    future: FollowService.getFollowList(itemid),
+                    future: FollowService.getFollowList(itemid, token),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(

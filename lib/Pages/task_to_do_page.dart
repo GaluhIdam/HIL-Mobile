@@ -18,9 +18,6 @@ class TaskToDoPage extends StatefulWidget {
   State<TaskToDoPage> createState() => _TaskToDoPageState();
 }
 
-const String page1 = "Task To Do";
-const String page2 = "HIL Management";
-
 class _TaskToDoPageState extends State<TaskToDoPage> {
   SortBy? _value = SortBy.due;
   @override
