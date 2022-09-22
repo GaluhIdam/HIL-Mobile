@@ -115,10 +115,7 @@ class OptionChange extends StatelessWidget {
                                       content: Text('Updating data...')),
                                 );
                                 OptionService.updateOption(
-                                        itemId, token, optionID)
-                                    .then((value) {
-                                  print(value);
-                                });
+                                    itemId, token, optionID);
                               }
                             },
                             child: const Text(
@@ -283,9 +280,6 @@ class OptionChange extends StatelessWidget {
                                       arguments: {
                                         "itemId": value['id'].toString(),
                                       });
-
-                                  print(value);
-                                  print(optionID);
                                 });
                               }
                             },

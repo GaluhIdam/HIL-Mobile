@@ -10,10 +10,11 @@ class StatusService {
   }
 
   //Get Data Status
-  static Future<List<DropdownMenuItem<String>>> getStatus() async {
+  static Future<List<DropdownMenuItem<String>>> getStatus(String token) async {
     String urlStatus = getURL() + 'master-status';
     try {
-      final response = await http.get(Uri.parse(urlStatus));
+      final response = await http.get(Uri.parse(urlStatus),
+          headers: {'Authorization': 'Bearer $token'});
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data'].cast<Map<String, dynamic>>();
@@ -34,10 +35,11 @@ class StatusService {
   }
 
   //Get Data Station
-  static Future<List<DropdownMenuItem<String>>> getStation() async {
+  static Future<List<DropdownMenuItem<String>>> getStation(String token) async {
     String urlStation = getURL() + 'master-station';
     try {
-      final response = await http.get(Uri.parse(urlStation));
+      final response = await http.get(Uri.parse(urlStation),
+          headers: {'Authorization': 'Bearer $token'});
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data'].cast<Map<String, dynamic>>();

@@ -148,7 +148,10 @@ class _LoginPageState extends State<LoginPage> {
                                 if (value['accessToken'] != null) {
                                   Navigator.pushNamed(
                                       context, TaskToDoPage.routeName,
-                                      arguments: value['data']['user']);
+                                      arguments: {
+                                        'data': value['data']['user'],
+                                        'token': value['accessToken'],
+                                      });
                                 }
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(

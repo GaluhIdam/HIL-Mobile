@@ -11,9 +11,10 @@ class FollowService {
   }
 
   //Get data reason
-  static Future<List<DropdownMenuItem<String>>> getReason() async {
+  static Future<List<DropdownMenuItem<String>>> getReason(String token) async {
     String urlReason = getURL() + 'master-reason';
-    final response = await http.get(Uri.parse(urlReason));
+    final response = await http
+        .get(Uri.parse(urlReason), headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       final parsed = json['data'].cast<Map<String, dynamic>>();
@@ -31,9 +32,10 @@ class FollowService {
   }
 
   //Get data unit
-  static Future<List<DropdownMenuItem<String>>> getUnit() async {
+  static Future<List<DropdownMenuItem<String>>> getUnit(String token) async {
     String urlUnit = getURL() + 'master-unit';
-    final response = await http.get(Uri.parse(urlUnit));
+    final response = await http
+        .get(Uri.parse(urlUnit), headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       final parsed = json['data'].cast<Map<String, dynamic>>();
@@ -85,8 +87,6 @@ class FollowService {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final message = json['message'];
-      print(json);
-      // final id = json['data'][0]['ItemIDFO'];
       return {'message': message};
     } else {
       final json = jsonDecode(response.body);

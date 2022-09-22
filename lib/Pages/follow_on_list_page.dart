@@ -47,7 +47,6 @@ class FollowOnListPage extends StatelessWidget {
                     future: FollowService.getFollowList(itemid),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        // print(snapshot.data);
                         return const Center(
                           child: CircularProgressIndicator(),
                         );

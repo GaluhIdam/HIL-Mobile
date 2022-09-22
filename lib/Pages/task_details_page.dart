@@ -17,16 +17,15 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     dynamic itemid = passData['itemId'];
-    dynamic x = passData['ata'];
 
-    dynamic token = '2|IBxvlgK2u8OLN57NY0BBpiEuWy2mtZHsIARWg7ss';
+    dynamic token = passData['token'];
 
     return Scaffold(
       body: SafeArea(
           child: Container(
               padding: const EdgeInsets.fromLTRB(25, 5, 25, 0),
               child: FutureBuilder<List<TaskDetailData>>(
-                future: TaskService.getTaskDetail(itemid),
+                future: TaskService.getTaskDetail(itemid, token),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -120,7 +119,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             FutureBuilder<List<TaskDetailData>>(
-                future: TaskService.getTaskDetail(itemid),
+                future: TaskService.getTaskDetail(itemid, token),
                 builder: (context, snapshot) {
                   if (snapshot.data == null ||
                       snapshot.connectionState == ConnectionState.waiting) {
@@ -330,8 +329,10 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                   List<
                                                                       DropdownMenuItem<
                                                                           String>>>(
-                                                              future: StatusService
-                                                                  .getStatus(),
+                                                              future:
+                                                                  StatusService
+                                                                      .getStatus(
+                                                                          token),
                                                               builder: (context,
                                                                   snaphot) {
                                                                 if (snaphot
@@ -431,7 +432,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                       DropdownMenuItem<
                                                                           String>>>(
                                                               future: StatusService
-                                                                  .getStation(),
+                                                                  .getStation(
+                                                                      token),
                                                               builder: (context,
                                                                   snapshot) {
                                                                 if (snapshot
@@ -633,6 +635,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                     "itemId":
                                                                         detailTask[0]
                                                                             .itemId,
+                                                                    "token":
+                                                                        token,
                                                                   });
                                                             });
                                                           }
@@ -678,7 +682,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                     builder: (BuildContext context) {
                                       return FutureBuilder<
                                               List<DropdownMenuItem<String>>>(
-                                          future: OptionService.getOption(),
+                                          future:
+                                              OptionService.getOption(token),
                                           builder: (context, snapshot) {
                                             if (snapshot.data == null ||
                                                 snapshot.connectionState ==
@@ -834,19 +839,13 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                             Text('Updating data...')),
                                                                   );
                                                                   OptionService.updateOption(
-                                                                          detailTask[0]
-                                                                              .itemId,
-                                                                          token,
-                                                                          detailTask[0]
-                                                                              .optionId)
-                                                                      .then(
-                                                                          (value) {
-                                                                    print(
-                                                                        value);
-                                                                    print(detailTask[
-                                                                            0]
-                                                                        .optionId);
-                                                                  });
+                                                                      detailTask[
+                                                                              0]
+                                                                          .itemId,
+                                                                      token,
+                                                                      detailTask[
+                                                                              0]
+                                                                          .optionId);
                                                                 }
                                                               },
                                                               child: const Text(
@@ -1030,12 +1029,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                               TaskDetailsPage.routeName,
                                                                               arguments: {
                                                                                 "itemId": detailTask[0].itemId,
+                                                                                "token": token,
                                                                               });
-
-                                                                          print(
-                                                                              value);
-                                                                          print(
-                                                                              detailTask[0].optionId);
                                                                         });
                                                                       }
                                                                     },
@@ -1236,12 +1231,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                               TaskDetailsPage.routeName,
                                                                               arguments: {
                                                                                 "itemId": detailTask[0].itemId,
+                                                                                "token": token,
                                                                               });
-
-                                                                          print(
-                                                                              value);
-                                                                          print(
-                                                                              detailTask[0].optionId);
                                                                         });
                                                                       }
                                                                     },

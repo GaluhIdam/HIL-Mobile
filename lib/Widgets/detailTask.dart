@@ -831,7 +831,7 @@ class DetailTask extends StatelessWidget {
                                                               DropdownMenuItem<
                                                                   String>>>(
                                                       future: FollowService
-                                                          .getReason(),
+                                                          .getReason(token),
                                                       builder:
                                                           (context, snapshot) {
                                                         if (snapshot.data ==
@@ -960,8 +960,9 @@ class DetailTask extends StatelessWidget {
                                                           List<
                                                               DropdownMenuItem<
                                                                   String>>>(
-                                                      future: FollowService
-                                                          .getUnit(),
+                                                      future:
+                                                          FollowService.getUnit(
+                                                              token),
                                                       builder:
                                                           (context, snapshot) {
                                                         if (snapshot.data ==

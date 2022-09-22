@@ -10,10 +10,11 @@ class OptionService {
   }
 
   //get data option
-  static Future<List<DropdownMenuItem<String>>> getOption() async {
+  static Future<List<DropdownMenuItem<String>>> getOption(String token) async {
     String urlOption = getURL() + 'master-option';
     try {
-      final response = await http.get(Uri.parse(urlOption));
+      final response = await http.get(Uri.parse(urlOption),
+          headers: {'Authorization': 'Bearer $token'});
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data'].cast<Map<String, dynamic>>();

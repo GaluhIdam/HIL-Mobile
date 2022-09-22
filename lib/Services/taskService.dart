@@ -11,9 +11,10 @@ class TaskService {
   }
 
   //Get All Data to be List
-  static Future<List<TaskListData>> getTask() async {
+  static Future<List<TaskListData>> getTask(String token) async {
     String urlTask = getURL() + 'task-list';
-    final response = await http.get(Uri.parse(urlTask));
+    final response = await http
+        .get(Uri.parse(urlTask), headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       final parsed = json['data']['data'];
@@ -26,9 +27,10 @@ class TaskService {
   }
 
 //Get Detail Data
-  static Future<List<TaskDetailData>> getTaskDetail(String id) async {
+  static Future<List<TaskDetailData>> getTaskDetail(String id, token) async {
     String urlTask = getURL() + 'task-detail/';
-    final response = await http.get(Uri.parse(urlTask + id));
+    final response = await http.get(Uri.parse(urlTask + id),
+        headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       final parsed = json['data'].cast<Map<String, dynamic>>();

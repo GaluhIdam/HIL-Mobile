@@ -40,7 +40,8 @@ class TaskCard extends StatelessWidget {
       partName,
       reason,
       categoryDesc,
-      dueDateDetail;
+      dueDateDetail,
+      token;
 
   const TaskCard({
     super.key,
@@ -82,6 +83,7 @@ class TaskCard extends StatelessWidget {
     required this.reason,
     required this.categoryDesc,
     required this.dueDateDetail,
+    required this.token,
   });
   @override
   Widget build(BuildContext context) {
@@ -99,6 +101,7 @@ class TaskCard extends StatelessWidget {
                   context,
                   TaskDetailsPage.routeName,
                   arguments: {
+                    "token": token,
                     "staClose": staClose,
                     "itemId": itemId,
                     "subject": subject,
@@ -391,6 +394,7 @@ class TaskCard extends StatelessWidget {
                       context,
                       TaskDetailsPage.routeName,
                       arguments: {
+                        "token": token,
                         "staClose": staClose,
                         "itemId": itemId,
                         "subject": subject,
@@ -688,6 +692,7 @@ class TaskCard extends StatelessWidget {
                           context,
                           TaskDetailsPage.routeName,
                           arguments: {
+                            "token": token,
                             "staClose": staClose,
                             "itemId": itemId,
                             "subject": subject,
@@ -995,6 +1000,7 @@ class TaskCard extends StatelessWidget {
                               context,
                               TaskDetailsPage.routeName,
                               arguments: {
+                                "token": token,
                                 "staClose": staClose,
                                 "itemId": itemId,
                                 "subject": subject,
@@ -1312,6 +1318,7 @@ class TaskCard extends StatelessWidget {
                                   context,
                                   TaskDetailsPage.routeName,
                                   arguments: {
+                                    "token": token,
                                     "staClose": staClose,
                                     "itemId": itemId,
                                     "subject": subject,
@@ -1637,6 +1644,7 @@ class TaskCard extends StatelessWidget {
                                       context,
                                       TaskDetailsPage.routeName,
                                       arguments: {
+                                        "token": token,
                                         "staClose": staClose,
                                         "itemId": itemId,
                                         "subject": subject,
@@ -1970,6 +1978,7 @@ class TaskCard extends StatelessWidget {
                                       context,
                                       TaskDetailsPage.routeName,
                                       arguments: {
+                                        "token": token,
                                         "staClose": staClose,
                                         "itemId": itemId,
                                         "subject": subject,

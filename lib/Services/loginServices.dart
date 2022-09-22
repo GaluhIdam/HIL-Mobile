@@ -26,7 +26,6 @@ class AuthService {
       if (token == null) {
         return {'status': status, 'message': message};
       } else {
-        print(data);
         return {
           'status': status,
           'message': message,

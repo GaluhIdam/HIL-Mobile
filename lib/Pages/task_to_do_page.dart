@@ -22,22 +22,14 @@ const String page1 = "Task To Do";
 const String page2 = "HIL Management";
 
 class _TaskToDoPageState extends State<TaskToDoPage> {
-  late Widget _page1;
-
-  @override
-  void initState() {
-    super.initState();
-    _page1 = TaskToDoPage();
-    TaskService.getTask();
-  }
-
   SortBy? _value = SortBy.due;
   @override
   Widget build(BuildContext context) {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
-    String name = passData['name'];
-    int id = passData['id'];
-    String unit = passData['unit'];
+    String name = passData['data']['name'];
+    int id = passData['data']['id'];
+    String unit = passData['data']['unit'];
+    String token = passData['token'];
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -130,7 +122,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                 child: Container(
                     padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
                     child: FutureBuilder<List<TaskListData>>(
-                        future: TaskService.getTask(),
+                        future: TaskService.getTask(token),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -150,6 +142,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                                   itemCount: snapshot.data!.length,
                                   itemBuilder: (context, index) {
                                     return TaskCard(
+                                        token: token,
                                         itemId: listTask[index].itemId,
                                         dateOccur: listTask[index].dateOccur,
                                         dueDateDetail: listTask[index].dueDate,
