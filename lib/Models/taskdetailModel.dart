@@ -37,102 +37,131 @@ class TaskDetail {
 class TaskDetailData {
   TaskDetailData({
     required this.itemId,
-    required this.dueStatus,
-    required this.subject,
-    required this.flightNumber,
-    required this.aCType,
-    required this.aCRegistration,
-    required this.station,
-    required this.ata,
-    required this.seqNumber,
-    required this.techlog,
-    required this.ref,
-    required this.refDdg,
     required this.dateOccur,
     required this.dueDate,
-    required this.stationCode,
-    required this.faultCode,
-    required this.category,
-    required this.optionStatus,
+    required this.dateInsert,
+    required this.dateClose,
+    required this.ddgRef,
+    required this.flightNo,
+    required this.ataNo,
+    required this.seqNo,
+    required this.sta,
+    required this.staClose,
+    required this.subject,
     required this.description,
-    required this.partNumber,
+    required this.category,
+    required this.subAta,
+    required this.insertProblem,
+    required this.techlog,
+    required this.status,
+    required this.acreg,
+    required this.acType,
+    required this.statusNo,
+    required this.statusDesc,
+    required this.staId,
+    required this.staCode,
+    required this.optionId,
+    required this.longName,
+    required this.partNbr,
     required this.partName,
     required this.reason,
+    required this.categoryDesc,
   });
 
   dynamic itemId;
-  DateTime dueStatus;
+  dynamic dateOccur;
+  dynamic dueDate;
+  dynamic dateInsert;
+  dynamic dateClose;
+  dynamic ddgRef;
+  dynamic flightNo;
+  dynamic ataNo;
+  dynamic seqNo;
+  dynamic sta;
+  dynamic staClose;
   dynamic subject;
-  dynamic flightNumber;
-  dynamic aCType;
-  dynamic aCRegistration;
-  dynamic station;
-  dynamic ata;
-  dynamic seqNumber;
-  dynamic techlog;
-  dynamic ref;
-  dynamic refDdg;
-  DateTime dateOccur;
-  DateTime dueDate;
-  dynamic stationCode;
-  dynamic faultCode;
-  dynamic category;
-  dynamic optionStatus;
   dynamic description;
-  dynamic partNumber;
+  dynamic category;
+  dynamic subAta;
+  dynamic insertProblem;
+  dynamic techlog;
+  dynamic status;
+  dynamic acreg;
+  dynamic acType;
+  dynamic statusNo;
+  dynamic statusDesc;
+  dynamic staId;
+  dynamic staCode;
+  dynamic optionId;
+  dynamic longName;
+  dynamic partNbr;
   dynamic partName;
   dynamic reason;
+  dynamic categoryDesc;
 
   factory TaskDetailData.fromJson(Map<String, dynamic> json) => TaskDetailData(
-        itemId: json["Item ID"],
-        dueStatus: DateTime.parse(json["Due Status"]),
+        itemId: json["itemID"],
+        dateOccur: json["DateOccur"],
+        dueDate: json["DueDate"],
+        dateInsert: json["DateInsert"],
+        dateClose: json["DateClose"],
+        ddgRef: json["DDGRef"],
+        flightNo: json["FlightNo"],
+        ataNo: json["ATANo"],
+        seqNo: json["SeqNo"],
+        sta: json["sta"],
+        staClose: json["staClose"],
         subject: json["Subject"],
-        flightNumber: json["Flight Number"],
-        aCType: json["A/C Type"],
-        aCRegistration: json["A/C Registration"],
-        station: json["Station"],
-        ata: json["ATA"],
-        seqNumber: json["Seq.Number"],
-        techlog: json["TECHLOG"],
-        ref: json["REF"],
-        refDdg: json["REF.DDG"],
-        dateOccur: DateTime.parse(json["Date Occur"]),
-        dueDate: DateTime.parse(json["Due Date"]),
-        stationCode: json["Station Code"],
-        faultCode: json["Fault Code"],
-        category: json["Category"],
-        optionStatus: json["Option Status"],
         description: json["Description"],
-        partNumber: json["Part Number"],
-        partName: json["Part Name"],
-        reason: json["Reason"],
+        category: json["Category"],
+        subAta: json["sub_ata"],
+        insertProblem: json["InsertProblem"],
+        techlog: json["TECHLOG"],
+        status: json["Status"],
+        acreg: json["acreg"],
+        acType: json["ACType"],
+        statusNo: json["StatusNo"],
+        statusDesc: json["StatusDesc"],
+        staId: json["StaID"],
+        staCode: json["StaCode"],
+        optionId: json["optionID"],
+        longName: json["long_name"],
+        partNbr: json["PartNbr"],
+        partName: json["PartName"],
+        reason: json["reason"],
+        categoryDesc: json["CategoryDesc"],
       );
 
   Map<String, dynamic> toJson() => {
-        "Item ID": itemId,
-        "Due Status":
-            "${dueStatus.year.toString().padLeft(4, '0')}-${dueStatus.month.toString().padLeft(2, '0')}-${dueStatus.day.toString().padLeft(2, '0')}",
+        "itemID": itemId,
+        "DateOccur": dateOccur,
+        "DueDate": dueDate,
+        "DateInsert": dateInsert,
+        "DateClose": dateClose,
+        "DDGRef": ddgRef,
+        "FlightNo": flightNo,
+        "ATANo": ataNo,
+        "SeqNo": seqNo,
+        "sta": sta,
+        "staClose": staClose,
         "Subject": subject,
-        "Flight Number": flightNumber,
-        "A/C Type": aCType,
-        "A/C Registration": aCRegistration,
-        "Station": station,
-        "ATA": ata,
-        "Seq.Number": seqNumber,
-        "TECHLOG": techlog,
-        "REF": ref,
-        "REF.DDG": refDdg,
-        "Date Occur":
-            "${dateOccur.year.toString().padLeft(4, '0')}-${dateOccur.month.toString().padLeft(2, '0')}-${dateOccur.day.toString().padLeft(2, '0')}",
-        "Due Date":
-            "${dueDate.year.toString().padLeft(4, '0')}-${dueDate.month.toString().padLeft(2, '0')}-${dueDate.day.toString().padLeft(2, '0')}",
-        "Station Code": stationCode,
-        "Fault Code": faultCode,
-        "Category": category,
-        "Option Status": optionStatus,
         "Description": description,
-        "Part Number": partNumber,
-        "Part Name": partName,
-        "Reason": reason,
+        "Category": category,
+        "sub_ata": subAta,
+        "InsertProblem": insertProblem,
+        "TECHLOG": techlog,
+        "Status": status,
+        "acreg": acreg,
+        "ACType": acType,
+        "StatusNo": statusNo,
+        "StatusDesc": statusDesc,
+        "StaID": staId,
+        "StaCode": staCode,
+        "optionID": optionId,
+        "long_name": longName,
+        "PartNbr": partNbr,
+        "PartName": partName,
+        "reason": reason,
+        "CategoryDesc": categoryDesc,
       };
 }

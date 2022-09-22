@@ -4,6 +4,7 @@ import 'package:hil_mobile/Pages/dashboard_page.dart';
 import 'package:hil_mobile/Pages/follow_on_list_page.dart';
 import 'package:hil_mobile/Pages/task_details_page.dart';
 import 'package:hil_mobile/Pages/task_to_do_page.dart';
+import 'package:hil_mobile/navigation_page.dart';
 import 'package:hil_mobile/welcome_page.dart';
 
 void main() async {
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         home: const WelcomePage(),
         routes: {
           TaskToDoPage.routeName: (context) => TaskToDoPage(),
+          NavigationPage.routeName: (context) => NavigationPage(),
           DashboardPage.routeName: (context) => DashboardPage(),
           TaskDetailsPage.routeName: (context) => TaskDetailsPage(),
           FollowOnListPage.routeName: (context) => FollowOnListPage(),

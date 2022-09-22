@@ -8,6 +8,7 @@ const String page1 = "Task To Do";
 const String page2 = "HIL Management";
 
 class NavigationPage extends StatefulWidget {
+  static const routeName = "/task_to_do_pages";
   const NavigationPage({Key? key}) : super(key: key);
 
   @override

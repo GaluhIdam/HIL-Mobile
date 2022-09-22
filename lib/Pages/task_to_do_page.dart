@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Models/taskModel.dart';
+import 'package:hil_mobile/Pages/dashboard_page.dart';
 import 'package:hil_mobile/Services/taskService.dart';
 import 'package:hil_mobile/filter_modal.dart';
 import 'package:intl/intl.dart';
@@ -8,155 +9,212 @@ import '../Widgets/cardTask.dart';
 enum SortBy { due, issue }
 
 // ignore: must_be_immutable
-class TaskToDoPage extends StatelessWidget {
+class TaskToDoPage extends StatefulWidget {
   static const routeName = "/task_to_do_pages";
-  SortBy? _value = SortBy.due;
 
-  TaskToDoPage({Key? key}) : super(key: key);
+  const TaskToDoPage({Key? key}) : super(key: key);
 
   @override
+  State<TaskToDoPage> createState() => _TaskToDoPageState();
+}
+
+const String page1 = "Task To Do";
+const String page2 = "HIL Management";
+
+class _TaskToDoPageState extends State<TaskToDoPage> {
+  late Widget _page1;
+
+  @override
+  void initState() {
+    super.initState();
+    _page1 = TaskToDoPage();
+    TaskService.getTask();
+  }
+
+  SortBy? _value = SortBy.due;
+  @override
   Widget build(BuildContext context) {
+    final passData = ModalRoute.of(context)?.settings.arguments as Map;
+    String name = passData['name'];
+    int id = passData['id'];
+    String unit = passData['unit'];
     return Scaffold(
-        body: SafeArea(
-            child: Container(
-      padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
-      child: Column(
-        children: <Widget>[
-          Container(
-              width: double.infinity,
-              margin: const EdgeInsets.fromLTRB(8, 20, 8, 0),
-              child: const Text(
-                'Good Morning,',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Color.fromRGBO(1, 98, 153, 1),
-                ),
-              )),
-          Container(
-              margin: const EdgeInsets.fromLTRB(8, 5, 8, 5),
-              width: double.infinity,
-              child: const Text(
-                'Sigit Prayoga',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  color: Color.fromRGBO(1, 98, 153, 1),
-                ),
-              )),
-          Container(
-            margin: const EdgeInsets.fromLTRB(8, 5, 8, 5),
-            child: Row(
-              children: const [
-                Text(
-                  '6618819',
+      body: SafeArea(
+          child: Container(
+        padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
+        child: Column(
+          children: <Widget>[
+            Container(
+                width: double.infinity,
+                margin: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+                child: const Text(
+                  'Good Morning,',
+                  textAlign: TextAlign.left,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 20,
                     fontWeight: FontWeight.w400,
                     color: Color.fromRGBO(1, 98, 153, 1),
                   ),
-                ),
-                SizedBox(
-                  width: 9,
-                ),
-                CircleAvatar(
-                  backgroundColor: Color.fromRGBO(209, 214, 217, 1),
-                  radius: 3,
-                ),
-                SizedBox(
-                  width: 9,
-                ),
-                Text(
-                  'TLC-7',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(239, 173, 66, 1),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-            child: Row(
-              children: [
-                Flexible(
-                    child: TextField(
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      prefixIconColor: const Color.fromRGBO(1, 98, 153, 1),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromRGBO(1, 98, 153, 1)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      contentPadding: const EdgeInsets.all(14),
-                      hintText: 'insert keyword'),
                 )),
-                filterData(context),
-                sortData(context),
-              ],
+            Container(
+                margin: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                width: double.infinity,
+                child: Text(
+                  name.toString(),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromRGBO(1, 98, 153, 1),
+                  ),
+                )),
+            Container(
+              margin: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    id.toString(),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(1, 98, 153, 1),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 9,
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Color.fromRGBO(209, 214, 217, 1),
+                    radius: 3,
+                  ),
+                  SizedBox(
+                    width: 9,
+                  ),
+                  Text(
+                    unit,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(239, 173, 66, 1),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-              child: Container(
-                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-                  child: FutureBuilder<List<TaskListData>>(
-                      future: TaskService.getTask(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.connectionState ==
-                                ConnectionState.done &&
-                            snapshot.data != null) {
-                          List<TaskListData> listTask = snapshot.data!;
-                          if (listTask.isEmpty) {
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+              child: Row(
+                children: [
+                  Flexible(
+                      child: TextField(
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        prefixIconColor: const Color.fromRGBO(1, 98, 153, 1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromRGBO(1, 98, 153, 1)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        contentPadding: const EdgeInsets.all(14),
+                        hintText: 'insert keyword'),
+                  )),
+                  filterData(context),
+                  sortData(context),
+                ],
+              ),
+            ),
+            Expanded(
+                child: Container(
+                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+                    child: FutureBuilder<List<TaskListData>>(
+                        future: TaskService.getTask(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return const Center(
-                              child: Text('Data not available!'),
+                              child: CircularProgressIndicator(),
                             );
+                          } else if (snapshot.connectionState ==
+                                  ConnectionState.done &&
+                              snapshot.data != null) {
+                            List<TaskListData> listTask = snapshot.data!;
+                            if (listTask.isEmpty) {
+                              return const Center(
+                                child: Text('Data not available!'),
+                              );
+                            } else {
+                              return ListView.builder(
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    return TaskCard(
+                                        itemId: listTask[index].itemId,
+                                        dateOccur: listTask[index].dateOccur,
+                                        dueDateDetail: listTask[index].dueDate,
+                                        dateClose: listTask[index].dateClose,
+                                        ddgRef: listTask[index].ddgRef,
+                                        flightNo: listTask[index].flightNo,
+                                        ataNo: listTask[index].ataNo,
+                                        seqNo: listTask[index].seqNo,
+                                        staClose: listTask[index].staClose,
+                                        subject: listTask[index].subject,
+                                        category: listTask[index].category,
+                                        subAta: listTask[index].subAta,
+                                        insertProblem:
+                                            listTask[index].insertProblem,
+                                        techlog: listTask[index].techlog,
+                                        status: listTask[index].statusDesc,
+                                        acreg: listTask[index].acreg,
+                                        acType: listTask[index].acType,
+                                        statusNo: listTask[index].statusNo,
+                                        statusDesc: listTask[index].statusDesc,
+                                        staId: listTask[index].staId,
+                                        staCode: listTask[index].staCode,
+                                        longName: listTask[index].longName,
+                                        partNbr: listTask[index].partNbr,
+                                        partName: listTask[index].partName,
+                                        reason: listTask[index].reason,
+                                        categoryDesc:
+                                            listTask[index].categoryDesc,
+                                        optionId:
+                                            listTask[index].optionId.toString(),
+                                        sta: listTask[index].sta.toString(),
+                                        id: listTask[index].itemId.toString(),
+                                        cardBackgroundColor:
+                                            listTask[index].statusDesc,
+                                        labelColor: listTask[index].statusDesc,
+                                        labelText: listTask[index].statusDesc,
+                                        title: listTask[index].acreg,
+                                        code: listTask[index].itemId.isEmpty
+                                            ? '-'
+                                            : listTask[index].itemId,
+                                        info: listTask[index].subject,
+                                        dueDate: DateFormat('d MMM y').format(
+                                            DateTime.parse(
+                                                listTask[index].dueDate)),
+                                        dateInsert: DateFormat('d MMM y')
+                                            .format(DateTime.parse(
+                                                listTask[index].dateInsert)),
+                                        description:
+                                            listTask[index].description);
+                                  });
+                            }
                           } else {
-                            return ListView.builder(
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  return TaskCard(
-                                      id: listTask[index].itemId.toString(),
-                                      cardBackgroundColor:
-                                          listTask[index].statusDesc,
-                                      labelColor: listTask[index].statusDesc,
-                                      labelText: listTask[index].statusDesc,
-                                      title: listTask[index].acreg,
-                                      code: listTask[index].itemId.isEmpty
-                                          ? '-'
-                                          : listTask[index].itemId,
-                                      info: listTask[index].subject,
-                                      dueDate: DateFormat('d MMM y')
-                                          .format(listTask[index].dueDate),
-                                      issueDate: DateFormat('d MMM y')
-                                          .format(listTask[index].dateInsert),
-                                      description: listTask[index].description);
-                                });
+                            return const Center(
+                              child: Text(
+                                'Connection failed!',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            );
                           }
-                        } else {
-                          return const Center(
-                            child: Text(
-                              'Connection failed!',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          );
-                        }
-                      })))
-        ],
-      ),
-    )));
+                        })))
+          ],
+        ),
+      )),
+    );
+    // );
   }
 
   GestureDetector filterData(BuildContext context) {
@@ -357,7 +415,7 @@ class TaskToDoPage extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return StatefulBuilder(builder: (BuildContext context, setState) {
-                return Container(
+                return SizedBox(
                   height: 320,
                   child: Column(
                     children: [

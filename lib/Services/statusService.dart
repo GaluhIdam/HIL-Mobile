@@ -45,7 +45,7 @@ class StatusService {
         parsed.forEach((element) {
           dataStation.add(
             DropdownMenuItem(
-                value: element['StaID'],
+                value: element['StaCode'],
                 child: Text(element['StaCode'] ?? '-')),
           );
         });
@@ -55,6 +55,29 @@ class StatusService {
       }
     } catch (e) {
       throw Exception('Error to load stations');
+    }
+  }
+
+  static Future updateStatus(
+      dynamic itemId, token, status, staClose, desc) async {
+    String urlStatus = getURL() + 'update-status/';
+    final response = await http.post(Uri.parse(urlStatus + itemId), headers: {
+      'Authorization': 'Bearer $token'
+    }, body: {
+      'Status': status,
+      'staClose': staClose ?? '',
+      'Desc': desc,
+    });
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final message = json['message'];
+      final status = json['status'];
+      return {'message': message, 'status': status};
+    } else {
+      final json = jsonDecode(response.body);
+      final message = json['message'];
+      final status = json['status'];
+      return {'message': message, 'status': status};
     }
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FollowListCard extends StatelessWidget {
-  final String dateFO, unit, byPerson, nextUnit, followOn;
-  final int labelNumber;
+  final String dateFO, unit, byPerson, nextUnit, followOn, labelNumber;
   const FollowListCard(
       {super.key,
       required this.labelNumber,

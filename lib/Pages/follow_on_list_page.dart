@@ -6,8 +6,6 @@ import 'package:hil_mobile/Widgets/cardTask.dart';
 import 'package:hil_mobile/Widgets/followlList.dart';
 import 'package:intl/intl.dart';
 
-import '../Services/taskService.dart';
-
 class FollowOnListPage extends StatelessWidget {
   static const routeName = "/follow_on_list_page";
   const FollowOnListPage({Key? key}) : super(key: key);
@@ -66,11 +64,12 @@ class FollowOnListPage extends StatelessWidget {
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
                                 return FollowListCard(
-                                  labelNumber: index + 1,
+                                  labelNumber: (index + 1).toString(),
                                   dateFO: listFollow[index].dateFo == null ||
                                           listFollow[index].dateFo == ''
                                       ? '-'
-                                      : listFollow[index].dateFo.toString(),
+                                      : DateFormat('y-M-d H:m')
+                                          .format(listFollow[index].dateFo),
                                   unit: listFollow[index].unitFo == null ||
                                           listFollow[index].unitFo == '   '
                                       ? '-'

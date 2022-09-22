@@ -9,6 +9,7 @@ class OptionService {
     return Config.baseURL;
   }
 
+  //get data option
   static Future<List<DropdownMenuItem<String>>> getOption() async {
     String urlOption = getURL() + 'master-option';
     try {
@@ -29,6 +30,24 @@ class OptionService {
       }
     } catch (e) {
       throw Exception('Error to load options');
+    }
+  }
+
+  //update option
+  static Future updateOption(dynamic itemId, token, option) async {
+    String urlStatusOption = getURL() + 'update-option/';
+    final response = await http.post(Uri.parse(urlStatusOption + itemId),
+        headers: {'Authorization': 'Bearer $token'},
+        body: {'optionID': option});
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final message = json['message'];
+      final id = json['data'][0]['itemID'];
+      return {'message': message, 'id': id};
+    } else {
+      final json = jsonDecode(response.body);
+      final message = json['message'];
+      return {'message': message};
     }
   }
 }
