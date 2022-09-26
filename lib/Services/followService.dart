@@ -11,66 +11,88 @@ class FollowService {
   }
 
   //Get data reason
-  static Future<List<DropdownMenuItem<String>>> getReason() async {
+  static Future<List<DropdownMenuItem<String>>> getReason(String token) async {
     String urlReason = getURL() + 'master-reason';
-    try {
-      final response = await http.get(Uri.parse(urlReason));
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-        final parsed = json['data'].cast<Map<String, dynamic>>();
-        List<DropdownMenuItem<String>> dataReason = [];
-        parsed.forEach((element) {
-          dataReason.add(
-            DropdownMenuItem(
-                value: element['reasonNo'], child: Text(element['reasonDesc'])),
-          );
-        });
-        return dataReason;
-      } else {
-        throw Exception('Failed to load reasons');
-      }
-    } catch (e) {
-      throw Exception('Error to load reasons');
+    final response = await http
+        .get(Uri.parse(urlReason), headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data'].cast<Map<String, dynamic>>();
+      List<DropdownMenuItem<String>> dataReason = [];
+      parsed.forEach((element) {
+        dataReason.add(
+          DropdownMenuItem(
+              value: element['reasonNo'], child: Text(element['reasonDesc'])),
+        );
+      });
+      return dataReason;
+    } else {
+      throw Exception('Failed to load reasons');
     }
   }
 
   //Get data unit
-  static Future<List<DropdownMenuItem<String>>> getUnit() async {
+  static Future<List<DropdownMenuItem<String>>> getUnit(String token) async {
     String urlUnit = getURL() + 'master-unit';
-    try {
-      final response = await http.get(Uri.parse(urlUnit));
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-        final parsed = json['data'].cast<Map<String, dynamic>>();
-        List<DropdownMenuItem<String>> dataUnit = [];
-        parsed.forEach((element) {
-          dataUnit.add(
-            DropdownMenuItem(
-                value: element['id'], child: Text(element['unit'])),
-          );
-        });
-        return dataUnit;
-      } else {
-        throw Exception('Failed to load reasons');
-      }
-    } catch (e) {
-      throw Exception('Error to load reasons');
+    final response = await http
+        .get(Uri.parse(urlUnit), headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data'].cast<Map<String, dynamic>>();
+      List<DropdownMenuItem<String>> dataUnit = [];
+      parsed.forEach((element) {
+        dataUnit.add(
+          DropdownMenuItem(value: element['id'], child: Text(element['unit'])),
+        );
+      });
+      return dataUnit;
+    } else {
+      throw Exception('Failed to load reasons');
     }
   }
 
-  //Get data part name
-  static Future<List<FollowList>> getFollowList(String id) async {
+  //Get data follow list
+  static Future<List<FollowList>> getFollowList(String id, token) async {
     String urlPartName = getURL() + 'detail-follow/';
-    final response = await http.get(Uri.parse(urlPartName + id));
+    final response = await http.get(Uri.parse(urlPartName + id),
+        headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      // print(json);
       final parsed = json['data'].cast<Map<String, dynamic>>();
       return parsed
           .map<FollowList>((json) => FollowList.fromJson(json))
           .toList();
     } else {
       throw Exception('Failed to load follow list');
+    }
+  }
+
+  //Update Follow List
+  static Future updateFollow(dynamic itemId, token, follow, nextFO, partNum,
+      partName, snIn, snOut, reason) async {
+    String urlFollow = getURL() + 'update-follow';
+
+    final response = await http.post(Uri.parse(urlFollow), headers: {
+      'Authorization': 'Bearer $token'
+    }, body: {
+      'itemID': itemId,
+      'Follow': follow,
+      'NextFO': nextFO,
+      'PartName': partName,
+      'PartNbr': partNum,
+      'SNIn': snIn,
+      'SNOut': snOut,
+      'reason': reason,
+    });
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final message = json['message'];
+      return {'message': message};
+    } else {
+      final json = jsonDecode(response.body);
+      final message = json['message'];
+      return {'message': message};
     }
   }
 }

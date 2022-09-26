@@ -40,9 +40,9 @@ class Option {
     required this.longName,
   });
 
-  String optionId;
-  String shortName;
-  String longName;
+  dynamic optionId;
+  dynamic shortName;
+  dynamic longName;
 
   factory Option.fromJson(Map<String, dynamic> json) => Option(
         optionId: json["optionID"],

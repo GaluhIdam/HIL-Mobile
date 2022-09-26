@@ -11,40 +11,34 @@ class TaskService {
   }
 
   //Get All Data to be List
-  static Future<List<TaskListData>> getTask() async {
-    String urlTask = getURL() + 'task-list?page';
-    try {
-      final response = await http.get(Uri.parse(urlTask));
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-        final parsed = json['data']['data'].cast<Map<String, dynamic>>();
-        return parsed
-            .map<TaskListData>((json) => TaskListData.fromJson(json))
-            .toList();
-      } else {
-        throw Exception('Failed to load task list');
-      }
-    } catch (e) {
-      throw Exception('Error to load task list');
+  static Future<List<TaskListData>> getTask(String token) async {
+    String urlTask = getURL() + 'task-list';
+    final response = await http
+        .get(Uri.parse(urlTask), headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data']['data'];
+      return parsed
+          .map<TaskListData>((json) => TaskListData.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load task list');
     }
   }
 
 //Get Detail Data
-  static Future<List<TaskDetailData>> getTaskDetail(String id) async {
+  static Future<List<TaskDetailData>> getTaskDetail(String id, token) async {
     String urlTask = getURL() + 'task-detail/';
-    try {
-      final response = await http.get(Uri.parse(urlTask + id));
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-        final parsed = json['data'].cast<Map<String, dynamic>>();
-        return parsed
-            .map<TaskDetailData>((json) => TaskDetailData.fromJson(json))
-            .toList();
-      } else {
-        throw Exception('Failed to load task detail');
-      }
-    } catch (e) {
-      throw Exception('Error to load task detail');
+    final response = await http.get(Uri.parse(urlTask + id),
+        headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data'].cast<Map<String, dynamic>>();
+      return parsed
+          .map<TaskDetailData>((json) => TaskDetailData.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load task detail');
     }
   }
 }
