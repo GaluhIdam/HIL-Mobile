@@ -104,20 +104,6 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Container(
-                          color: const Color(0x00016299),
-                          width: double.infinity,
-                          child: const Text(
-                            'Forgot password?',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(1, 98, 153, 1),
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 30,
-                      ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor:
@@ -135,24 +121,24 @@ class _LoginPageState extends State<LoginPage> {
                             );
                             AuthService.login(_employeeId.text, _password.text)
                                 .then((value) {
-                              if (value['status'] == true) {
+                              if (value['accessToken'] != null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: Colors.green,
                                       content: Text(
                                         value['message'],
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
                                       )),
                                 );
-                                if (value['accessToken'] != null) {
-                                  Navigator.pushNamed(
-                                      context, TaskToDoPage.routeName,
-                                      arguments: {
-                                        'data': value['data']['user'],
-                                        'token': value['accessToken'],
-                                      });
-                                }
+                                Navigator.pushNamed(
+                                    context, TaskToDoPage.routeName,
+                                    arguments: {
+                                      'data': value['data']['user'],
+                                      'token': value['accessToken'],
+                                    });
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

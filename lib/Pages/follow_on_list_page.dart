@@ -14,7 +14,13 @@ class FollowOnListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final passing = ModalRoute.of(context)?.settings.arguments as Map;
     final itemid = passing['itemid'];
-    final token = passing['token'];
+    final labelNumber = 0.toString();
+    final dateFO =
+        DateFormat('y-m-d H:m').format(DateTime.parse(passing['dateFo']));
+    final unit = passing['unitFo'];
+    final byPerson = passing['by'];
+    final nextUnit = passing['nextUnit'];
+    final followOn = passing['follow'];
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -44,61 +50,13 @@ class FollowOnListPage extends StatelessWidget {
                     )),
               ),
             ),
-            Expanded(
-                child: FutureBuilder<List<FollowList>>(
-                    future: FollowService.getFollowList(itemid, token),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (snapshot.connectionState ==
-                              ConnectionState.done &&
-                          snapshot.data != null) {
-                        List<FollowList> listFollow = snapshot.data!;
-                        if (snapshot.data == null) {
-                          return const Center(
-                            child: Text('Data not available!'),
-                          );
-                        } else {
-                          return ListView.builder(
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                return FollowListCard(
-                                  labelNumber: (index + 1).toString(),
-                                  dateFO: listFollow[index].dateFo == null ||
-                                          listFollow[index].dateFo == ''
-                                      ? '-'
-                                      : DateFormat('y-M-d H:m')
-                                          .format(listFollow[index].dateFo),
-                                  unit: listFollow[index].unitFo == null ||
-                                          listFollow[index].unitFo == '   '
-                                      ? '-'
-                                      : listFollow[index].unitFo.toString(),
-                                  byPerson: listFollow[index].nameFo == null ||
-                                          listFollow[index].nameFo == ''
-                                      ? '-'
-                                      : listFollow[index].nameFo.toString(),
-                                  nextUnit: listFollow[index].nextFo == null ||
-                                          listFollow[index].nextFo == ''
-                                      ? '-'
-                                      : listFollow[index].nextFo.toString(),
-                                  followOn: listFollow[index].follow == null ||
-                                          listFollow[index].follow == ''
-                                      ? '-'
-                                      : listFollow[index].follow.toString(),
-                                );
-                              });
-                        }
-                      } else {
-                        return const Center(
-                          child: Text(
-                            'Connection failed!',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        );
-                      }
-                    }))
+            FollowListCard(
+                labelNumber: labelNumber,
+                dateFO: dateFO.toString(),
+                unit: unit ?? '-',
+                byPerson: byPerson ?? '-',
+                nextUnit: nextUnit ?? '-',
+                followOn: followOn ?? '-')
           ],
         ),
       )),
