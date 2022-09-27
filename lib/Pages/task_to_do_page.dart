@@ -180,7 +180,6 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                       child: TextField(
                     textInputAction: TextInputAction.go,
                     onSubmitted: ((value) {
-                      print(value);
                       if (value.isNotEmpty) {
                         setState(() {
                           items.clear();
@@ -226,7 +225,6 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                   itemBuilder: (context, index) {
                     if (index < items.length) {
                       final item = items[index];
-                      print(items.length);
                       return TaskCard(
                           id: item.itemId,
                           cardBackgroundColor: item.statusDesc,
