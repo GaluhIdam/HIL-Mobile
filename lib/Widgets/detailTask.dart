@@ -1504,11 +1504,31 @@ class DetailTask extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                FollowOnListPage.routeName,
-                arguments: {'itemid': itemId, 'token': token},
-              );
+              FollowService.getFollowList(itemId, token).then((value) {
+                print(value.toString());
+                Navigator.pushNamed(
+                  context,
+                  FollowOnListPage.routeName,
+                  arguments: {
+                    'itemid': itemId,
+                    'foid': value['foid'],
+                    'follow': value['follow'],
+                    'unitFo': value['unitFo'],
+                    'nameFo': value['nameFo'],
+                    'dateFo': value['dateFo'],
+                    'nextFo': value['nextFo'],
+                    'insertFo': value['insertFo'],
+                    'partName': value['partName'],
+                    'partNbr': value['partNbr'],
+                    'snIn': value['snIn'],
+                    'sNout': value['sNout'],
+                    'by': value['by'],
+                    'reason': value['reason'],
+                    'countFollow': value['countFollow'],
+                    'insertDate': value['insertDate'],
+                  },
+                );
+              });
             },
             child: const Text(
               'Check Date Follow On',

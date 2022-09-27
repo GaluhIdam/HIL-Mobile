@@ -62,6 +62,7 @@ class StatusService {
 
   static Future updateStatus(
       dynamic itemId, token, status, staClose, desc) async {
+    print(desc);
     String urlStatus = getURL() + 'update-status/';
     final response = await http.post(Uri.parse(urlStatus + itemId), headers: {
       'Authorization': 'Bearer $token'

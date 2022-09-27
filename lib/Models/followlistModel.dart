@@ -1,39 +1,40 @@
+// To parserequired this JSON data, do
+//
+//     final followList = followListFromJson(jsonString);
+
 import 'dart:convert';
 
-FollowListResponse followListResponseFromJson(String str) =>
-    FollowListResponse.fromJson(json.decode(str));
+FollowList followListFromJson(String str) =>
+    FollowList.fromJson(json.decode(str));
 
-String followListResponseToJson(FollowListResponse data) =>
-    json.encode(data.toJson());
-
-class FollowListResponse {
-  FollowListResponse({
-    required this.status,
-    required this.message,
-    required this.data,
-  });
-
-  String status;
-  String message;
-  List<FollowList> data;
-
-  factory FollowListResponse.fromJson(Map<String, dynamic> json) =>
-      FollowListResponse(
-        status: json["status"],
-        message: json["message"],
-        data: List<FollowList>.from(
-            json["data"].map((x) => FollowList.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-      };
-}
+String followListToJson(FollowList data) => json.encode(data.toJson());
 
 class FollowList {
   FollowList({
+    required this.data,
+    required this.message,
+    required this.success,
+  });
+
+  DataFollow data;
+  String message;
+  bool success;
+
+  factory FollowList.fromJson(Map<String, dynamic> json) => FollowList(
+        data: DataFollow.fromJson(json["data"]),
+        message: json["message"],
+        success: json["success"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "data": data.toJson(),
+        "message": message,
+        "success": success,
+      };
+}
+
+class DataFollow {
+  DataFollow({
     required this.foid,
     required this.itemIdfo,
     required this.follow,
@@ -52,10 +53,10 @@ class FollowList {
     required this.insertDate,
   });
 
-  dynamic foid;
-  dynamic itemIdfo;
-  dynamic follow;
-  dynamic unitFo;
+  int foid;
+  String itemIdfo;
+  String follow;
+  String unitFo;
   dynamic nameFo;
   DateTime dateFo;
   dynamic nextFo;
@@ -66,10 +67,10 @@ class FollowList {
   dynamic sNout;
   dynamic by;
   dynamic reason;
-  dynamic countFollow;
+  String countFollow;
   DateTime insertDate;
 
-  factory FollowList.fromJson(Map<String, dynamic> json) => FollowList(
+  factory DataFollow.fromJson(Map<String, dynamic> json) => DataFollow(
         foid: json["FOID"],
         itemIdfo: json["ItemIDFO"],
         follow: json["Follow"],

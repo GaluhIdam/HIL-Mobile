@@ -1,10 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Models/taskModel.dart';
-import 'package:hil_mobile/Pages/dashboard_page.dart';
-import 'package:hil_mobile/Services/taskService.dart';
+import 'package:hil_mobile/Services/config.dart';
 import 'package:hil_mobile/filter_modal.dart';
 import 'package:intl/intl.dart';
 import '../Widgets/cardTask.dart';
+import 'package:http/http.dart' as http;
 
 enum SortBy { due, issue }
 
@@ -19,7 +22,86 @@ class TaskToDoPage extends StatefulWidget {
 }
 
 class _TaskToDoPageState extends State<TaskToDoPage> {
+  final TextEditingController _search = TextEditingController();
   SortBy? _value = SortBy.due;
+  final controller = ScrollController();
+  List<TaskListData> items = [];
+  int page = 1;
+  final token = '1027|Wv9URBymV4NaMQM5LZw7PVJMP8SBM6TUjDK2R2W8';
+
+  @override
+  void initState() {
+    super.initState();
+    fetch(token, _search.text);
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        fetch(token, _search.text);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _search.dispose();
+    controller.dispose();
+    super.dispose();
+  }
+
+  getURL() {
+    return Config.baseURL;
+  }
+
+  Future fetch(String token, String? search) async {
+    if (search != null) {
+      String urlTask = getURL() + 'task-list?search=$search';
+      final response = await http
+          .get(Uri.parse(urlTask), headers: {'Authorization': 'Bearer $token'});
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        final parsed = json['data']['data'];
+        setState(() {
+          page++;
+          items.addAll(parsed
+              .map<TaskListData>((json) => TaskListData.fromJson(json))
+              .toList());
+        });
+      }
+    } else {
+      String urlTask = getURL() + 'task-list';
+      final response = await http
+          .get(Uri.parse(urlTask), headers: {'Authorization': 'Bearer $token'});
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        final parsed = json['data']['data'];
+        setState(() {
+          page++;
+          items.addAll(parsed
+              .map<TaskListData>((json) => TaskListData.fromJson(json))
+              .toList());
+        });
+      }
+    }
+  }
+  // else if(filterAcReg != null) {
+  //       Uri urlTask = Uri.parse(getURL() + 'task-list?search=$search');
+  //       dynamic params =
+  //         filterAcReg.map((e) {
+  //           return e['filter_ac_reg'];
+  //         })
+  //       ;
+  //       final response = await http.get(urlTask.replace(queryParameters: params), headers: {'Authorization': 'Bearer $token', HttpHeaders.contentTypeHeader: "application/json",});
+  //       if (response.statusCode == 200) {
+  //         var json = jsonDecode(response.body);
+  //         final parsed = json['data']['data'];
+  //         setState(() {
+  //           page++;
+  //           items.addAll(parsed
+  //               .map<TaskListData>((json) => TaskListData.fromJson(json))
+  //               .toList());
+  //         });
+  //     }
+  // }
+
   @override
   Widget build(BuildContext context) {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
@@ -96,6 +178,26 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                 children: [
                   Flexible(
                       child: TextField(
+                    textInputAction: TextInputAction.go,
+                    onSubmitted: ((value) {
+                      print(value);
+                      if (value.isNotEmpty) {
+                        setState(() {
+                          items.clear();
+                        });
+                        fetch(
+                          token,
+                          value,
+                        );
+                        controller.addListener(() {
+                          if (controller.position.maxScrollExtent ==
+                              controller.offset) {
+                            fetch(token, value);
+                          }
+                        });
+                      }
+                    }),
+                    controller: _search,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.search),
                         prefixIconColor: const Color.fromRGBO(1, 98, 153, 1),
@@ -117,89 +219,66 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
             ),
             Expanded(
                 child: Container(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-                    child: FutureBuilder<List<TaskListData>>(
-                        future: TaskService.getTask(token),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (snapshot.connectionState ==
-                                  ConnectionState.done &&
-                              snapshot.data != null) {
-                            List<TaskListData> listTask = snapshot.data!;
-                            if (listTask.isEmpty) {
-                              return const Center(
-                                child: Text('Data not available!'),
-                              );
-                            } else {
-                              return ListView.builder(
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: (context, index) {
-                                    return TaskCard(
-                                        token: token,
-                                        itemId: listTask[index].itemId,
-                                        dateOccur: listTask[index].dateOccur,
-                                        dueDateDetail: listTask[index].dueDate,
-                                        dateClose: listTask[index].dateClose,
-                                        ddgRef: listTask[index].ddgRef,
-                                        flightNo: listTask[index].flightNo,
-                                        ataNo: listTask[index].ataNo,
-                                        seqNo: listTask[index].seqNo,
-                                        staClose: listTask[index].staClose,
-                                        subject: listTask[index].subject,
-                                        category: listTask[index].category,
-                                        subAta: listTask[index].subAta,
-                                        insertProblem:
-                                            listTask[index].insertProblem,
-                                        techlog: listTask[index].techlog,
-                                        status: listTask[index].statusDesc,
-                                        acreg: listTask[index].acreg,
-                                        acType: listTask[index].acType,
-                                        statusNo: listTask[index].statusNo,
-                                        statusDesc: listTask[index].statusDesc,
-                                        staId: listTask[index].staId,
-                                        staCode: listTask[index].staCode,
-                                        longName: listTask[index].longName,
-                                        partNbr: listTask[index].partNbr,
-                                        partName: listTask[index].partName,
-                                        reason: listTask[index].reason,
-                                        categoryDesc:
-                                            listTask[index].categoryDesc,
-                                        optionId:
-                                            listTask[index].optionId.toString(),
-                                        sta: listTask[index].sta.toString(),
-                                        id: listTask[index].itemId.toString(),
-                                        cardBackgroundColor:
-                                            listTask[index].statusDesc,
-                                        labelColor: listTask[index].statusDesc,
-                                        labelText: listTask[index].statusDesc,
-                                        title: listTask[index].acreg,
-                                        code: listTask[index].itemId.isEmpty
-                                            ? '-'
-                                            : listTask[index].itemId,
-                                        info: listTask[index].subject,
-                                        dueDate: DateFormat('d MMM y').format(
-                                            DateTime.parse(
-                                                listTask[index].dueDate)),
-                                        dateInsert: DateFormat('d MMM y')
-                                            .format(DateTime.parse(
-                                                listTask[index].dateInsert)),
-                                        description:
-                                            listTask[index].description);
-                                  });
-                            }
-                          } else {
-                            return const Center(
-                              child: Text(
-                                'Connection failed!',
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            );
-                          }
-                        })))
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+              child: ListView.builder(
+                  controller: controller,
+                  itemCount: items.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index < items.length) {
+                      final item = items[index];
+                      print(items.length);
+                      return TaskCard(
+                          id: item.itemId,
+                          cardBackgroundColor: item.statusDesc,
+                          labelColor: item.statusDesc,
+                          labelText: item.statusDesc,
+                          title: item.acreg,
+                          code: item.itemId,
+                          info: item.subject,
+                          itemId: item.itemId,
+                          dateOccur: item.dateOccur,
+                          dueDate: DateFormat('d MMM y')
+                              .format(DateTime.parse(item.dueDate)),
+                          dateInsert: DateFormat('d MMM y')
+                              .format(DateTime.parse(item.dateInsert)),
+                          dateClose: item.dateClose,
+                          ddgRef: item.ddgRef,
+                          flightNo: item.flightNo,
+                          ataNo: item.ataNo,
+                          seqNo: item.seqNo,
+                          sta: item.sta,
+                          staClose: item.staClose,
+                          subject: item.subject,
+                          description: item.description,
+                          category: item.category,
+                          subAta: item.subAta,
+                          insertProblem: item.insertProblem,
+                          techlog: item.techlog,
+                          status: item.status,
+                          acreg: item.acreg,
+                          acType: item.acType,
+                          statusNo: item.statusNo,
+                          statusDesc: item.statusDesc,
+                          staId: item.staId,
+                          staCode: item.staCode,
+                          optionId: item.optionId,
+                          longName: item.longName,
+                          partNbr: item.partNbr,
+                          partName: item.partName,
+                          reason: item.reason,
+                          categoryDesc: item.categoryDesc,
+                          dueDateDetail: item.dueDate,
+                          token: token);
+                    } else {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 32),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                  }),
+            ))
           ],
         ),
       )),
