@@ -52,16 +52,31 @@ class FollowService {
   }
 
   //Get data follow list
-  static Future<List<FollowList>> getFollowList(String id, token) async {
+  static Future getFollowList(String id, token) async {
     String urlPartName = getURL() + 'detail-follow/';
     final response = await http.get(Uri.parse(urlPartName + id),
         headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      final parsed = json['data'].cast<Map<String, dynamic>>();
-      return parsed
-          .map<FollowList>((json) => FollowList.fromJson(json))
-          .toList();
+      final parsed = json['data'];
+      return {
+        'foid': parsed["FOID"],
+        'itemIdfo': parsed["ItemIDFO"],
+        'follow': parsed["Follow"],
+        'unitFo': parsed["UnitFO"],
+        'nameFo': parsed["NameFO"],
+        'dateFo': parsed["DateFO"],
+        'nextFo': parsed["NextFO"],
+        'insertFo': parsed["InsertFO"],
+        'partName': parsed["PartName"],
+        'partNbr': parsed["PartNbr"],
+        'snIn': parsed["SNIn"],
+        'sNout': parsed["SNout"],
+        'by': parsed["By"],
+        'reason': parsed["reason"],
+        'countFollow': parsed["CountFollow"],
+        'insertDate': parsed["insert_date"],
+      };
     } else {
       throw Exception('Failed to load follow list');
     }

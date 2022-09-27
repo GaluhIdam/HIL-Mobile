@@ -14,6 +14,7 @@ class TaskDetailsPage extends StatefulWidget {
 
 class _TaskDetailsPage extends State<TaskDetailsPage> {
   final _formKey = GlobalKey<FormState>();
+  @override
   Widget build(BuildContext context) {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     dynamic itemid = passData['itemId'];
@@ -93,9 +94,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                         partName: detailTask[0].partName == null
                             ? '-'
                             : detailTask[0].partName.toString(),
-                        statusName: detailTask[0].longName == null
-                            ? '-'
-                            : detailTask[0].longName.toString(),
+                        statusName: '-',
                         optionName: detailTask[0].longName == null
                             ? '-'
                             : detailTask[0].longName.toString(),
@@ -109,7 +108,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                 },
               ))),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        padding: const EdgeInsets.fromLTRB(22, 0, 22, 0),
         decoration: const BoxDecoration(
             border: Border(
                 top: BorderSide(
