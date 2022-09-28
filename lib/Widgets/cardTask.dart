@@ -144,10 +144,10 @@ class TaskCard extends StatelessWidget {
                                 border: Border.all(
                                     color: const Color.fromRGBO(51, 51, 51, 1)),
                                 borderRadius: BorderRadius.circular(8)),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                ' D ',
+                                categoryDesc,
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
@@ -438,10 +438,10 @@ class TaskCard extends StatelessWidget {
                                         color: const Color.fromRGBO(
                                             51, 51, 51, 1)),
                                     borderRadius: BorderRadius.circular(8)),
-                                child: const Padding(
+                                child: Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Text(
-                                    ' D ',
+                                    categoryDesc,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
@@ -738,10 +738,10 @@ class TaskCard extends StatelessWidget {
                                             color: const Color.fromRGBO(
                                                 51, 51, 51, 1)),
                                         borderRadius: BorderRadius.circular(8)),
-                                    child: const Padding(
+                                    child: Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Text(
-                                        ' D ',
+                                        categoryDesc,
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
@@ -1048,10 +1048,10 @@ class TaskCard extends StatelessWidget {
                                                     51, 51, 51, 1)),
                                             borderRadius:
                                                 BorderRadius.circular(8)),
-                                        child: const Padding(
+                                        child: Padding(
                                           padding: EdgeInsets.all(8.0),
                                           child: Text(
-                                            ' D ',
+                                            categoryDesc,
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w700,
@@ -1366,10 +1366,10 @@ class TaskCard extends StatelessWidget {
                                                         51, 51, 51, 1)),
                                                 borderRadius:
                                                     BorderRadius.circular(8)),
-                                            child: const Padding(
+                                            child: Padding(
                                               padding: EdgeInsets.all(8.0),
                                               child: Text(
-                                                ' D ',
+                                                categoryDesc,
                                                 style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w700,
@@ -1695,10 +1695,10 @@ class TaskCard extends StatelessWidget {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8)),
-                                                child: const Padding(
+                                                child: Padding(
                                                   padding: EdgeInsets.all(8.0),
                                                   child: Text(
-                                                    ' D ',
+                                                    categoryDesc,
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:
@@ -2029,10 +2029,10 @@ class TaskCard extends StatelessWidget {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8)),
-                                                child: const Padding(
+                                                child: Padding(
                                                   padding: EdgeInsets.all(8.0),
                                                   child: Text(
-                                                    ' D ',
+                                                    categoryDesc,
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:

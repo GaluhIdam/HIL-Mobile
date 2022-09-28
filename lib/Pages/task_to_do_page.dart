@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hil_mobile/Models/acregModel.dart';
 import 'package:hil_mobile/Models/taskModel.dart';
 import 'package:hil_mobile/Services/config.dart';
+import 'package:hil_mobile/Widgets/filterAcreg.dart';
 import 'package:hil_mobile/filter_modal.dart';
 import 'package:intl/intl.dart';
 import '../Widgets/cardTask.dart';
@@ -25,14 +27,19 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
   final TextEditingController _search = TextEditingController();
   SortBy? _value = SortBy.due;
   final controller = ScrollController();
+  final acregController = ScrollController();
   List<TaskListData> items = [];
+  bool hasMore = true;
+  List<DataAcreg> acregList = [];
   int page = 1;
-  final token = '1027|Wv9URBymV4NaMQM5LZw7PVJMP8SBM6TUjDK2R2W8';
+  bool isLoading = false;
+  final token = '16|F1AOo347Jg6wG2P3nnDOtkT25FAOtG4ApTXLAkXY';
 
   @override
   void initState() {
     super.initState();
     fetch(token, _search.text);
+    acreg(token);
     controller.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {
         fetch(token, _search.text);
@@ -44,6 +51,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
   void dispose() {
     _search.dispose();
     controller.dispose();
+    acregController.dispose();
     super.dispose();
   }
 
@@ -52,6 +60,9 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
   }
 
   Future fetch(String token, String? search) async {
+    if (isLoading) return;
+    isLoading = true;
+    const limit = 10;
     if (search != null) {
       String urlTask = getURL() + 'task-list?search=$search';
       final response = await http
@@ -59,8 +70,13 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data']['data'];
+        final List cekdata = parsed;
         setState(() {
           page++;
+          isLoading = false;
+          if (cekdata.length < limit) {
+            hasMore = false;
+          }
           items.addAll(parsed
               .map<TaskListData>((json) => TaskListData.fromJson(json))
               .toList());
@@ -73,8 +89,13 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data']['data'];
+        final List cekdata = parsed;
         setState(() {
           page++;
+          isLoading = false;
+          if (cekdata.length < limit) {
+            hasMore = true;
+          }
           items.addAll(parsed
               .map<TaskListData>((json) => TaskListData.fromJson(json))
               .toList());
@@ -82,25 +103,31 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       }
     }
   }
-  // else if(filterAcReg != null) {
-  //       Uri urlTask = Uri.parse(getURL() + 'task-list?search=$search');
-  //       dynamic params =
-  //         filterAcReg.map((e) {
-  //           return e['filter_ac_reg'];
-  //         })
-  //       ;
-  //       final response = await http.get(urlTask.replace(queryParameters: params), headers: {'Authorization': 'Bearer $token', HttpHeaders.contentTypeHeader: "application/json",});
-  //       if (response.statusCode == 200) {
-  //         var json = jsonDecode(response.body);
-  //         final parsed = json['data']['data'];
-  //         setState(() {
-  //           page++;
-  //           items.addAll(parsed
-  //               .map<TaskListData>((json) => TaskListData.fromJson(json))
-  //               .toList());
-  //         });
-  //     }
-  // }
+
+  Future refresh() async {
+    setState(() {
+      isLoading = false;
+      hasMore = true;
+      page = 0;
+      items.clear();
+    });
+    fetch(token, _search.text);
+  }
+
+  Future acreg(String token) async {
+    String urlAcreg = getURL() + 'master-acreg';
+    final response = await http
+        .get(Uri.parse(urlAcreg), headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data']['data'];
+      setState(() {
+        page++;
+        acregList.addAll(
+            parsed.map<DataAcreg>((json) => DataAcreg.fromJson(json)).toList());
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +209,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                     onSubmitted: ((value) {
                       if (value.isNotEmpty) {
                         setState(() {
+                          hasMore = true;
                           items.clear();
                         });
                         fetch(
@@ -211,72 +239,103 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         contentPadding: const EdgeInsets.all(14),
                         hintText: 'insert keyword'),
                   )),
-                  filterData(context),
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FilterAcreg();
+                          });
+                    },
+                    child: Container(
+                        margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.filter_alt_outlined,
+                            size: 30,
+                            color: Color.fromRGBO(1, 98, 153, 1),
+                          ),
+                        )),
+                  ),
                   sortData(context),
                 ],
               ),
             ),
             Expanded(
                 child: Container(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-              child: ListView.builder(
-                  controller: controller,
-                  itemCount: items.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index < items.length) {
-                      final item = items[index];
-                      return TaskCard(
-                          id: item.itemId,
-                          cardBackgroundColor: item.statusDesc,
-                          labelColor: item.statusDesc,
-                          labelText: item.statusDesc,
-                          title: item.acreg,
-                          code: item.itemId,
-                          info: item.subject,
-                          itemId: item.itemId,
-                          dateOccur: item.dateOccur,
-                          dueDate: DateFormat('d MMM y')
-                              .format(DateTime.parse(item.dueDate)),
-                          dateInsert: DateFormat('d MMM y')
-                              .format(DateTime.parse(item.dateInsert)),
-                          dateClose: item.dateClose,
-                          ddgRef: item.ddgRef,
-                          flightNo: item.flightNo,
-                          ataNo: item.ataNo,
-                          seqNo: item.seqNo,
-                          sta: item.sta,
-                          staClose: item.staClose,
-                          subject: item.subject,
-                          description: item.description,
-                          category: item.category,
-                          subAta: item.subAta,
-                          insertProblem: item.insertProblem,
-                          techlog: item.techlog,
-                          status: item.status,
-                          acreg: item.acreg,
-                          acType: item.acType,
-                          statusNo: item.statusNo,
-                          statusDesc: item.statusDesc,
-                          staId: item.staId,
-                          staCode: item.staCode,
-                          optionId: item.optionId,
-                          longName: item.longName,
-                          partNbr: item.partNbr,
-                          partName: item.partName,
-                          reason: item.reason,
-                          categoryDesc: item.categoryDesc,
-                          dueDateDetail: item.dueDate,
-                          token: token);
-                    } else {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 32),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-                  }),
-            ))
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                    child: RefreshIndicator(
+                        onRefresh: refresh,
+                        child: ListView.builder(
+                            controller: controller,
+                            itemCount: items.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index < items.length) {
+                                final item = items[index];
+                                return TaskCard(
+                                    id: item.itemId,
+                                    cardBackgroundColor: item.statusDesc,
+                                    labelColor: item.statusDesc,
+                                    labelText: item.statusDesc,
+                                    title: item.acreg,
+                                    code: item.itemId,
+                                    info: item.subject,
+                                    itemId: item.itemId,
+                                    dateOccur: item.dateOccur,
+                                    dueDate: DateFormat('d MMM y')
+                                        .format(DateTime.parse(item.dueDate)),
+                                    dateInsert: DateFormat('d MMM y').format(
+                                        DateTime.parse(item.dateInsert)),
+                                    dateClose: item.dateClose,
+                                    ddgRef: item.ddgRef,
+                                    flightNo: item.flightNo,
+                                    ataNo: item.ataNo,
+                                    seqNo: item.seqNo,
+                                    sta: item.sta,
+                                    staClose: item.staClose,
+                                    subject: item.subject,
+                                    description: item.description,
+                                    category: item.category,
+                                    subAta: item.subAta,
+                                    insertProblem: item.insertProblem,
+                                    techlog: item.techlog,
+                                    status: item.status,
+                                    acreg: item.acreg,
+                                    acType: item.acType,
+                                    statusNo: item.statusNo,
+                                    statusDesc: item.statusDesc,
+                                    staId: item.staId,
+                                    staCode: item.staCode,
+                                    optionId: item.optionId,
+                                    longName: item.longName,
+                                    partNbr: item.partNbr,
+                                    partName: item.partName,
+                                    reason: item.reason,
+                                    categoryDesc: item.categoryDesc,
+                                    dueDateDetail: item.dueDate,
+                                    token: token);
+                              } else {
+                                if (hasMore == true) {
+                                  return const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 32),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                } else {
+                                  return const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 32),
+                                    child: Center(
+                                      child: Text('Data not available!'),
+                                    ),
+                                  );
+                                }
+                              }
+                            }))))
           ],
         ),
       )),
@@ -361,6 +420,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                         margin: const EdgeInsets.fromLTRB(15, 0, 0, 10),
                         width: double.infinity,
                         child: ListView(
+                          controller: acregController,
                           scrollDirection: Axis.horizontal,
                           children: const [
                             FilterModal(
@@ -377,10 +437,6 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                             ),
                             FilterModal(
                               filterLabel: 'PK-WWG',
-                              selectedColor: Color.fromRGBO(1, 98, 153, 1),
-                            ),
-                            FilterModal(
-                              filterLabel: 'PK-AJJ',
                               selectedColor: Color.fromRGBO(1, 98, 153, 1),
                             ),
                           ],
