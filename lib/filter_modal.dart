@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class FilterModal extends StatefulWidget {
   final String filterLabel;
@@ -20,7 +18,7 @@ class FilterModal extends StatefulWidget {
 
 class _FilterModalState extends State<FilterModal> {
   var isSelected = false;
-
+  List listFilter = [];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,13 +31,20 @@ class _FilterModalState extends State<FilterModal> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         checkmarkColor: Colors.white,
-        // shape: StadiumBorder(side: BorderSide(color: Colors.black12)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         selected: isSelected,
         onSelected: (bool value) {
           isSelected = value;
-          setState(() {});
+          setState(() {
+            if (value) {
+              listFilter.add(widget.filterLabel);
+            } else {
+              listFilter.removeWhere((value) {
+                return widget.filterLabel == widget.filterLabel;
+              });
+            }
+          });
         },
       ),
     );

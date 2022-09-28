@@ -19,7 +19,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     dynamic itemid = passData['itemId'];
 
-    dynamic token = passData['token'];
+    dynamic token = '16|F1AOo347Jg6wG2P3nnDOtkT25FAOtG4ApTXLAkXY';
+    // dynamic token = passData['token'];
 
     return Scaffold(
       body: SafeArea(
