@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Pages/task_to_do_page.dart';
 import 'package:hil_mobile/Services/loginServices.dart';
-import 'package:hil_mobile/navigation_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -115,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  duration: Duration(seconds: 1),
                                   behavior: SnackBarBehavior.floating,
                                   content: Text('Logging your account...')),
                             );
