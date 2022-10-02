@@ -10,7 +10,7 @@ class OptionService {
   }
 
   //get data option
-  static Future<List<DropdownMenuItem<String>>> getOption(String token) async {
+  static Future<List<DropdownMenuItem<String>>> getOption(String? token) async {
     String urlOption = getURL() + 'master-option';
     try {
       final response = await http.get(Uri.parse(urlOption),
@@ -26,6 +26,23 @@ class OptionService {
           );
         });
         return dataOption;
+      } else {
+        throw Exception('Failed to load options');
+      }
+    } catch (e) {
+      throw Exception('Error to load options');
+    }
+  }
+
+  static Future getOptions(String? token) async {
+    String urlOption = getURL() + 'master-option';
+    try {
+      final response = await http.get(Uri.parse(urlOption),
+          headers: {'Authorization': 'Bearer $token'});
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        final parsed = json['data'].cast<Map<String, dynamic>>();
+        return parsed;
       } else {
         throw Exception('Failed to load options');
       }

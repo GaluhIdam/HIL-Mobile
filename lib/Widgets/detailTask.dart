@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Pages/follow_on_list_page.dart';
 import 'package:hil_mobile/Pages/task_details_page.dart';
+import 'package:hil_mobile/Services/authService.dart';
 import 'package:hil_mobile/Services/followService.dart';
+import 'package:hil_mobile/Services/optionService.dart';
 import 'package:intl/intl.dart';
 
-class DetailTask extends StatelessWidget {
+class DetailTask extends StatefulWidget {
   dynamic itemId,
       subject,
       flightNumber,
@@ -28,7 +30,8 @@ class DetailTask extends StatelessWidget {
       statusName,
       optionName,
       reason,
-      token;
+      token,
+      optionId;
 
   DetailTask({
     super.key,
@@ -56,8 +59,14 @@ class DetailTask extends StatelessWidget {
     required this.optionName,
     required this.reason,
     required this.token,
+    required this.optionId,
   });
 
+  @override
+  State<DetailTask> createState() => _DetailTaskState();
+}
+
+class _DetailTaskState extends State<DetailTask> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _maintenance = TextEditingController();
@@ -69,7 +78,45 @@ class DetailTask extends StatelessWidget {
   final TextEditingController _snIn = TextEditingController();
 
   final TextEditingController _snOut = TextEditingController();
+
+  List<DropdownMenuItem<String>> listReason = [];
+  List<DropdownMenuItem<String>> listUnit = [];
+  List<DropdownMenuItem<String>> listOption = [];
+
+  String? token;
   String? nextUnit;
+
+  @override
+  void initState() {
+    super.initState();
+    AuthService.hasToken().then((value) {
+      token = value['token'];
+      FollowService.getReason(token).then((element) {
+        element.forEach((element) {
+          listReason.add(
+            DropdownMenuItem(
+                value: element['reasonNo'], child: Text(element['reasonDesc'])),
+          );
+        });
+      });
+      FollowService.getUnit(token).then((element) {
+        element.forEach((element) {
+          listUnit.add(
+            DropdownMenuItem(
+                value: element['id'], child: Text(element['unit'])),
+          );
+        });
+      });
+      OptionService.getOptions(token).then((element) {
+        element.forEach((element) {
+          listOption.add(
+            DropdownMenuItem(
+                value: element['optionID'], child: Text(element['long_name'])),
+          );
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +150,7 @@ class DetailTask extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      itemId,
+                      widget.itemId,
                       style: TextStyle(fontSize: 24),
                     ),
                     SizedBox(
@@ -127,7 +174,7 @@ class DetailTask extends StatelessWidget {
                       children: [
                         Column(
                           children: <Widget>[
-                            optionName == 'Urgent'
+                            widget.optionName == 'Urgent'
                                 ? Container(
                                     margin:
                                         const EdgeInsets.fromLTRB(0, 0, 10, 0),
@@ -147,7 +194,7 @@ class DetailTask extends StatelessWidget {
                                             color: Colors.white),
                                       ),
                                     ))
-                                : optionName == 'Important'
+                                : widget.optionName == 'Important'
                                     ? Container(
                                         margin: const EdgeInsets.fromLTRB(
                                             0, 0, 10, 0),
@@ -169,7 +216,7 @@ class DetailTask extends StatelessWidget {
                                                 color: Colors.white),
                                           ),
                                         ))
-                                    : optionName == 'Urgent & Important'
+                                    : widget.optionName == 'Urgent & Important'
                                         ? Container(
                                             margin: const EdgeInsets.fromLTRB(
                                                 0, 0, 10, 0),
@@ -191,7 +238,7 @@ class DetailTask extends StatelessWidget {
                                                     color: Colors.white),
                                               ),
                                             ))
-                                        : optionName == 'Important'
+                                        : widget.optionName == 'Important'
                                             ? Container(
                                                 margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                                 decoration: BoxDecoration(
@@ -215,7 +262,7 @@ class DetailTask extends StatelessWidget {
                                                         color: Colors.white),
                                                   ),
                                                 ))
-                                            : optionName == 'Normal'
+                                            : widget.optionName == 'Normal'
                                                 ? Container(
                                                     margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                                     decoration: BoxDecoration(
@@ -238,7 +285,7 @@ class DetailTask extends StatelessWidget {
                                                                 Colors.white),
                                                       ),
                                                     ))
-                                                : optionName == '-'
+                                                : widget.optionName == '-'
                                                     ? Container(
                                                         margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                                         decoration: BoxDecoration(
@@ -302,7 +349,7 @@ class DetailTask extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              statusName,
+                              widget.statusName,
                               style: TextStyle(
                                   fontSize: 19,
                                   color: Color.fromRGBO(181, 12, 12, 1)),
@@ -311,7 +358,7 @@ class DetailTask extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              'on ${DateFormat('d MMM y').format(DateTime.parse(dueDate))}',
+                              'on ${DateFormat('d MMM y').format(DateTime.parse(widget.dueDate))}',
                               style: TextStyle(
                                   color: Color.fromRGBO(181, 12, 12, 1)),
                             ),
@@ -339,7 +386,7 @@ class DetailTask extends StatelessWidget {
                 height: 7,
               ),
               Text(
-                subject,
+                widget.subject,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -357,7 +404,7 @@ class DetailTask extends StatelessWidget {
                 height: 7,
               ),
               Text(
-                flightNumber,
+                widget.flightNumber,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -380,7 +427,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        aircraftType,
+                        widget.aircraftType,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -396,7 +443,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        dateOccured,
+                        widget.dateOccured,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -421,7 +468,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        aircraftRegistration,
+                        widget.aircraftRegistration,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -437,7 +484,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        dueDate,
+                        widget.dueDate,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -462,7 +509,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        station,
+                        widget.station,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -473,12 +520,12 @@ class DetailTask extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Station Code'),
+                      Text('Station Close'),
                       SizedBox(
                         height: 7,
                       ),
                       Text(
-                        stationCode,
+                        widget.station,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -503,7 +550,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        ata,
+                        widget.ata,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -519,7 +566,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        faultCode,
+                        widget.faultCode,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -544,7 +591,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        sequenceNumber,
+                        widget.sequenceNumber,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -560,7 +607,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        categoryName,
+                        widget.categoryName,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -585,7 +632,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        techlog,
+                        widget.techlog,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -601,7 +648,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        optionStatus,
+                        widget.optionStatus,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -621,7 +668,7 @@ class DetailTask extends StatelessWidget {
                 height: 7,
               ),
               Text(
-                ref,
+                widget.ref,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -639,7 +686,7 @@ class DetailTask extends StatelessWidget {
                 height: 7,
               ),
               Text(
-                refDdg,
+                widget.refDdg,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -660,7 +707,7 @@ class DetailTask extends StatelessWidget {
                 height: 7,
               ),
               Text(
-                description,
+                widget.description,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -687,7 +734,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        partNumber,
+                        widget.partNumber,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -703,7 +750,7 @@ class DetailTask extends StatelessWidget {
                         height: 7,
                       ),
                       Text(
-                        partName,
+                        widget.partName,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -723,7 +770,7 @@ class DetailTask extends StatelessWidget {
                 height: 7,
               ),
               Text(
-                reason.toString() == 'null' ? '-' : reason,
+                widget.reason.toString() == 'null' ? '-' : widget.reason,
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -743,748 +790,442 @@ class DetailTask extends StatelessWidget {
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
-                    return StatefulBuilder(
-                        builder: (BuildContext context, setState) {
-                      return SizedBox(
-                          height: 800,
-                          child: Container(
-                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          10, 20, 0, 10),
-                                      child: const Text('Add Follow On Job',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color:
-                                                Color.fromRGBO(1, 98, 153, 1),
-                                          )),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 20, 15, 10),
-                                          child: const Icon(Icons.close)),
-                                    )
-                                  ],
-                                ),
-                                Expanded(
-                                    child: Form(
-                                        key: _formKey,
-                                        child: ListView(
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(15),
-                                              width: double.infinity,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 0, 0, 10),
-                                                      child: const Text(
-                                                          'Maintenance Advise')),
-                                                  TextFormField(
-                                                    controller: _maintenance,
-                                                    validator: (value) {
-                                                      if (value == null ||
-                                                          value.isEmpty) {
-                                                        return 'Please enter maintenance advise';
-                                                      }
-                                                      return null;
-                                                    },
-                                                    keyboardType:
-                                                        TextInputType.multiline,
-                                                    maxLines: 5,
-                                                    decoration: InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      hintText:
-                                                          'Type a description',
-                                                      contentPadding:
-                                                          const EdgeInsets.all(
-                                                              15),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 30, 0, 10),
-                                                      child:
-                                                          const Text('Reason')),
-                                                  FutureBuilder<
-                                                          List<
-                                                              DropdownMenuItem<
-                                                                  String>>>(
-                                                      future: FollowService
-                                                          .getReason(token),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.data ==
-                                                            null) {
-                                                          return DropdownButtonFormField(
-                                                              hint: Text(
-                                                                  'Please select reason'),
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                      enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      border:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      filled:
-                                                                          true,
-                                                                      fillColor: const Color
-                                                                              .fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      contentPadding:
-                                                                          const EdgeInsets.all(
-                                                                              13)),
-                                                              onChanged: (dynamic
-                                                                  newValue) {
-                                                                setState(() {
-                                                                  newValue!;
-                                                                });
-                                                              },
-                                                              items: null);
-                                                        } else {
-                                                          return DropdownButtonFormField(
-                                                              validator:
-                                                                  (value) {
-                                                                if (value ==
-                                                                        null ||
-                                                                    value ==
-                                                                        'null') {
-                                                                  return 'Please select reason';
-                                                                }
-                                                                return null;
-                                                              },
-                                                              hint: Text(
-                                                                  'Please select reason'),
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                      enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      border:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      filled:
-                                                                          true,
-                                                                      fillColor: const Color
-                                                                              .fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      contentPadding:
-                                                                          const EdgeInsets.all(
-                                                                              13)),
-                                                              value: reason,
-                                                              onChanged: (dynamic
-                                                                  newValue) {
-                                                                setState(() {
-                                                                  reason =
-                                                                      newValue!;
-                                                                });
-                                                              },
-                                                              items: snapshot
-                                                                  .data!);
-                                                        }
-                                                      }),
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 30, 0, 10),
-                                                      child: const Text(
-                                                          'Next Unit')),
-                                                  FutureBuilder<
-                                                          List<
-                                                              DropdownMenuItem<
-                                                                  String>>>(
-                                                      future:
-                                                          FollowService.getUnit(
-                                                              token),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.data ==
-                                                            null) {
-                                                          return DropdownButtonFormField(
-                                                              hint: Text(
-                                                                  'Please select unit'),
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                      enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      border:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      filled:
-                                                                          true,
-                                                                      fillColor: const Color
-                                                                              .fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      contentPadding:
-                                                                          const EdgeInsets.all(
-                                                                              13)),
-                                                              onChanged: (String?
-                                                                  newValue) {
-                                                                setState(() {
-                                                                  newValue!;
-                                                                });
-                                                              },
-                                                              items: null);
-                                                        } else {
-                                                          return DropdownButtonFormField(
-                                                              value: nextUnit,
-                                                              validator:
-                                                                  (value) {
-                                                                if (value ==
-                                                                        null ||
-                                                                    value ==
-                                                                        'null') {
-                                                                  return 'Please select next unit';
-                                                                }
-                                                                return null;
-                                                              },
-                                                              hint: Text(
-                                                                  'Please select unit'),
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                      enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      border:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                            color: Color.fromRGBO(
-                                                                                226,
-                                                                                234,
-                                                                                239,
-                                                                                1),
-                                                                            width:
-                                                                                2),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10),
-                                                                      ),
-                                                                      filled:
-                                                                          true,
-                                                                      fillColor: const Color
-                                                                              .fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      contentPadding:
-                                                                          const EdgeInsets.all(
-                                                                              13)),
-                                                              onChanged: (String?
-                                                                  newValue) {
-                                                                setState(() {
-                                                                  nextUnit =
-                                                                      newValue!;
-                                                                });
-                                                              },
-                                                              items: snapshot
-                                                                  .data!);
-                                                        }
-                                                      }),
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 30, 0, 10),
-                                                      child: const Text(
-                                                          'Part Name')),
-                                                  TextFormField(
-                                                    controller: _partName,
-                                                    validator: (value) {
-                                                      if (value == null ||
-                                                          value.isEmpty) {
-                                                        return 'Please enter part name';
-                                                      }
-                                                      return null;
-                                                    },
-                                                    decoration: InputDecoration(
-                                                        hintText:
-                                                            'Please type part name',
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                  width: 2),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                  width: 2),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor: const Color
-                                                                .fromRGBO(
-                                                            226, 234, 239, 1),
-                                                        contentPadding:
-                                                            const EdgeInsets
-                                                                .all(13)),
-                                                    onChanged:
-                                                        (String? newValue) {
-                                                      setState(() {
-                                                        newValue!;
-                                                      });
-                                                    },
-                                                  ),
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 30, 0, 10),
-                                                      child: const Text(
-                                                          'Part Number')),
-                                                  TextFormField(
-                                                      controller: _partNumber,
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'Please enter part number';
-                                                        }
-                                                        return null;
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                              hintText:
-                                                                  'Please type part number',
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              border:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              filled: true,
-                                                              fillColor: const Color
-                                                                      .fromRGBO(
-                                                                  226,
-                                                                  234,
-                                                                  239,
-                                                                  1),
-                                                              contentPadding:
-                                                                  const EdgeInsets
-                                                                      .all(13)),
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          newValue!;
-                                                        });
-                                                      }),
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 30, 0, 10),
-                                                      child:
-                                                          const Text('SN.In')),
-                                                  TextFormField(
-                                                      controller: _snIn,
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'Please enter SN.In';
-                                                        }
-                                                        return null;
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                              hintText:
-                                                                  'Please type SN.in',
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              border:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              filled: true,
-                                                              fillColor: const Color
-                                                                      .fromRGBO(
-                                                                  226,
-                                                                  234,
-                                                                  239,
-                                                                  1),
-                                                              contentPadding:
-                                                                  const EdgeInsets
-                                                                      .all(13)),
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          newValue!;
-                                                        });
-                                                      }),
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 30, 0, 10),
-                                                      child:
-                                                          const Text('SN.Out')),
-                                                  TextFormField(
-                                                      controller: _snOut,
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'Please enter SN.Out';
-                                                        }
-                                                        return null;
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                              hintText:
-                                                                  'Please type SN.out',
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              border:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              filled: true,
-                                                              fillColor: const Color
-                                                                      .fromRGBO(
-                                                                  226,
-                                                                  234,
-                                                                  239,
-                                                                  1),
-                                                              contentPadding:
-                                                                  const EdgeInsets
-                                                                      .all(13)),
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          newValue!;
-                                                        });
-                                                      }),
-                                                  Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0, 30, 0, 10),
-                                                      child: const Text(
-                                                          'Follow On Status')),
-                                                  TextFormField(
-                                                      decoration:
-                                                          InputDecoration(
-                                                              hintText:
-                                                                  'Please type follow on status',
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              border:
-                                                                  OutlineInputBorder(
-                                                                borderSide: const BorderSide(
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              filled: true,
-                                                              fillColor: const Color
-                                                                      .fromRGBO(
-                                                                  226,
-                                                                  234,
-                                                                  239,
-                                                                  1),
-                                                              contentPadding:
-                                                                  const EdgeInsets
-                                                                      .all(13)),
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          newValue!;
-                                                        });
-                                                      })
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  15, 15, 15, 50),
-                                              child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        const Color.fromRGBO(
-                                                            1, 98, 153, 1),
-                                                    minimumSize: const Size
-                                                        .fromHeight(45),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10))),
-                                                onPressed: () {
-                                                  if (_formKey.currentState!
-                                                      .validate()) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      const SnackBar(
-                                                          duration: Duration(
-                                                              seconds: 1),
-                                                          behavior:
-                                                              SnackBarBehavior
-                                                                  .floating,
-                                                          content: Text(
-                                                              'Add follow on job...')),
-                                                    );
-                                                    FollowService.updateFollow(
-                                                            itemId,
-                                                            token,
-                                                            _maintenance.text,
-                                                            nextUnit,
-                                                            _partNumber.text,
-                                                            _partName.text,
-                                                            _snIn.text,
-                                                            _snOut.text,
-                                                            reason)
-                                                        .then((value) {
-                                                      Navigator.pop(context);
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                            behavior:
-                                                                SnackBarBehavior
-                                                                    .floating,
-                                                            backgroundColor:
-                                                                Colors.green,
-                                                            content: Text(
-                                                              value['message'],
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            )),
-                                                      );
-                                                      Navigator
-                                                          .pushReplacementNamed(
-                                                              context,
-                                                              TaskDetailsPage
-                                                                  .routeName,
-                                                              arguments: {
-                                                            "itemId": itemId,
-                                                            "token": token,
-                                                          });
-                                                    });
-                                                  }
-                                                },
-                                                child: const Text(
-                                                  'Save',
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )))
-                              ],
+                    return ListView(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(20, 20, 0, 10),
+                              child: const Text('Add Follow On Job',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromRGBO(1, 98, 153, 1),
+                                  )),
                             ),
-                          ));
-                    });
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 20, 20, 10),
+                                  child: const Icon(Icons.close)),
+                            )
+                          ],
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                          child: Form(
+                              key: _formKey,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(15),
+                                    width: double.infinity,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 10),
+                                            child: const Text(
+                                                'Maintenance Advise')),
+                                        TextFormField(
+                                          controller: _maintenance,
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Please enter maintenance advise';
+                                            }
+                                            return null;
+                                          },
+                                          keyboardType: TextInputType.multiline,
+                                          maxLines: 5,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            hintText: 'Type a description',
+                                            contentPadding:
+                                                const EdgeInsets.all(15),
+                                          ),
+                                        ),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child: const Text('Reason')),
+                                        DropdownButtonFormField(
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value == 'null') {
+                                                return 'Please select reason';
+                                              }
+                                              return null;
+                                            },
+                                            hint: Text('Please select reason'),
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                filled: true,
+                                                fillColor: const Color.fromRGBO(
+                                                    226, 234, 239, 1),
+                                                contentPadding:
+                                                    const EdgeInsets.all(13)),
+                                            value: widget.reason,
+                                            onChanged: (dynamic newValue) {
+                                              setState(() {
+                                                widget.reason = newValue!;
+                                              });
+                                            },
+                                            items: listReason),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child: const Text('Next Unit')),
+                                        DropdownButtonFormField(
+                                            value: nextUnit,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value == 'null') {
+                                                return 'Please select next unit';
+                                              }
+                                              return null;
+                                            },
+                                            hint: Text('Please select unit'),
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                filled: true,
+                                                fillColor: const Color.fromRGBO(
+                                                    226, 234, 239, 1),
+                                                contentPadding:
+                                                    const EdgeInsets.all(13)),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                nextUnit = newValue!;
+                                              });
+                                            },
+                                            items: listUnit),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child: const Text('Part Name')),
+                                        TextFormField(
+                                          controller: _partName,
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Please enter part name';
+                                            }
+                                            return null;
+                                          },
+                                          decoration: InputDecoration(
+                                              hintText: 'Please type part name',
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    color: Color.fromRGBO(
+                                                        226, 234, 239, 1),
+                                                    width: 2),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    color: Color.fromRGBO(
+                                                        226, 234, 239, 1),
+                                                    width: 2),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              filled: true,
+                                              fillColor: const Color.fromRGBO(
+                                                  226, 234, 239, 1),
+                                              contentPadding:
+                                                  const EdgeInsets.all(13)),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              newValue!;
+                                            });
+                                          },
+                                        ),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child: const Text('Part Number')),
+                                        TextFormField(
+                                            controller: _partNumber,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Please enter part number';
+                                              }
+                                              return null;
+                                            },
+                                            decoration: InputDecoration(
+                                                hintText:
+                                                    'Please type part number',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                filled: true,
+                                                fillColor: const Color.fromRGBO(
+                                                    226, 234, 239, 1),
+                                                contentPadding:
+                                                    const EdgeInsets.all(13)),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                newValue!;
+                                              });
+                                            }),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child: const Text('SN.In')),
+                                        TextFormField(
+                                            controller: _snIn,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Please enter SN.In';
+                                              }
+                                              return null;
+                                            },
+                                            decoration: InputDecoration(
+                                                hintText: 'Please type SN.in',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                filled: true,
+                                                fillColor: const Color.fromRGBO(
+                                                    226, 234, 239, 1),
+                                                contentPadding:
+                                                    const EdgeInsets.all(13)),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                newValue!;
+                                              });
+                                            }),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child: const Text('SN.Out')),
+                                        TextFormField(
+                                            controller: _snOut,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Please enter SN.Out';
+                                              }
+                                              return null;
+                                            },
+                                            decoration: InputDecoration(
+                                                hintText: 'Please type SN.out',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                filled: true,
+                                                fillColor: const Color.fromRGBO(
+                                                    226, 234, 239, 1),
+                                                contentPadding:
+                                                    const EdgeInsets.all(13)),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                newValue!;
+                                              });
+                                            }),
+                                        Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 30, 0, 10),
+                                            child:
+                                                const Text('Change Option to')),
+                                        DropdownButtonFormField(
+                                            value: widget.optionId.toString(),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value == 'null') {
+                                                return 'Please select option';
+                                              }
+                                              return null;
+                                            },
+                                            hint: Text('Please select option'),
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          226, 234, 239, 1),
+                                                      width: 2),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                filled: true,
+                                                fillColor: const Color.fromRGBO(
+                                                    226, 234, 239, 1),
+                                                contentPadding:
+                                                    const EdgeInsets.all(13)),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                widget.optionId = newValue!;
+                                              });
+                                            },
+                                            items: listOption),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        15, 15, 15, 50),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromRGBO(
+                                              1, 98, 153, 1),
+                                          minimumSize:
+                                              const Size.fromHeight(45),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10))),
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                duration: Duration(seconds: 1),
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                content: Text(
+                                                    'Add follow on job...')),
+                                          );
+                                          FollowService.updateFollow(
+                                                  widget.itemId,
+                                                  widget.token,
+                                                  _maintenance.text,
+                                                  nextUnit,
+                                                  _partNumber.text,
+                                                  _partName.text,
+                                                  _snIn.text,
+                                                  _snOut.text,
+                                                  widget.reason)
+                                              .then((value) {
+                                            Navigator.pop(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  backgroundColor: Colors.green,
+                                                  content: Text(
+                                                    value['message'],
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  )),
+                                            );
+                                            Navigator.pushReplacementNamed(
+                                                context,
+                                                TaskDetailsPage.routeName,
+                                                arguments: {
+                                                  "itemId": widget.itemId,
+                                                  "token": widget.token,
+                                                });
+                                          });
+                                        }
+                                      },
+                                      child: const Text(
+                                        'Save',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        )
+                      ],
+                    );
                   });
             },
             child: const Text(
@@ -1504,30 +1245,10 @@ class DetailTask extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
-              FollowService.getFollowList(itemId, token).then((value) {
-                print(value.toString());
-                Navigator.pushNamed(
-                  context,
-                  FollowOnListPage.routeName,
-                  arguments: {
-                    'itemid': itemId,
-                    'foid': value['foid'],
-                    'follow': value['follow'],
-                    'unitFo': value['unitFo'],
-                    'nameFo': value['nameFo'],
-                    'dateFo': value['dateFo'],
-                    'nextFo': value['nextFo'],
-                    'insertFo': value['insertFo'],
-                    'partName': value['partName'],
-                    'partNbr': value['partNbr'],
-                    'snIn': value['snIn'],
-                    'sNout': value['sNout'],
-                    'by': value['by'],
-                    'reason': value['reason'],
-                    'countFollow': value['countFollow'],
-                    'insertDate': value['insertDate'],
-                  },
-                );
+              FollowService.getFollowList(widget.itemId, widget.token)
+                  .then((value) {
+                Navigator.pushNamed(context, FollowOnListPage.routeName,
+                    arguments: widget.itemId);
               });
             },
             child: const Text(

@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Models/followlistModel.dart';
-import 'package:hil_mobile/Models/taskModel.dart';
+import 'package:hil_mobile/Services/authService.dart';
 import 'package:hil_mobile/Services/followService.dart';
-import 'package:hil_mobile/Widgets/cardTask.dart';
 import 'package:hil_mobile/Widgets/followlList.dart';
 import 'package:intl/intl.dart';
 
-class FollowOnListPage extends StatelessWidget {
+class FollowOnListPage extends StatefulWidget {
   static const routeName = "/follow_on_list_page";
   const FollowOnListPage({Key? key}) : super(key: key);
 
   @override
+  State<FollowOnListPage> createState() => _FollowOnListPageState();
+}
+
+class _FollowOnListPageState extends State<FollowOnListPage> {
+  String? token;
+
+  @override
+  void initState() {
+    super.initState();
+    AuthService.hasToken().then((value) {
+      setState(() {
+        token = value['token'];
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final passing = ModalRoute.of(context)?.settings.arguments as Map;
-    final itemid = passing['itemid'];
-    final labelNumber = 0.toString();
-    final dateFO =
-        DateFormat('y-m-d H:m').format(DateTime.parse(passing['dateFo']));
-    final unit = passing['unitFo'];
-    final byPerson = passing['by'];
-    final nextUnit = passing['nextUnit'];
-    final followOn = passing['follow'];
+    final id = ModalRoute.of(context)?.settings.arguments as String;
+    final itemid = id;
+
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -50,13 +60,37 @@ class FollowOnListPage extends StatelessWidget {
                     )),
               ),
             ),
-            FollowListCard(
-                labelNumber: labelNumber,
-                dateFO: dateFO.toString(),
-                unit: unit ?? '-',
-                byPerson: byPerson ?? '-',
-                nextUnit: nextUnit ?? '-',
-                followOn: followOn ?? '-')
+            Expanded(
+              child: FutureBuilder<List<DetailFollowList>>(
+                  future: FollowService.getFollowList(id, token),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      List<DetailFollowList> listFollow = snapshot.data!;
+                      return ListView.builder(
+                          itemCount: listFollow.length,
+                          itemBuilder: (context, index) {
+                            if (listFollow.isNotEmpty) {
+                              return FollowListCard(
+                                  labelNumber: index.toString(),
+                                  dateFO: DateFormat('y-MM-dd').format(
+                                      DateTime.parse(listFollow[index].dateFo)),
+                                  unit: listFollow[index].unitFo ?? '-',
+                                  byPerson: listFollow[index].by ?? '-',
+                                  nextUnit: listFollow[index].nextFo ?? '-',
+                                  followOn: listFollow[index].follow ?? '-');
+                            } else {
+                              return Center(
+                                child: Text('data not available'),
+                              );
+                            }
+                          });
+                    }
+                  }),
+            )
           ],
         ),
       )),

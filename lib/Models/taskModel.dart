@@ -178,6 +178,7 @@ class TaskListData {
     required this.partName,
     required this.reason,
     required this.categoryDesc,
+    required this.categoryCat,
   });
 
   dynamic itemId;
@@ -210,6 +211,7 @@ class TaskListData {
   dynamic partName;
   dynamic reason;
   dynamic categoryDesc;
+  dynamic categoryCat;
 
   factory TaskListData.fromJson(Map<String, dynamic> json) => TaskListData(
         itemId: json["itemID"],
@@ -242,6 +244,7 @@ class TaskListData {
         partName: json["PartName"],
         reason: json["reason"],
         categoryDesc: json["CategoryDesc"],
+        categoryCat: json["CategoryCat"],
       );
 
   Map<String, dynamic> toJson() => {

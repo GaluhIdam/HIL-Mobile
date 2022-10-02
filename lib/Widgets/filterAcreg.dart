@@ -102,6 +102,11 @@ class _FilterAcregState extends State<FilterAcreg> {
                   selectedColor: Color.fromRGBO(181, 12, 12, 1),
                 ),
                 FilterModal(
+                  filterLabel: 'Medium',
+                  backgroundColor: Color.fromARGB(255, 228, 82, 14),
+                  selectedColor: Color.fromARGB(255, 228, 82, 14),
+                ),
+                FilterModal(
                   filterLabel: 'Low',
                   backgroundColor: Color.fromRGBO(255, 200, 16, 1),
                   selectedColor: Color.fromRGBO(255, 200, 16, 1),
@@ -185,7 +190,11 @@ class _FilterAcregState extends State<FilterAcreg> {
                     backgroundColor: const Color.fromRGBO(66, 66, 66, 1),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8))),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    acregList.clear();
+                  });
+                },
                 child: const Text(
                   'Reset',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),

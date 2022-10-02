@@ -17,12 +17,13 @@ class FilterModal extends StatefulWidget {
 }
 
 class _FilterModalState extends State<FilterModal> {
-  var isSelected = false;
   List listFilter = [];
+  List get listFilters => listFilter;
+  var isSelected = false;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+      margin: EdgeInsets.fromLTRB(0, 0, 10, 20),
       child: FilterChip(
         backgroundColor: widget.backgroundColor,
         selectedColor: widget.selectedColor,

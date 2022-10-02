@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Models/taskdetailModel.dart';
+import 'package:hil_mobile/Services/authService.dart';
 import 'package:hil_mobile/Services/optionService.dart';
 import 'package:hil_mobile/Services/statusService.dart';
 import 'package:hil_mobile/Services/taskService.dart';
@@ -14,13 +15,22 @@ class TaskDetailsPage extends StatefulWidget {
 
 class _TaskDetailsPage extends State<TaskDetailsPage> {
   final _formKey = GlobalKey<FormState>();
+  String? token;
+
+  @override
+  void initState() {
+    super.initState();
+    AuthService.hasToken().then((value) {
+      setState(() {
+        token = value['token'];
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     dynamic itemid = passData['itemId'];
-
-    dynamic token = '16|F1AOo347Jg6wG2P3nnDOtkT25FAOtG4ApTXLAkXY';
-    // dynamic token = passData['token'];
 
     return Scaffold(
       body: SafeArea(
@@ -39,6 +49,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       );
                     } else {
                       return DetailTask(
+                        optionId: detailTask[0].optionId,
                         token: token,
                         reason: detailTask[0].reason,
                         itemId: detailTask[0].itemId == null
@@ -73,9 +84,9 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                         faultCode: detailTask[0].subAta == null
                             ? '-'
                             : detailTask[0].subAta.toString(),
-                        categoryName: detailTask[0].category == null
+                        categoryName: detailTask[0].categoryDesc == null
                             ? '-'
-                            : detailTask[0].category.toString(),
+                            : detailTask[0].categoryDesc.toString(),
                         techlog: detailTask[0].techlog == null
                             ? '-'
                             : detailTask[0].techlog.toString(),
@@ -282,6 +293,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                               child: const Text(
                                                                   'Change Description')),
                                                           TextFormField(
+                                                            enabled: false,
                                                             validator: (value) {
                                                               if (value ==
                                                                       null ||
@@ -306,6 +318,12 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                             maxLines: 5,
                                                             decoration:
                                                                 InputDecoration(
+                                                              fillColor: Color
+                                                                  .fromRGBO(
+                                                                      226,
+                                                                      234,
+                                                                      239,
+                                                                      1),
                                                               border:
                                                                   OutlineInputBorder(
                                                                 borderRadius:
