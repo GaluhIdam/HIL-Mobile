@@ -10,7 +10,7 @@ class StatusService {
   }
 
   //Get Data Status
-  static Future<List<DropdownMenuItem<String>>> getStatus(String token) async {
+  static Future<List<DropdownMenuItem<String>>> getStatus(String? token) async {
     String urlStatus = getURL() + 'master-status';
     try {
       final response = await http.get(Uri.parse(urlStatus),
@@ -35,7 +35,8 @@ class StatusService {
   }
 
   //Get Data Station
-  static Future<List<DropdownMenuItem<String>>> getStation(String token) async {
+  static Future<List<DropdownMenuItem<String>>> getStation(
+      String? token) async {
     String urlStation = getURL() + 'master-station';
     try {
       final response = await http.get(Uri.parse(urlStation),
@@ -62,7 +63,6 @@ class StatusService {
 
   static Future updateStatus(
       dynamic itemId, token, status, staClose, desc) async {
-    print(desc);
     String urlStatus = getURL() + 'update-status/';
     final response = await http.post(Uri.parse(urlStatus + itemId), headers: {
       'Authorization': 'Bearer $token'
