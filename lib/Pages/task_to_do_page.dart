@@ -16,7 +16,6 @@ import 'package:http/http.dart' as http;
 
 enum SortBy { due, issue }
 
-// ignore: must_be_immutable
 class TaskToDoPage extends StatefulWidget {
   static const routeName = "/task_to_do_pages";
 
