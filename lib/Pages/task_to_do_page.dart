@@ -50,7 +50,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
           token = value['token'];
         });
         getUser(token).then((value) {
-          if (value["logging"] != false) {
+          if (value["logging"] == true) {
             setState(() {
               name = value["data"]['name'];
               id = value["data"]['id'];
@@ -78,6 +78,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
             (route) => false);
       }
     });
+    // test();
   }
 
   @override
@@ -86,6 +87,17 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
     controller.dispose();
     acregController.dispose();
     super.dispose();
+  }
+
+  String greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Morning';
+    }
+    if (hour < 17) {
+      return 'Afternoon';
+    }
+    return 'Evening';
   }
 
   getURL() {
@@ -106,6 +118,30 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       }
     }
   }
+
+  // Future test() async {
+  //   var headers = {
+  //     'Authorization': 'Bearer 177|EmH8IR34c8CMHUQZmFojcYn0zEub2NfCQBpZ9Nc7'
+  //   };
+  //   var request = http.MultipartRequest(
+  //       'GET',
+  //       Uri.parse(
+  //           'http://172.16.122.133:8000/api/task-list?order=DateOccur&by=asc'));
+  //   request.fields.addAll({'filter_ac_reg': 'PK-GPW'});
+
+  //   request.headers.addAll(headers);
+
+  //   http.StreamedResponse response = await request.send();
+
+  //   if (response.statusCode == 200) {
+  //     var data = await response.stream.bytesToString();
+  //     var json = jsonDecode(data);
+  //     final parsed = json['data']['data'];
+  //     print(parsed);
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  // }
 
   Future fetch(String? token, String? search) async {
     if (isLoading) return;
@@ -199,7 +235,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           Column(
                             children: [
                               Text(
-                                'Good Morning,',
+                                'Good ${greeting()},',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: 20,

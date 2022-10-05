@@ -55,6 +55,13 @@ class _DropDownSearchState extends State<DropDownSearch> {
           category.add(item[i]['CategoryDesc'].toString());
         }
       });
+      filterList.add({
+        'acreg': filterAcreg,
+        'actype': filterActype,
+        'subject': filterSubject,
+        'status': filterStatus,
+        'category': filterCategory
+      });
     });
   }
 
@@ -126,7 +133,19 @@ class _DropDownSearchState extends State<DropDownSearch> {
         Container(
           padding: EdgeInsets.fromLTRB(25, 10, 25, 0),
           child: DropdownSearch<String>.multiSelection(
+            dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                    fillColor: const Color.fromRGBO(226, 234, 239, 1),
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(226, 234, 239, 1), width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)))),
             items: acreg,
+            selectedItems: filterAcreg.isNotEmpty ? filterAcreg : filterAcreg,
             popupProps: PopupPropsMultiSelection.dialog(
                 showSearchBox: true,
                 showSelectedItems: true,
@@ -143,6 +162,8 @@ class _DropDownSearchState extends State<DropDownSearch> {
                 )),
             onChanged: (value) {
               filterAcreg.addAll(value);
+              print(filterAcreg);
+              filterAcreg.clear();
             },
           ),
         ),
@@ -155,6 +176,17 @@ class _DropDownSearchState extends State<DropDownSearch> {
         Container(
           padding: EdgeInsets.fromLTRB(25, 10, 25, 0),
           child: DropdownSearch<String>.multiSelection(
+            dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                    fillColor: const Color.fromRGBO(226, 234, 239, 1),
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(226, 234, 239, 1), width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)))),
             items: actype,
             popupProps: PopupPropsMultiSelection.dialog(
                 showSearchBox: true,
@@ -179,11 +211,22 @@ class _DropDownSearchState extends State<DropDownSearch> {
             margin: const EdgeInsets.fromLTRB(25, 15, 25, 0),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Text('Subject'),
+              child: Text('Customer'),
             )),
         Container(
           padding: EdgeInsets.fromLTRB(25, 10, 25, 0),
           child: DropdownSearch<String>.multiSelection(
+            dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                    fillColor: const Color.fromRGBO(226, 234, 239, 1),
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(226, 234, 239, 1), width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)))),
             items: subject,
             popupProps: PopupPropsMultiSelection.dialog(
                 showSearchBox: true,
@@ -213,6 +256,17 @@ class _DropDownSearchState extends State<DropDownSearch> {
         Container(
           padding: EdgeInsets.fromLTRB(25, 10, 25, 0),
           child: DropdownSearch<String>.multiSelection(
+            dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                    fillColor: const Color.fromRGBO(226, 234, 239, 1),
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(226, 234, 239, 1), width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)))),
             items: status,
             popupProps: PopupPropsMultiSelection.dialog(
                 showSearchBox: true,
@@ -242,6 +296,17 @@ class _DropDownSearchState extends State<DropDownSearch> {
         Container(
           padding: EdgeInsets.fromLTRB(25, 10, 25, 0),
           child: DropdownSearch<String>.multiSelection(
+            dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                    fillColor: const Color.fromRGBO(226, 234, 239, 1),
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(226, 234, 239, 1), width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)))),
             items: category,
             popupProps: PopupPropsMultiSelection.dialog(
                 showSearchBox: true,
@@ -271,13 +336,6 @@ class _DropDownSearchState extends State<DropDownSearch> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
-              filterList.add({
-                'acreg': filterAcreg,
-                'actype': filterActype,
-                'subject': filterSubject,
-                'status': filterStatus,
-                'category': filterCategory
-              });
               print(filterList);
             },
             child: const Text(
@@ -295,14 +353,12 @@ class _DropDownSearchState extends State<DropDownSearch> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
-              setState(() {
-                filterAcreg.clear();
-                filterActype.clear();
-                filterSubject.clear();
-                filterStatus.clear();
-                filterCategory.clear();
-                filterList.clear();
-              });
+              filterAcreg.clear();
+              filterActype.clear();
+              filterSubject.clear();
+              filterStatus.clear();
+              filterCategory.clear();
+              filterList.clear();
             },
             child: const Text(
               'Reset',
