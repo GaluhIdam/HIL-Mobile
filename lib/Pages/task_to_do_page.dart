@@ -44,6 +44,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
   @override
   void initState() {
     super.initState();
+    greeting();
     AuthService.hasToken().then((value) {
       if (value['logging'] == true) {
         setState(() {
@@ -91,13 +92,15 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
 
   String greeting() {
     var hour = DateTime.now().hour;
-    if (hour < 12) {
+    if (hour >= 5 && hour < 12) {
       return 'Morning';
-    }
-    if (hour < 17) {
+    } else if (hour >= 12 && hour < 18) {
       return 'Afternoon';
+    } else if (hour >= 18 && hour < 22) {
+      return 'Evening';
+    } else {
+      return 'Night';
     }
-    return 'Evening';
   }
 
   getURL() {
