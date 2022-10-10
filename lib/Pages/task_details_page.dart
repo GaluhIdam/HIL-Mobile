@@ -31,8 +31,12 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     dynamic itemid = passData['itemId'];
+    dynamic dueStatus = passData['dueStatus'];
+    dynamic priority = passData['priority'];
+    dynamic statusName = passData['statusName'];
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
           child: Container(
               padding: const EdgeInsets.fromLTRB(25, 5, 25, 0),
@@ -49,9 +53,9 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                       );
                     } else {
                       return DetailTask(
-                        optionId: detailTask[0].optionId,
-                        token: token,
-                        reason: detailTask[0].reason,
+                        optionId: detailTask[0].optionId.toString(),
+                        token: token.toString(),
+                        reason: detailTask[0].reason.toString(),
                         itemId: detailTask[0].itemId == null
                             ? '-'
                             : detailTask[0].itemId.toString(),
@@ -106,10 +110,13 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                         partName: detailTask[0].partName == null
                             ? '-'
                             : detailTask[0].partName.toString(),
-                        statusName: '-',
-                        optionName: detailTask[0].longName == null
-                            ? '-'
-                            : detailTask[0].longName.toString(),
+                        statusName: dueStatus == "-"
+                            ? priority
+                            : dueStatus == null
+                                ? statusName
+                                : priority,
+                        dueStatus: dueStatus == "" ? '-' : dueStatus.toString(),
+                        priority: priority.toString(),
                       );
                     }
                   } else {
@@ -222,7 +229,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                     context: context,
                                     builder: (context) {
                                       return SizedBox(
-                                          height: 550,
+                                          height: 520,
                                           child: Container(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
@@ -711,7 +718,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                   (BuildContext context,
                                                       setState) {
                                                 return SizedBox(
-                                                    height: 270,
+                                                    height: 265,
                                                     child: Container(
                                                       padding: const EdgeInsets
                                                               .fromLTRB(
@@ -884,7 +891,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                               });
                                             } else {
                                               return SizedBox(
-                                                  height: 270,
+                                                  height: 265,
                                                   child: detailTask[0]
                                                                   .optionId ==
                                                               null ||

@@ -83,6 +83,7 @@ class _FollowOnListPageState extends State<FollowOnListPage> {
                                   nextUnit: listFollow[index].nextFo ?? '-',
                                   followOn: listFollow[index].follow ?? '-');
                             } else {
+                              print('object');
                               return Center(
                                 child: Text('data not available'),
                               );
