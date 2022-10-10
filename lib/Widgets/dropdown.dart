@@ -12,18 +12,17 @@ class DropDownSearch extends StatefulWidget {
 }
 
 class _DropDownSearchState extends State<DropDownSearch> {
-  final controller = ScrollbarProps();
   List<String> acreg = [];
   List<String> actype = [];
-  List<String> subject = [];
   List<String> status = [];
+  List<String> customer = [];
   List<String> category = [];
   List filterList = [];
 
   List<String> filterAcreg = [];
   List<String> filterActype = [];
-  List<String> filterSubject = [];
   List<String> filterStatus = [];
+  List<String> filterCustomer = [];
   List<String> filterCategory = [];
 
   String? token;
@@ -45,23 +44,17 @@ class _DropDownSearchState extends State<DropDownSearch> {
           actype.add(item[i]['ACType'].toString());
         }
       });
-      FilterService.getStatus(token).then((item) {
-        for (var i = 0; i < item.length; i++) {
-          status.add(item[i]['StatusDesc'].toString());
-        }
-      });
       FilterService.getCategory(token).then((item) {
         for (var i = 0; i < item.length; i++) {
           category.add(item[i]['CategoryDesc'].toString());
         }
       });
-      filterList.add({
-        'acreg': filterAcreg,
-        'actype': filterActype,
-        'subject': filterSubject,
-        'status': filterStatus,
-        'category': filterCategory
-      });
+      // FilterService.getCustomer(token).then((item) {
+      // for (var i = 0; i < item.length; i++) {
+      //   customer.add(item);
+      //   print(item);
+      // }
+      // });
     });
   }
 
@@ -162,8 +155,6 @@ class _DropDownSearchState extends State<DropDownSearch> {
                 )),
             onChanged: (value) {
               filterAcreg.addAll(value);
-              print(filterAcreg);
-              filterAcreg.clear();
             },
           ),
         ),
@@ -227,7 +218,7 @@ class _DropDownSearchState extends State<DropDownSearch> {
                     ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)))),
-            items: subject,
+            items: customer,
             popupProps: PopupPropsMultiSelection.dialog(
                 showSearchBox: true,
                 showSelectedItems: true,
@@ -236,14 +227,14 @@ class _DropDownSearchState extends State<DropDownSearch> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Select Subject',
+                      'Select Customer',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                 )),
             onChanged: (value) {
-              filterSubject.addAll(value);
+              filterCustomer.addAll(value);
             },
           ),
         ),
@@ -336,6 +327,13 @@ class _DropDownSearchState extends State<DropDownSearch> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
+              filterList.add({
+                'acreg': filterAcreg,
+                'actype': filterActype,
+                'customer': filterCustomer,
+                'status': filterStatus,
+                'category': filterCategory
+              });
               print(filterList);
             },
             child: const Text(
@@ -355,7 +353,7 @@ class _DropDownSearchState extends State<DropDownSearch> {
             onPressed: () {
               filterAcreg.clear();
               filterActype.clear();
-              filterSubject.clear();
+              filterCustomer.clear();
               filterStatus.clear();
               filterCategory.clear();
               filterList.clear();
