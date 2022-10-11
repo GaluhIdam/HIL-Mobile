@@ -57,7 +57,7 @@ class FollowService {
 
   //Update Follow List
   static Future updateFollow(dynamic itemId, token, follow, nextFO, partNum,
-      partName, snIn, snOut, reason) async {
+      partName, snIn, snOut, reason, option) async {
     String urlFollow = getURL() + 'update-follow';
 
     final response = await http.post(Uri.parse(urlFollow), headers: {
@@ -71,6 +71,7 @@ class FollowService {
       'SNIn': snIn,
       'SNOut': snOut,
       'reason': reason,
+      'optionID': option,
     });
 
     if (response.statusCode == 200) {

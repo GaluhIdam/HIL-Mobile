@@ -14,7 +14,7 @@ class FilterService {
         .get(Uri.parse(urlActype), headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      final parsed = json['data']['data'];
+      final parsed = json['data'];
       // print(parsed);
       return parsed.toList();
     } else {
@@ -28,23 +28,10 @@ class FilterService {
         .get(Uri.parse(urlActype), headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      final parsed = json['data']['data'];
-      return parsed.toList();
-    } else {
-      throw Exception('Failed to load actype');
-    }
-  }
-
-  static Future getStatus(String? token) async {
-    String urlActype = getURL() + 'master-status';
-    final response = await http
-        .get(Uri.parse(urlActype), headers: {'Authorization': 'Bearer $token'});
-    if (response.statusCode == 200) {
-      var json = jsonDecode(response.body);
       final parsed = json['data'];
       return parsed.toList();
     } else {
-      throw Exception('Failed to load status');
+      throw Exception('Failed to load actype');
     }
   }
 
@@ -58,6 +45,19 @@ class FilterService {
       return parsed.toList();
     } else {
       throw Exception('Failed to load category');
+    }
+  }
+
+  static Future getCustomer(String? token) async {
+    String urlActype = getURL() + 'master-customer';
+    final response = await http
+        .get(Uri.parse(urlActype), headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data'];
+      return parsed;
+    } else {
+      throw Exception('Failed to load customer');
     }
   }
 }
