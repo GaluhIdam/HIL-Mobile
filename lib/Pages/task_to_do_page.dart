@@ -50,17 +50,25 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
           token = value['token'];
         });
         getUser(token).then((value) {
-          setState(() {
-            name = value['name'];
-            id = value['id'];
-            unit = value['unit'];
-          });
-        });
-        fetch(token, _search.text);
-        acreg(token);
-        controller.addListener(() {
-          if (controller.position.maxScrollExtent == controller.offset) {
+          if (value["logging"] != false) {
+            setState(() {
+              name = value["data"]['name'];
+              id = value["data"]['id'];
+              unit = value["data"]['unit'];
+            });
             fetch(token, _search.text);
+            acreg(token);
+            controller.addListener(() {
+              if (controller.position.maxScrollExtent == controller.offset) {
+                fetch(token, _search.text);
+              }
+            });
+          } else {
+            return Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => LoginPage()),
+                (route) => false);
           }
         });
       } else {
@@ -92,7 +100,9 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
       if (response.statusCode == 200) {
         var json = jsonDecode(response.body);
         final parsed = json['data']['user'];
-        return parsed;
+        return {"logging": true, "data": parsed};
+      } else {
+        return {"logging": false};
       }
     }
   }

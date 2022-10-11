@@ -33,6 +33,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
     dynamic itemid = passData['itemId'];
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
           child: Container(
               padding: const EdgeInsets.fromLTRB(25, 5, 25, 0),
