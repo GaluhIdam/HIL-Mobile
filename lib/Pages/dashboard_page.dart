@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hil_mobile/Pages/login_page.dart';
+import 'package:hil_mobile/Services/authService.dart';
+import 'package:hil_mobile/Services/config.dart';
 import 'package:hil_mobile/data_chart.dart';
 import 'package:hil_mobile/data_series.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:http/http.dart' as http;
 
 class DashboardPage extends StatefulWidget {
   static const routeName = "/dashboard_page";
@@ -65,6 +71,56 @@ class _DashboardPageState extends State<DashboardPage> {
             const Color.fromRGBO(1, 98, 153, 1))),
   ];
 
+  String? token;
+  String? name;
+  int? id;
+  String? unit;
+
+  @override
+  void initState() {
+    super.initState();
+    AuthService.hasToken().then((value) {
+      if (value['logging'] == true) {
+        setState(() {
+          token = value['token'];
+        });
+      }
+      getUser(token).then((value) {
+        if (value["logging"] == true) {
+          setState(() {
+            name = value["data"]['name'];
+            id = value["data"]['id'];
+            unit = value["data"]['unit'];
+          });
+        } else {
+          return Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+              (route) => false);
+        }
+      });
+    });
+  }
+
+  static getURL() {
+    return Config.baseURL;
+  }
+
+  Future getUser(String? token) async {
+    if (token != null) {
+      String urlUser = getURL() + 'auth/user';
+      final response = await http
+          .get(Uri.parse(urlUser), headers: {'Authorization': 'Bearer $token'});
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        final parsed = json['data']['user'];
+        return {"logging": true, "data": parsed};
+      } else {
+        return {"logging": false};
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,8 +134,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   Container(
                       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       width: double.infinity,
-                      child: const Text(
-                        'Username',
+                      child: Text(
+                        name == null ? '-' : name.toString(),
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 24,
@@ -90,9 +146,9 @@ class _DashboardPageState extends State<DashboardPage> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                     child: Row(
-                      children: const [
+                      children: [
                         Text(
-                          '123456789',
+                          id == null ? '-' : id.toString(),
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -110,7 +166,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           width: 9,
                         ),
                         Text(
-                          'TLC-7',
+                          unit == null ? '-' : unit.toString(),
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,

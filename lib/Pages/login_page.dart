@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                     labelText: 'Password'),
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 30,
                               ),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(

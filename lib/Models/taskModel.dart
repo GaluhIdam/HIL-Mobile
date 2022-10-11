@@ -146,137 +146,95 @@ class TaskList {
       };
 }
 
+TaskListData taskListDataFromJson(String str) =>
+    TaskListData.fromJson(json.decode(str));
+
+String taskListDataToJson(TaskListData data) => json.encode(data.toJson());
+
 class TaskListData {
   TaskListData({
     required this.itemId,
-    required this.dateOccur,
-    required this.dueDate,
-    required this.dateInsert,
-    required this.dateClose,
-    required this.ddgRef,
-    required this.flightNo,
-    required this.ataNo,
-    required this.seqNo,
-    required this.sta,
-    required this.staClose,
     required this.subject,
     required this.description,
-    required this.category,
-    required this.subAta,
-    required this.insertProblem,
-    required this.techlog,
+    required this.dateoccur,
+    required this.duedate,
+    required this.flightNo,
     required this.status,
+    required this.category,
     required this.acreg,
-    required this.acType,
-    required this.statusNo,
-    required this.statusDesc,
-    required this.staId,
-    required this.staCode,
+    required this.sta,
     required this.optionId,
-    required this.longName,
-    required this.partNbr,
-    required this.partName,
-    required this.reason,
-    required this.categoryDesc,
-    required this.categoryCat,
+    required this.actypeid,
+    required this.priorityId,
+    required this.dueStatus,
+    required this.priority,
+    required this.lastFollow,
+    required this.categoryText,
+    required this.shortName,
+    required this.customer,
   });
 
-  dynamic itemId;
-  dynamic dateOccur;
-  dynamic dueDate;
-  dynamic dateInsert;
-  dynamic dateClose;
-  dynamic ddgRef;
-  dynamic flightNo;
-  dynamic ataNo;
-  dynamic seqNo;
-  dynamic sta;
-  dynamic staClose;
-  dynamic subject;
-  dynamic description;
-  dynamic category;
-  dynamic subAta;
-  dynamic insertProblem;
-  dynamic techlog;
-  dynamic status;
-  dynamic acreg;
-  dynamic acType;
-  dynamic statusNo;
-  dynamic statusDesc;
-  dynamic staId;
-  dynamic staCode;
+  String itemId;
+  String subject;
+  String description;
+  DateTime dateoccur;
+  DateTime duedate;
+  String flightNo;
+  String status;
+  String? category;
+  String acreg;
+  String? sta;
   dynamic optionId;
-  dynamic longName;
-  dynamic partNbr;
-  dynamic partName;
-  dynamic reason;
-  dynamic categoryDesc;
-  dynamic categoryCat;
+  String actypeid;
+  String priorityId;
+  String dueStatus;
+  String priority;
+  dynamic lastFollow;
+  String categoryText;
+  String shortName;
+  String customer;
 
   factory TaskListData.fromJson(Map<String, dynamic> json) => TaskListData(
         itemId: json["itemID"],
-        dateOccur: json["DateOccur"],
-        dueDate: json["DueDate"],
-        dateInsert: json["DateInsert"],
-        dateClose: json["DateClose"],
-        ddgRef: json["DDGRef"],
-        flightNo: json["FlightNo"],
-        ataNo: json["ATANo"],
-        seqNo: json["SeqNo"],
-        sta: json["sta"],
-        staClose: json["staClose"],
         subject: json["Subject"],
         description: json["Description"],
-        category: json["Category"],
-        subAta: json["sub_ata"],
-        insertProblem: json["InsertProblem"],
-        techlog: json["TECHLOG"],
+        dateoccur: DateTime.parse(json["Dateoccur"]),
+        duedate: DateTime.parse(json["Duedate"]),
+        flightNo: json["FlightNo"],
         status: json["Status"],
+        category: json["Category"],
         acreg: json["acreg"],
-        acType: json["ACType"],
-        statusNo: json["StatusNo"],
-        statusDesc: json["StatusDesc"],
-        staId: json["StaID"],
-        staCode: json["StaCode"],
+        sta: json["sta"],
         optionId: json["optionID"],
-        longName: json["long_name"],
-        partNbr: json["PartNbr"],
-        partName: json["PartName"],
-        reason: json["reason"],
-        categoryDesc: json["CategoryDesc"],
-        categoryCat: json["CategoryCat"],
+        actypeid: json["actypeid"],
+        priorityId: json["priorityID"],
+        dueStatus: json["dueStatus"],
+        priority: json["priority"],
+        lastFollow: json["last_follow"],
+        categoryText: json["category_text"],
+        shortName: json["short_name"],
+        customer: json["customer"],
       );
 
   Map<String, dynamic> toJson() => {
         "itemID": itemId,
-        "DateOccur": dateOccur,
-        "DueDate": dueDate,
-        "DateInsert": dateInsert,
-        "DateClose": dateClose,
-        "DDGRef": ddgRef,
-        "FlightNo": flightNo,
-        "ATANo": ataNo,
-        "SeqNo": seqNo,
-        "sta": sta,
-        "staClose": staClose,
         "Subject": subject,
         "Description": description,
-        "Category": category,
-        "sub_ata": subAta,
-        "InsertProblem": insertProblem,
-        "TECHLOG": techlog,
+        "Dateoccur": dateoccur.toIso8601String(),
+        "Duedate": duedate.toIso8601String(),
+        "FlightNo": flightNo,
         "Status": status,
+        "Category": category,
         "acreg": acreg,
-        "ACType": acType,
-        "StatusNo": statusNo,
-        "StatusDesc": statusDesc,
-        "StaID": staId,
-        "StaCode": staCode,
+        "sta": sta,
         "optionID": optionId,
-        "long_name": longName,
-        "PartNbr": partNbr,
-        "PartName": partName,
-        "reason": reason,
-        "CategoryDesc": categoryDesc,
+        "actypeid": actypeid,
+        "priorityID": priorityId,
+        "dueStatus": dueStatus,
+        "priority": priority,
+        "last_follow": lastFollow,
+        "category_text": categoryText,
+        "short_name": shortName,
+        "customer": customer,
       };
 }
