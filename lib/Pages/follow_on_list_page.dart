@@ -78,12 +78,13 @@ class _FollowOnListPageState extends State<FollowOnListPage> {
                                   labelNumber: index.toString(),
                                   dateFO: DateFormat('y-MM-dd').format(
                                       DateTime.parse(listFollow[index].dateFo)),
-                                  unit: listFollow[index].unitFo ?? '-',
+                                  unit: listFollow[index].unitFo == "   "
+                                      ? '-'
+                                      : listFollow[index].unitFo ?? '-',
                                   byPerson: listFollow[index].by ?? '-',
                                   nextUnit: listFollow[index].nextFo ?? '-',
                                   followOn: listFollow[index].follow ?? '-');
                             } else {
-                              print('object');
                               return Center(
                                 child: Text('data not available'),
                               );

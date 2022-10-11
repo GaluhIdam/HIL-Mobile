@@ -105,7 +105,7 @@ class _DetailTaskState extends State<DetailTask> {
         element.forEach((element) {
           listUnit.add(
             DropdownMenuItem(
-                value: element['id'], child: Text(element['unit'])),
+                value: element['unit'], child: Text(element['unit'])),
           );
         });
       });
