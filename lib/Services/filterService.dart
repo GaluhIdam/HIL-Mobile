@@ -15,7 +15,6 @@ class FilterService {
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       final parsed = json['data'];
-      // print(parsed);
       return parsed.toList();
     } else {
       throw Exception('Failed to load acreg');
