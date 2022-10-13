@@ -124,89 +124,92 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: WillPopScope(
-            onWillPop: onWillPop,
-            child: SafeArea(
-                child: Container(
-              padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-              child: ListView(
-                children: [
-                  Container(
-                      margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                      width: double.infinity,
-                      child: Text(
-                        name == null ? '-' : name.toString(),
-                        textAlign: TextAlign.left,
+        body: MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 0.8),
+      child: WillPopScope(
+          onWillPop: onWillPop,
+          child: SafeArea(
+              child: Container(
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+            child: ListView(
+              children: [
+                Container(
+                    margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                    width: double.infinity,
+                    child: Text(
+                      name == null ? '-' : name.toString(),
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(1, 98, 153, 1),
+                      ),
+                    )),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: Row(
+                    children: [
+                      Text(
+                        id == null ? '-' : id.toString(),
                         style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
                           color: Color.fromRGBO(1, 98, 153, 1),
                         ),
-                      )),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                    child: Row(
+                      ),
+                      SizedBox(
+                        width: 9,
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Color.fromRGBO(209, 214, 217, 1),
+                        radius: 3,
+                      ),
+                      SizedBox(
+                        width: 9,
+                      ),
+                      Text(
+                        unit == null ? '-' : unit.toString(),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(239, 173, 66, 1),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  height: 400,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          id == null ? '-' : id.toString(),
+                        const Text(
+                          "HIL Open by Follow On",
                           style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(1, 98, 153, 1),
-                          ),
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
-                          width: 9,
-                        ),
-                        CircleAvatar(
-                          backgroundColor: Color.fromRGBO(209, 214, 217, 1),
-                          radius: 3,
-                        ),
-                        SizedBox(
-                          width: 9,
-                        ),
-                        Text(
-                          unit == null ? '-' : unit.toString(),
+                        Expanded(child: DataChart(data: data1))
+                      ]),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 30, 0, 20),
+                  height: 400,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "HIL without Follow On",
                           style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(239, 173, 66, 1),
-                          ),
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                    height: 400,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "HIL Open by Follow On",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                          Expanded(child: DataChart(data: data1))
-                        ]),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 30, 0, 20),
-                    height: 400,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "HIL without Follow On",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                          Expanded(child: DataChart(data: data2))
-                        ]),
-                  )
-                ],
-              ),
-            ))));
+                        Expanded(child: DataChart(data: data2))
+                      ]),
+                )
+              ],
+            ),
+          ))),
+    ));
   }
 
   Future<bool> onWillPop() {
