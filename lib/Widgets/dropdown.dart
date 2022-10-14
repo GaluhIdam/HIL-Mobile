@@ -49,12 +49,6 @@ class _DropDownSearchState extends State<DropDownSearch> {
           category.add(item[i]['CategoryDesc'].toString());
         }
       });
-      // FilterService.getCustomer(token).then((item) {
-      // for (var i = 0; i < item.length; i++) {
-      //   customer.add(item);
-      //   print(item);
-      // }
-      // });
     });
   }
 
@@ -334,7 +328,6 @@ class _DropDownSearchState extends State<DropDownSearch> {
                 'status': filterStatus,
                 'category': filterCategory
               });
-              print(filterList);
             },
             child: const Text(
               'Filter',
