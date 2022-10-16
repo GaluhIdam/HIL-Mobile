@@ -780,7 +780,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                             final item = items[index];
                                             return TaskCard(
                                                 id: item.itemId,
-                                                dueDate: item.dueStatus == "1"
+                                                dueDate: item.status == "1"
                                                     ? 'OVERDUEJOBS'
                                                     : item.dueStatus == "2"
                                                         ? 'DUE IN 3 DAY'
@@ -818,7 +818,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                                 info: item.subject,
                                                 itemId: item.itemId,
                                                 dateOccur: item.dateoccur,
-                                                statusDue: item.dueStatus == "1"
+                                                statusDue: item.status == "1"
                                                     ? 'OVERDUEJOBS'
                                                     : item.dueStatus == "2"
                                                         ? 'DUE IN 3 DAY'
