@@ -174,25 +174,25 @@ class TaskListData {
     required this.customer,
   });
 
-  String itemId;
-  String subject;
-  String description;
+  dynamic itemId;
+  dynamic subject;
+  dynamic description;
   DateTime dateoccur;
   DateTime duedate;
-  String flightNo;
-  String status;
-  String? category;
-  String acreg;
-  String? sta;
+  dynamic flightNo;
+  dynamic status;
+  dynamic category;
+  dynamic acreg;
+  dynamic sta;
   dynamic optionId;
-  String actypeid;
-  String priorityId;
-  String dueStatus;
-  String priority;
+  dynamic actypeid;
+  dynamic priorityId;
+  dynamic dueStatus;
+  dynamic priority;
   dynamic lastFollow;
-  String categoryText;
-  String shortName;
-  String customer;
+  dynamic categoryText;
+  dynamic shortName;
+  dynamic customer;
 
   factory TaskListData.fromJson(Map<String, dynamic> json) => TaskListData(
         itemId: json["itemID"],

@@ -10,6 +10,7 @@ import 'package:hil_mobile/Services/config.dart';
 import 'package:hil_mobile/Services/authService.dart';
 import 'package:hil_mobile/Services/filterService.dart';
 import 'package:intl/intl.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../Widgets/cardTask.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,7 +23,10 @@ class TaskToDoPage extends StatefulWidget {
   State<TaskToDoPage> createState() => _TaskToDoPageState();
 }
 
-class _TaskToDoPageState extends State<TaskToDoPage> {
+class _TaskToDoPageState extends State<TaskToDoPage>
+    with AutomaticKeepAliveClientMixin {
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
   final TextEditingController _search = TextEditingController();
   final _priorityKey = GlobalKey<DropdownSearchState<String>>();
   final _acregKey = GlobalKey<DropdownSearchState<String>>();
@@ -32,7 +36,9 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
   final _categoryKey = GlobalKey<DropdownSearchState<String>>();
   final _dateKey = GlobalKey<DropdownSearchState<String>>();
   final controller = ScrollController();
-  final acregController = ScrollController();
+
+  ValueChanged<String>? onChanged;
+
   List<TaskListData> items = [];
   bool hasMore = true;
   int page = 1;
@@ -173,6 +179,7 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
   String? sort = 'Duedate';
   String? by = 'desc';
   String? orderSelect;
+  String? totalData;
 
   @override
   void initState() {
@@ -252,7 +259,6 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
   void dispose() {
     _search.dispose();
     controller.dispose();
-    acregController.dispose();
     super.dispose();
   }
 
@@ -364,8 +370,10 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
     if (response.statusCode == 200) {
       final json = await response.stream.bytesToString();
       final parsed = jsonDecode(json)['data']['data'];
+      final total = jsonDecode(json)['data']['total'];
       final List cekdata = parsed;
       setState(() {
+        totalData = total.toString();
         connection = true;
         page++;
         isLoading = false;
@@ -391,388 +399,533 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
     filterACREG(token, _search.text, filterList, sort, by);
   }
 
+  Future reset() async {
+    _search.clear();
+    filterList.clear();
+    //clear priority
+    priorityValue.clear();
+    priorityValueLabel.clear();
+    filterPriority.clear();
+    //clear acreg
+    filterAcreg.clear();
+    //clear actype
+    actypeValueLabel.clear();
+    actypeValue.clear();
+    filterActype.clear();
+    //clear customer
+    filterCustomer.clear();
+    //clear status
+    statusValue.clear();
+    statusValueLabel.clear();
+    filterStatus.clear();
+    //clear category
+    categoryValue.clear();
+    categoryValueLabel.clear();
+    filterCategory.clear();
+    setState(() {
+      sort = 'Duedate';
+      by = 'desc';
+      orderSelect = null;
+    });
+    refresh();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 0.8),
-      child: WillPopScope(
-          onWillPop: onWillPop,
-          child: SafeArea(
-              child: Container(
-            padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
-            child: Column(
-              children: <Widget>[
-                Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.fromLTRB(15, 20, 8, 0),
-                    child: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Good ${greeting()},',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromRGBO(1, 98, 153, 1),
-                              ),
-                            )
-                          ],
-                        ),
-                        Positioned(
-                            top: 0,
-                            right: 8,
-                            bottom: 0,
-                            child: GestureDetector(
-                              onTap: () => showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(25, 20, 25, 5),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  titleTextStyle: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 197, 0, 0)),
-                                  title: Text(
-                                    'Log Out',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  content: Text(
-                                    'Are you sure you want to leave?',
-                                  ),
-                                  actions: <Widget>[
-                                    Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                              onPressed: () {
-                                                AuthService.logout(token)
-                                                    .then((value) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                        behavior:
-                                                            SnackBarBehavior
-                                                                .floating,
-                                                        backgroundColor:
-                                                            Colors.green,
-                                                        content: Text(
-                                                          value,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                        )),
-                                                  );
-                                                  AuthService.deleteToken();
-                                                  Navigator.pushAndRemoveUntil(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              LoginPage()),
-                                                      (route) => false);
-                                                });
-                                              },
-                                              child: Text(
-                                                'Log Out',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 197, 0, 0)),
-                                              )),
-                                        ],
+    super.build(context);
+    return WillPopScope(
+        onWillPop: onWillPop,
+        child: GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Scaffold(
+              body: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 0.8),
+                  child: SafeArea(
+                      child: Container(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.fromLTRB(15, 20, 8, 0),
+                            child: Stack(
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Good ${greeting()},',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color.fromRGBO(1, 98, 153, 1),
                                       ),
                                     )
                                   ],
                                 ),
-                              ),
-                              child: Icon(
-                                Icons.logout,
-                                color: Color.fromARGB(255, 197, 0, 0),
-                              ),
-                            )),
-                      ],
-                    )),
-                Container(
-                    margin: const EdgeInsets.fromLTRB(15, 5, 8, 5),
-                    width: double.infinity,
-                    child: Text(
-                      name == null ? '-' : name.toString(),
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(1, 98, 153, 1),
-                      ),
-                    )),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(15, 5, 8, 5),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        id == null ? '-' : id.toString(),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(1, 98, 153, 1),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 9,
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Color.fromRGBO(209, 214, 217, 1),
-                        radius: 3,
-                      ),
-                      SizedBox(
-                        width: 9,
-                      ),
-                      Text(
-                        unit == null ? '-' : unit.toString(),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(239, 173, 66, 1),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: Row(
-                    children: [
-                      Flexible(
-                          child: Container(
-                        margin: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                        child: TextField(
-                          textInputAction: TextInputAction.go,
-                          onSubmitted: ((value) {
-                            if (value.isNotEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.green,
-                                    content: Text(
-                                      'Finding data...',
-                                      style: TextStyle(
-                                        color: Colors.white,
+                                Positioned(
+                                    top: 0,
+                                    right: 8,
+                                    bottom: 0,
+                                    child: GestureDetector(
+                                      onTap: () => showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              25, 20, 25, 5),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          titleTextStyle: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 197, 0, 0)),
+                                          title: Text(
+                                            'Log Out',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          content: Text(
+                                            'Are you sure you want to leave?',
+                                          ),
+                                          actions: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  20, 0, 20, 0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(context),
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        AuthService.logout(
+                                                                token)
+                                                            .then((value) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            SnackBar(
+                                                                behavior:
+                                                                    SnackBarBehavior
+                                                                        .floating,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .green,
+                                                                content: Text(
+                                                                  value,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                )),
+                                                          );
+                                                          AuthService
+                                                              .deleteToken();
+                                                          Navigator.pushAndRemoveUntil(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      LoginPage()),
+                                                              (route) => false);
+                                                        });
+                                                      },
+                                                      child: Text(
+                                                        'Log Out',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    197,
+                                                                    0,
+                                                                    0)),
+                                                      )),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.logout,
+                                        color: Color.fromARGB(255, 197, 0, 0),
                                       ),
                                     )),
-                              );
-                              setState(() {
-                                connection = false;
-                                hasMore = true;
-                                page = 1;
-                                isLoading = false;
-                                items.clear();
-                              });
-                              filterACREG(token, value, filterList, sort, by);
-                              controller.addListener(() {
-                                if (controller.position.maxScrollExtent ==
-                                    controller.offset) {
-                                  filterACREG(
-                                      token, value, filterList, sort, by);
-                                }
-                              });
-                            }
-                          }),
-                          controller: _search,
-                          decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.search),
-                              prefixIconColor:
-                                  const Color.fromRGBO(1, 98, 153, 1),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                              ],
+                            )),
+                        Container(
+                            margin: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            width: double.infinity,
+                            child: Text(
+                              name == null ? '-' : name.toString(),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(1, 98, 153, 1),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromRGBO(1, 98, 153, 1)),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              contentPadding: const EdgeInsets.all(14),
-                              hintText: 'insert keyword'),
-                        ),
-                      )),
-                      GestureDetector(
-                        onTap: () {
-                          if (connection == true) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: Colors.green,
-                                  content: Text(
-                                    'Finding data...',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                            )),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(15, 5, 10, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 2, 0),
+                                    child: Text(
+                                      id == null ? '-' : id.toString(),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(1, 98, 153, 1),
+                                      ),
                                     ),
-                                  )),
-                            );
-                            refresh();
-                          }
-                        },
-                        child: Container(
-                            margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.search,
-                                size: 30,
-                                color: Color.fromRGBO(1, 98, 153, 1),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                                    child: CircleAvatar(
+                                      backgroundColor:
+                                          Color.fromRGBO(209, 214, 217, 1),
+                                      radius: 3,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                                    child: Text(
+                                      unit == null ? '-' : unit.toString(),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(239, 173, 66, 1),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if (connection == true) {
-                            filter();
-                          }
-                        },
-                        child: Container(
-                            margin: const EdgeInsets.fromLTRB(10, 0, 15, 0),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.filter_alt_outlined,
-                                size: 30,
-                                color: Color.fromRGBO(1, 98, 153, 1),
-                              ),
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                    child: Container(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                        child: RefreshIndicator(
-                            onRefresh: refresh,
-                            child: ListView.builder(
-                                controller: controller,
-                                itemCount: items.length + 1,
-                                itemBuilder: (context, index) {
-                                  if (index < items.length) {
-                                    final item = items[index];
-                                    return TaskCard(
-                                        id: item.itemId,
-                                        dueDate: item.dueStatus == "1"
-                                            ? 'OVERDUEJOBS'
-                                            : item.dueStatus == "2"
-                                                ? 'DUE IN 3 DAY'
-                                                : item.dueStatus == "3"
-                                                    ? "DUE IN 1 WEEK"
-                                                    : item.dueStatus == "4"
-                                                        ? "DUE IN 1 MONTH"
-                                                        : item.dueStatus == "5"
-                                                            ? 'DUE IN 3 MONTH'
-                                                            : item.dueStatus ==
-                                                                    "6"
-                                                                ? "ISSUED LAST 3 DAYS"
-                                                                : item.dueStatus ==
-                                                                        "7"
-                                                                    ? "OPEN"
-                                                                    : item.dueStatus ==
-                                                                            "8"
-                                                                        ? "CLOSE"
-                                                                        : item.dueStatus ==
-                                                                                "9"
-                                                                            ? "EXTENSION 1"
-                                                                            : item.dueStatus ==
-                                                                                    "10"
-                                                                                ? "CLOSED BY SWIFT"
-                                                                                : item.dueStatus ==
-                                                                                        "11"
-                                                                                    ? "NOCATEGORY"
-                                                                                    : item.dueStatus ==
-                                                                                            "11"
-                                                                                        ? "NAMCLOSE"
-                                                                                        : '-',
-                                        cardBackgroundColor: item.priority,
-                                        lastFollow: item.lastFollow != null
-                                            ? item.lastFollow['Follow']
-                                            : '-',
-                                        labelColor: item.priority,
-                                        labelText: item.priority,
-                                        title: item.acreg,
-                                        code: item.itemId,
-                                        info: item.subject,
-                                        itemId: item.itemId,
-                                        dateOccur: item.dateoccur,
-                                        statusDue: item.dueStatus == "1"
-                                            ? 'OVERDUEJOBS'
-                                            : item.dueStatus == "2"
-                                                ? 'DUE IN 3 DAY'
-                                                : item.dueStatus == "3"
-                                                    ? "DUE IN 1 WEEK"
-                                                    : item.dueStatus == "4"
-                                                        ? "DUE IN 1 MONTH"
-                                                        : item.dueStatus == "5"
-                                                            ? 'DUE IN 3 MONTH'
-                                                            : item.dueStatus ==
-                                                                    "6"
-                                                                ? "ISSUED LAST 3 DAYS"
-                                                                : item.dueStatus ==
-                                                                        "7"
-                                                                    ? "OPEN"
-                                                                    : item.dueStatus ==
-                                                                            "8"
-                                                                        ? "CLOSE"
-                                                                        : item.dueStatus ==
-                                                                                "9"
-                                                                            ? "EXTENSION 1"
-                                                                            : item.dueStatus == "10"
-                                                                                ? "CLOSED BY SWIFT"
-                                                                                : item.dueStatus == "11"
-                                                                                    ? "NOCATEGORY"
-                                                                                    : item.dueStatus == "11"
-                                                                                        ? "NAMCLOSE"
-                                                                                        : '-',
-                                        dateInsert: DateFormat('d MMM y').format(item.duedate),
-                                        description: item.description,
-                                        categoryDesc: item.categoryText,
-                                        token: token);
-                                  } else {
-                                    if (hasMore == true) {
-                                      return const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 32),
-                                        child: Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Total : ',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                  Text(
+                                    totalData.toString() == 'null'
+                                        ? '-'
+                                        : totalData.toString(),
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                  child: Container(
+                                margin: const EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                child: TextField(
+                                  mouseCursor: MouseCursor.defer,
+                                  textInputAction: TextInputAction.go,
+                                  onSubmitted: ((value) {
+                                    if (value.isNotEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            behavior: SnackBarBehavior.floating,
+                                            backgroundColor: Colors.green,
+                                            duration: Duration(seconds: 1),
+                                            content: Text(
+                                              'Finding data...',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            )),
                                       );
-                                    } else {
-                                      return const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 32),
-                                        child: Center(
-                                          child: Text('Data not available!'),
-                                        ),
-                                      );
+                                      setState(() {
+                                        connection = false;
+                                        hasMore = true;
+                                        page = 1;
+                                        isLoading = false;
+                                        items.clear();
+                                      });
+                                      filterACREG(
+                                          token, value, filterList, sort, by);
+                                      controller.addListener(() {
+                                        if (controller
+                                                .position.maxScrollExtent ==
+                                            controller.offset) {
+                                          filterACREG(token, value, filterList,
+                                              sort, by);
+                                        }
+                                      });
                                     }
+                                  }),
+                                  controller: _search,
+                                  decoration: InputDecoration(
+                                      prefixIcon: const Icon(Icons.search),
+                                      prefixIconColor:
+                                          const Color.fromRGBO(1, 98, 153, 1),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color:
+                                                Color.fromRGBO(1, 98, 153, 1)),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      contentPadding: const EdgeInsets.all(14),
+                                      suffixIcon: _search.text.isNotEmpty
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                _search.clear();
+                                                refresh();
+                                                FocusScope.of(context)
+                                                    .requestFocus(FocusNode());
+                                              },
+                                              child: Icon(Icons.close))
+                                          : null,
+                                      hintText: 'insert keyword'),
+                                  onChanged: onChanged,
+                                ),
+                              )),
+                              GestureDetector(
+                                onTap: () {
+                                  if (connection == true) {
+                                    setState(() {
+                                      connection = false;
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          duration: Duration(seconds: 2),
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: Colors.green,
+                                          content: Text(
+                                            'Finding data...',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          )),
+                                    );
+                                    refresh();
                                   }
-                                }))))
-              ],
-            ),
-          ))),
-    ));
+                                },
+                                child: Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        Icons.search,
+                                        size: 30,
+                                        color: Color.fromRGBO(1, 98, 153, 1),
+                                      ),
+                                    )),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (connection == true) {
+                                    filter();
+                                  }
+                                },
+                                child: Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        Icons.filter_alt_outlined,
+                                        size: 30,
+                                        color: Color.fromRGBO(1, 98, 153, 1),
+                                      ),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                            child: Container(
+                                padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                                child: RefreshIndicator(
+                                    onRefresh: refresh,
+                                    child: ListView.builder(
+                                        controller: controller,
+                                        itemCount: items.length + 1,
+                                        itemBuilder: (context, index) {
+                                          if (index < items.length) {
+                                            final item = items[index];
+                                            return TaskCard(
+                                                id: item.itemId,
+                                                dueDate: item.dueStatus == "1"
+                                                    ? 'OVERDUEJOBS'
+                                                    : item.dueStatus == "2"
+                                                        ? 'DUE IN 3 DAY'
+                                                        : item.dueStatus == "3"
+                                                            ? "DUE IN 1 WEEK"
+                                                            : item.dueStatus ==
+                                                                    "4"
+                                                                ? "DUE IN 1 MONTH"
+                                                                : item.dueStatus ==
+                                                                        "5"
+                                                                    ? 'DUE IN 3 MONTH'
+                                                                    : item.dueStatus ==
+                                                                            "6"
+                                                                        ? "ISSUED LAST 3 DAYS"
+                                                                        : item.dueStatus ==
+                                                                                "7"
+                                                                            ? "OPEN"
+                                                                            : item.dueStatus == "8"
+                                                                                ? "CLOSE"
+                                                                                : item.dueStatus == "9"
+                                                                                    ? "EXTENSION 1"
+                                                                                    : item.dueStatus == "10"
+                                                                                        ? "CLOSED BY SWIFT"
+                                                                                        : item.dueStatus == "11"
+                                                                                            ? "NOCATEGORY"
+                                                                                            : item.dueStatus == "11"
+                                                                                                ? "NAMCLOSE"
+                                                                                                : '-',
+                                                cardBackgroundColor: item.priority,
+                                                lastFollow: item.lastFollow != null ? item.lastFollow['Follow'] : '-',
+                                                labelColor: item.priority,
+                                                labelText: item.priority,
+                                                title: item.acreg,
+                                                code: item.itemId,
+                                                info: item.subject,
+                                                itemId: item.itemId,
+                                                dateOccur: item.dateoccur,
+                                                statusDue: item.dueStatus == "1"
+                                                    ? 'OVERDUEJOBS'
+                                                    : item.dueStatus == "2"
+                                                        ? 'DUE IN 3 DAY'
+                                                        : item.dueStatus == "3"
+                                                            ? "DUE IN 1 WEEK"
+                                                            : item.dueStatus == "4"
+                                                                ? "DUE IN 1 MONTH"
+                                                                : item.dueStatus == "5"
+                                                                    ? 'DUE IN 3 MONTH'
+                                                                    : item.dueStatus == "6"
+                                                                        ? "ISSUED LAST 3 DAYS"
+                                                                        : item.dueStatus == "7"
+                                                                            ? "OPEN"
+                                                                            : item.dueStatus == "8"
+                                                                                ? "CLOSE"
+                                                                                : item.dueStatus == "9"
+                                                                                    ? "EXTENSION 1"
+                                                                                    : item.dueStatus == "10"
+                                                                                        ? "CLOSED BY SWIFT"
+                                                                                        : item.dueStatus == "11"
+                                                                                            ? "NOCATEGORY"
+                                                                                            : item.dueStatus == "11"
+                                                                                                ? "NAMCLOSE"
+                                                                                                : '-',
+                                                dateInsert: DateFormat('d MMM y').format(item.duedate),
+                                                description: item.description,
+                                                categoryDesc: item.categoryText,
+                                                token: token);
+                                          } else {
+                                            if (hasMore == true) {
+                                              return const Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 32),
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              );
+                                            } else {
+                                              return Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 32),
+                                                child: Center(
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        margin:
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 0, 0, 20),
+                                                        child: Text(
+                                                            'Data not available!'),
+                                                      ),
+                                                      Container(
+                                                        margin:
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 0, 0, 10),
+                                                        child:
+                                                            RoundedLoadingButton(
+                                                          color: Color.fromRGBO(
+                                                              1, 98, 153, 1),
+                                                          duration: Duration(
+                                                              milliseconds: 1),
+                                                          height: 35,
+                                                          width: 100,
+                                                          controller:
+                                                              _btnController,
+                                                          onPressed: () =>
+                                                              refresh(),
+                                                          child: Text('Refresh',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white)),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin:
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 0, 0, 10),
+                                                        child:
+                                                            RoundedLoadingButton(
+                                                          color: Color.fromRGBO(
+                                                              1, 98, 153, 1),
+                                                          duration: Duration(
+                                                              milliseconds: 1),
+                                                          height: 35,
+                                                          width: 100,
+                                                          controller:
+                                                              _btnController,
+                                                          onPressed: () =>
+                                                              reset(),
+                                                          child: Text('Reset',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white)),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          }
+                                        }))))
+                      ],
+                    ),
+                  ))),
+            )));
   }
 
   Future<bool> onWillPop() {
@@ -1358,160 +1511,134 @@ class _TaskToDoPageState extends State<TaskToDoPage> {
                           ),
                         )),
                     onChanged: (value) {
-                      setState(() {
-                        orderSelect = null;
-                        sort = 'Duedate';
-                        by = 'desc';
-                      });
-                      filterIssuedate.add(value!);
-                      passingSort();
-                      setState(() {
+                      issuedateValue.clear();
+                      filterIssuedate.clear();
+                      if (value != null) {
+                        filterIssuedate.add(value);
+                        passingSort();
                         orderSelect = value;
                         sort = issuedateValue[0] == null
                             ? 'Duedate'
                             : issuedateValue[0];
                         by = issuedateValue[0] == null ? 'desc' : 'asc';
-                      });
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(25, 30, 25, 10),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(1, 98, 153, 1),
-                        minimumSize: const Size.fromHeight(45),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {
-                      if (priorityValue.isEmpty &&
-                          filterAcreg.isEmpty &&
-                          actypeValue.isEmpty &&
-                          filterCustomer.isEmpty &&
-                          statusValue.isEmpty &&
-                          categoryValue.isEmpty &&
-                          issuedateValue.isEmpty) {
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              behavior: SnackBarBehavior.floating,
-                              backgroundColor: Colors.red,
-                              content: Text(
-                                "Can't filtering data, please select one!",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              )),
-                        );
                       } else {
-                        setState(() {
-                          connection = false;
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              behavior: SnackBarBehavior.floating,
-                              backgroundColor: Colors.green,
-                              content: Text(
-                                "Filtering data...",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              )),
-                        );
-                        if (priorityLast.length == priorityValue.length &&
-                            acregLast.length == filterAcreg.length &&
-                            acrtypeLast.length == actypeValue.length &&
-                            customerLast.length == filterCustomer.length &&
-                            statusLast.length == statusLast.length &&
-                            categoryLast.length == categoryValue.length) {
-                          Navigator.pop(context);
-                          refresh();
-                        } else {
-                          filterList.clear();
-
-                          priorityLast.clear();
-                          acregLast.clear();
-                          acrtypeLast.clear();
-                          customerLast.clear();
-                          statusLast.clear();
-                          categoryLast.clear();
-
-                          priorityLast.addAll(priorityValue);
-                          acregLast.addAll(filterAcreg);
-                          acrtypeLast.addAll(actypeValue);
-                          customerLast.addAll(filterCustomer);
-                          statusLast.addAll(statusLast);
-                          categoryLast.addAll(categoryValue);
-                          filterList.add({
-                            'filter_priority': priorityValue,
-                            'filter_ac_reg': filterAcreg,
-                            'filter_ac_type': actypeValue,
-                            'filter_customer': filterCustomer,
-                            'filter_status': statusValue,
-                            'filter_category': categoryValue,
-                          });
-                          filterListLast.addAll(filterList);
-
-                          Navigator.pop(context);
-                          refresh();
-                        }
-                      }
-                    },
-                    child: const Text(
-                      'Filter',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(25, 5, 25, 10),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 153, 1, 1),
-                        minimumSize: const Size.fromHeight(45),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      filterList.clear();
-                      //clear priority
-                      priorityValue.clear();
-                      priorityValueLabel.clear();
-                      filterPriority.clear();
-                      //clear acreg
-                      filterAcreg.clear();
-                      //clear actype
-                      actypeValueLabel.clear();
-                      actypeValue.clear();
-                      filterActype.clear();
-                      //clear customer
-                      filterCustomer.clear();
-                      //clear status
-                      statusValue.clear();
-                      statusValueLabel.clear();
-                      filterStatus.clear();
-                      //clear category
-                      categoryValue.clear();
-                      categoryValueLabel.clear();
-                      filterCategory.clear();
-                      setState(() {
+                        orderSelect = null;
                         sort = 'Duedate';
                         by = 'desc';
-                        orderSelect = null;
-                      });
-                      refresh();
+                      }
                     },
-                    child: const Text(
-                      'Reset',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
                   ),
                 ),
+                Container(
+                    margin: const EdgeInsets.fromLTRB(25, 30, 25, 10),
+                    child: RoundedLoadingButton(
+                      borderRadius: 10,
+                      height: 45,
+                      width: 340,
+                      color: Color.fromRGBO(1, 98, 153, 1),
+                      controller: _btnController,
+                      onPressed: () {
+                        if (priorityValue.isEmpty &&
+                            filterAcreg.isEmpty &&
+                            actypeValue.isEmpty &&
+                            filterCustomer.isEmpty &&
+                            statusValue.isEmpty &&
+                            categoryValue.isEmpty &&
+                            orderSelect == null) {
+                          Timer(Duration(seconds: 1), () {
+                            _btnController.reset();
+                          });
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 3),
+                                content: Text(
+                                  "Can't filtering data, please select one!",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )),
+                          );
+                        } else {
+                          setState(() {
+                            connection = false;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 1),
+                                content: Text(
+                                  "Filtering data...",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )),
+                          );
+                          if (priorityLast.length == priorityValue.length &&
+                              acregLast.length == filterAcreg.length &&
+                              acrtypeLast.length == actypeValue.length &&
+                              customerLast.length == filterCustomer.length &&
+                              statusLast.length == filterStatus.length &&
+                              categoryLast.length == categoryValue.length) {
+                            Navigator.pop(context);
+                            refresh();
+                          } else {
+                            filterList.clear();
+
+                            priorityLast.clear();
+                            acregLast.clear();
+                            acrtypeLast.clear();
+                            customerLast.clear();
+                            statusLast.clear();
+                            categoryLast.clear();
+
+                            priorityLast.addAll(priorityValue);
+                            acregLast.addAll(filterAcreg);
+                            acrtypeLast.addAll(actypeValue);
+                            customerLast.addAll(filterCustomer);
+                            statusLast.addAll(statusLast);
+                            categoryLast.addAll(categoryValue);
+                            filterList.add({
+                              'filter_priority': priorityValue,
+                              'filter_ac_reg': filterAcreg,
+                              'filter_ac_type': actypeValue,
+                              'filter_customer': filterCustomer,
+                              'filter_status': statusValue,
+                              'filter_category': categoryValue,
+                            });
+                            filterListLast.addAll(filterList);
+                            refresh();
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
+                      child:
+                          Text('Filter', style: TextStyle(color: Colors.white)),
+                    )),
+                Container(
+                    margin: const EdgeInsets.fromLTRB(25, 5, 25, 10),
+                    child: RoundedLoadingButton(
+                      borderRadius: 10,
+                      height: 45,
+                      width: 340,
+                      color: Color.fromARGB(255, 153, 1, 1),
+                      controller: _btnController,
+                      onPressed: () {
+                        Navigator.pop(context);
+                        reset();
+                      },
+                      child:
+                          Text('Reset', style: TextStyle(color: Colors.white)),
+                    )),
               ],
             ),
           );
         });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

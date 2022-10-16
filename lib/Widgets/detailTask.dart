@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Pages/follow_on_list_page.dart';
 import 'package:hil_mobile/Pages/task_details_page.dart';
@@ -5,6 +7,7 @@ import 'package:hil_mobile/Services/authService.dart';
 import 'package:hil_mobile/Services/followService.dart';
 import 'package:hil_mobile/Services/optionService.dart';
 import 'package:intl/intl.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class DetailTask extends StatefulWidget {
   dynamic itemId,
@@ -70,7 +73,8 @@ class DetailTask extends StatefulWidget {
 
 class _DetailTaskState extends State<DetailTask> {
   final _formKey = GlobalKey<FormState>();
-
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
   final TextEditingController _maintenance = TextEditingController();
 
   final TextEditingController _partName = TextEditingController();
@@ -113,7 +117,8 @@ class _DetailTaskState extends State<DetailTask> {
         element.forEach((element) {
           listOption.add(
             DropdownMenuItem(
-                value: element['optionID'], child: Text(element['long_name'])),
+                value: element['optionID'].toString(),
+                child: Text(element['long_name'])),
           );
         });
       });
@@ -122,7 +127,7 @@ class _DetailTaskState extends State<DetailTask> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         Align(
           alignment: Alignment.topLeft,
@@ -849,10 +854,10 @@ class _DetailTaskState extends State<DetailTask> {
                                                                 .all(13)),
                                                     onChanged:
                                                         (dynamic newValue) {
-                                                      setState(() {
-                                                        widget.reason =
-                                                            newValue!;
-                                                      });
+                                                      // setState(() {
+                                                      widget.reason = newValue!;
+                                                      // });
+                                                      print(newValue);
                                                     },
                                                     items: listReason),
                                                 Container(
@@ -1220,86 +1225,87 @@ class _DetailTaskState extends State<DetailTask> {
                                             ),
                                           ),
                                           Container(
-                                            margin: const EdgeInsets.fromLTRB(
-                                                15, 20, 15, 20),
-                                            child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      const Color.fromRGBO(
-                                                          1, 98, 153, 1),
-                                                  minimumSize:
-                                                      const Size.fromHeight(45),
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10))),
-                                              onPressed: () {
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                        duration: Duration(
-                                                            seconds: 1),
-                                                        behavior:
-                                                            SnackBarBehavior
-                                                                .floating,
-                                                        content: Text(
-                                                            'Add follow on job...')),
-                                                  );
-                                                  FollowService.updateFollow(
-                                                          widget.itemId,
-                                                          widget.token,
-                                                          _maintenance.text,
-                                                          nextUnit,
-                                                          _partNumber.text,
-                                                          _partName.text,
-                                                          _snIn.text,
-                                                          _snOut.text,
-                                                          widget.reason,
-                                                          widget.optionId)
-                                                      .then((value) {
-                                                    Navigator.pop(context);
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0, 25, 0, 25),
+                                              child: RoundedLoadingButton(
+                                                borderRadius: 10,
+                                                height: 45,
+                                                width: 340,
+                                                color: Color.fromRGBO(
+                                                    1, 98, 153, 1),
+                                                // ignore: sort_child_properties_last
+                                                child: Text('Save',
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                                controller: _btnController,
+                                                onPressed: () {
+                                                  if (_formKey.currentState!
+                                                      .validate()) {
                                                     ScaffoldMessenger.of(
                                                             context)
                                                         .showSnackBar(
-                                                      SnackBar(
+                                                      const SnackBar(
+                                                          duration: Duration(
+                                                              seconds: 1),
                                                           behavior:
                                                               SnackBarBehavior
                                                                   .floating,
-                                                          backgroundColor:
-                                                              Colors.green,
                                                           content: Text(
-                                                            value['message'],
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          )),
+                                                              'Add follow on job...')),
                                                     );
-                                                    Navigator
-                                                        .pushReplacementNamed(
-                                                            context,
-                                                            TaskDetailsPage
-                                                                .routeName,
-                                                            arguments: {
-                                                          "itemId":
-                                                              widget.itemId,
-                                                          "token": widget.token,
-                                                          "statusName":
-                                                              widget.statusName
-                                                        });
-                                                  });
-                                                }
-                                              },
-                                              child: const Text(
-                                                'Save',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                          ),
+                                                    FollowService.updateFollow(
+                                                            widget.itemId,
+                                                            widget.token,
+                                                            _maintenance.text,
+                                                            nextUnit,
+                                                            _partNumber.text,
+                                                            _partName.text,
+                                                            _snIn.text,
+                                                            _snOut.text,
+                                                            widget.reason,
+                                                            widget.optionId)
+                                                        .then((value) {
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                            duration: Duration(
+                                                                seconds: 1),
+                                                            behavior:
+                                                                SnackBarBehavior
+                                                                    .floating,
+                                                            backgroundColor:
+                                                                Colors.green,
+                                                            content: Text(
+                                                              value['message'],
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            )),
+                                                      );
+                                                      Navigator
+                                                          .pushReplacementNamed(
+                                                              context,
+                                                              TaskDetailsPage
+                                                                  .routeName,
+                                                              arguments: {
+                                                            "itemId":
+                                                                widget.itemId,
+                                                            "token":
+                                                                widget.token,
+                                                            "statusName": widget
+                                                                .statusName
+                                                          });
+                                                    });
+                                                  } else {
+                                                    Timer(Duration(seconds: 1),
+                                                        () {
+                                                      _btnController.reset();
+                                                    });
+                                                  }
+                                                },
+                                              )),
                                         ],
                                       ),
                                     )),
