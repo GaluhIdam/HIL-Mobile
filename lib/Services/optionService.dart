@@ -22,7 +22,8 @@ class OptionService {
         parsed.forEach((element) {
           dataOption.add(
             DropdownMenuItem(
-                value: element['optionID'], child: Text(element['long_name'])),
+                value: element['optionID'].toString(),
+                child: Text(element['long_name'])),
           );
         });
         return dataOption;

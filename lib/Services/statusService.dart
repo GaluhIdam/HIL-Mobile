@@ -22,7 +22,8 @@ class StatusService {
         parsed.forEach((element) {
           dataStatus.add(
             DropdownMenuItem(
-                value: element['StatusNo'], child: Text(element['StatusDesc'])),
+                value: element['StatusNo'].toString(),
+                child: Text(element['StatusDesc'])),
           );
         });
         return dataStatus;

@@ -3,7 +3,6 @@ import 'package:hil_mobile/Models/followlistModel.dart';
 import 'package:hil_mobile/Services/authService.dart';
 import 'package:hil_mobile/Services/followService.dart';
 import 'package:hil_mobile/Widgets/followlList.dart';
-import 'package:intl/intl.dart';
 
 class FollowOnListPage extends StatefulWidget {
   static const routeName = "/follow_on_list_page";
@@ -78,9 +77,12 @@ class _FollowOnListPageState extends State<FollowOnListPage> {
                               if (listFollow.isNotEmpty) {
                                 return FollowListCard(
                                     labelNumber: index.toString(),
-                                    dateFO: DateFormat('y-MM-dd').format(
-                                        DateTime.parse(
-                                            listFollow[index].dateFo)),
+                                    dateFO: listFollow[index].dateFo.length > 11
+                                        ? listFollow[index]
+                                            .dateFo
+                                            .substring(0, 10)
+                                        : listFollow[index].dateFo.substring(
+                                            0, listFollow[index].dateFo.length),
                                     unit: listFollow[index].unitFo == "   "
                                         ? '-'
                                         : listFollow[index].unitFo ?? '-',

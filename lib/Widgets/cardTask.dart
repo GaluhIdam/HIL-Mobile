@@ -40,894 +40,227 @@ class TaskCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return cardBackgroundColor == 'HIGH'
-        ? Card(
-            elevation: 0,
-            margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-            color: const Color.fromRGBO(255, 239, 239, 1),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TaskDetailsPage.routeName,
-                  arguments: {
-                    "itemId": itemId,
-                    "dueStatus": statusDue,
-                    "priority": cardBackgroundColor
-                  },
-                );
-              },
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(51, 51, 51, 1),
-                                    border: Border.all(
-                                        color: const Color.fromRGBO(
-                                            51, 51, 51, 1)),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    categoryDesc,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )),
-                            Container(
-                                margin: const EdgeInsets.fromLTRB(7, 0, 0, 0),
-                                decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(181, 12, 12, 1),
-                                    border: Border.all(
-                                        color: const Color.fromRGBO(
-                                            181, 12, 12, 1)),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    labelText,
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                                  ),
-                                )),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
-                    child: Row(
-                      children: [
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                          child: const Text(
-                            '|',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w200,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          code,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                    child: Text(
-                      info,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(1, 98, 153, 1),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                    child: Row(
+    return GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+          Navigator.pushNamed(
+            context,
+            TaskDetailsPage.routeName,
+            arguments: {
+              "itemId": itemId,
+              "dueStatus": statusDue,
+              "priority": cardBackgroundColor
+            },
+          );
+        },
+        child: Card(
+          elevation: 0,
+          margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+          color: cardBackgroundColor == 'HIGH'
+              ? Color.fromRGBO(255, 239, 239, 1)
+              : cardBackgroundColor == 'MEDIUM'
+                  ? Color.fromARGB(255, 255, 239, 226)
+                  : cardBackgroundColor == 'LOW'
+                      ? Color.fromARGB(255, 255, 248, 224)
+                      : Color.fromARGB(255, 241, 241, 241),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(15, 15, 0, 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
                         Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 40, 0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Due: ',
+                            margin: const EdgeInsets.fromLTRB(0, 0, 3, 0),
+                            decoration: BoxDecoration(
+                                color: const Color.fromRGBO(51, 51, 51, 1),
+                                border: Border.all(
+                                    color: const Color.fromRGBO(51, 51, 51, 1)),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: EdgeInsets.all(7.5),
+                              child: Text(
+                                categoryDesc,
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white),
                               ),
-                              Text(
-                                dueDate,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromRGBO(224, 13, 13, 1),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Issue: ',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Text(
-                                dateInsert,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          description,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: Divider(
-                      color: Colors.black,
-                    ),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.fromLTRB(15, 5, 15, 3),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text('Last Follow :',
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
                             )),
-                      )),
-                  Container(
-                      margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          lastFollow.toString(),
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-          )
-        : cardBackgroundColor == "MEDIUM"
-            ? Card(
-                elevation: 0,
-                margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                color: Color.fromARGB(255, 255, 239, 226),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      TaskDetailsPage.routeName,
-                      arguments: {
-                        "itemId": itemId,
-                        "dueStatus": statusDue,
-                        "priority": cardBackgroundColor
-                      },
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                    decoration: BoxDecoration(
-                                        color:
-                                            const Color.fromRGBO(51, 51, 51, 1),
-                                        border: Border.all(
-                                            color: const Color.fromRGBO(
-                                                51, 51, 51, 1)),
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                        categoryDesc,
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white),
-                                      ),
-                                    )),
-                                Container(
-                                    margin:
-                                        const EdgeInsets.fromLTRB(7, 0, 0, 0),
-                                    decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 255, 116, 16),
-                                        border: Border.all(
-                                            color: const Color.fromARGB(
-                                                255, 255, 116, 16)),
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        labelText,
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white),
-                                      ),
-                                    )),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
-                        child: Row(
-                          children: [
-                            Text(
-                              title,
-                              style: const TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                              child: const Text(
-                                '|',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.black,
+                        Container(
+                            margin: const EdgeInsets.fromLTRB(3, 0, 0, 0),
+                            decoration: BoxDecoration(
+                                color: cardBackgroundColor == 'HIGH'
+                                    ? Color.fromARGB(255, 189, 0, 0)
+                                    : cardBackgroundColor == 'MEDIUM'
+                                        ? Color.fromARGB(255, 255, 116, 16)
+                                        : cardBackgroundColor == 'LOW'
+                                            ? Color.fromRGBO(255, 200, 16, 1)
+                                            : Color.fromARGB(
+                                                255, 149, 149, 149),
+                                border: Border.all(
+                                  color: cardBackgroundColor == 'HIGH'
+                                      ? Color.fromARGB(255, 189, 0, 0)
+                                      : cardBackgroundColor == 'MEDIUM'
+                                          ? Color.fromARGB(255, 255, 116, 16)
+                                          : cardBackgroundColor == 'LOW'
+                                              ? Color.fromRGBO(255, 200, 16, 1)
+                                              : Color.fromARGB(
+                                                  255, 149, 149, 149),
                                 ),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(7.5),
+                              child: Text(
+                                labelText,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white),
                               ),
-                            ),
-                            Text(
-                              code,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
+                child: Row(
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
-                      Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                        child: Text(
-                          info,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(1, 98, 153, 1),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 0, 40, 0),
-                              child: Row(
-                                children: [
-                                  const Text(
-                                    'Due: ',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    dueDate,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color.fromRGBO(224, 13, 13, 1),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                              child: Row(
-                                children: [
-                                  const Text(
-                                    'Issue: ',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    dateInsert,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              description,
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                          )),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        child: Divider(
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      child: const Text(
+                        '|',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w200,
                           color: Colors.black,
                         ),
                       ),
-                      Container(
-                          margin: const EdgeInsets.fromLTRB(15, 5, 15, 3),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text('Last Follow :',
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                )),
-                          )),
-                      Container(
-                          margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              lastFollow,
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                          )),
-                    ],
+                    ),
+                    Text(
+                      code,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.fromLTRB(15, 0, 0, 5),
+                child: Text(
+                  info,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromRGBO(1, 98, 153, 1),
                   ),
                 ),
-              )
-            : cardBackgroundColor == "LOW"
-                ? Card(
-                    elevation: 0,
-                    margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    color: Color.fromARGB(255, 255, 248, 224),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'Due: ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          dueDate,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(224, 13, 13, 1),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          TaskDetailsPage.routeName,
-                          arguments: {
-                            "itemId": itemId,
-                            "dueStatus": statusDue,
-                            "priority": cardBackgroundColor
-                          },
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            0, 0, 0, 0),
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                51, 51, 51, 1),
-                                            border: Border.all(
-                                                color: const Color.fromRGBO(
-                                                    51, 51, 51, 1)),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text(
-                                            categoryDesc,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white),
-                                          ),
-                                        )),
-                                    Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            7, 0, 0, 0),
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                255, 200, 16, 1),
-                                            border: Border.all(
-                                                color: const Color.fromRGBO(
-                                                    255, 200, 16, 1)),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            labelText,
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white),
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
-                            child: Row(
-                              children: [
-                                Text(
-                                  title,
-                                  style: const TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                  child: const Text(
-                                    '|',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  code,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                            child: Text(
-                              info,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(1, 98, 153, 1),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(0, 0, 40, 0),
-                                  child: Row(
-                                    children: [
-                                      const Text(
-                                        'Due: ',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        dueDate,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(224, 13, 13, 1),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                                  child: Row(
-                                    children: [
-                                      const Text(
-                                        'Issue: ',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        dateInsert,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                              margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  description,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: Divider(
-                              color: Colors.black,
-                            ),
-                          ),
-                          Container(
-                              margin: const EdgeInsets.fromLTRB(15, 5, 15, 3),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text('Last Follow :',
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                              )),
-                          Container(
-                              margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  lastFollow.toString(),
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )),
-                        ],
+                    Text(
+                      'Issue: $dateInsert',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
                       ),
                     ),
-                  )
-                : Card(
-                    elevation: 0,
-                    margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    color: Color.fromARGB(255, 241, 241, 241),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          TaskDetailsPage.routeName,
-                          arguments: {
-                            "itemId": itemId,
-                            "dueStatus": statusDue,
-                            "priority": cardBackgroundColor
-                          },
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            0, 0, 0, 0),
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(
-                                                51, 51, 51, 1),
-                                            border: Border.all(
-                                                color: const Color.fromRGBO(
-                                                    51, 51, 51, 1)),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text(
-                                            categoryDesc,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white),
-                                          ),
-                                        )),
-                                    Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            7, 0, 0, 0),
-                                        decoration: BoxDecoration(
-                                            color: Color.fromARGB(
-                                                255, 149, 149, 149),
-                                            border: Border.all(
-                                                color: const Color.fromARGB(
-                                                    255, 149, 149, 149)),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            labelText,
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white),
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
-                            child: Row(
-                              children: [
-                                Text(
-                                  title,
-                                  style: const TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                  child: const Text(
-                                    '|',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  code,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                            child: Text(
-                              info,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(1, 98, 153, 1),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(0, 0, 40, 0),
-                                  child: Row(
-                                    children: [
-                                      const Text(
-                                        'Due: ',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        dueDate,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromRGBO(224, 13, 13, 1),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                                  child: Row(
-                                    children: [
-                                      const Text(
-                                        'Issue: ',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        dateInsert,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                              margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  description,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: Divider(
-                              color: Colors.black,
-                            ),
-                          ),
-                          Container(
-                              margin: const EdgeInsets.fromLTRB(15, 5, 15, 3),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text('Last Follow :',
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                              )),
-                          Container(
-                              margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  lastFollow.toString(),
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )),
-                        ],
+                  ],
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      description,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
                     ),
-                  );
+                  )),
+              Container(
+                margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: Divider(
+                  color: Colors.black,
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text('Last Follow :',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        )),
+                  )),
+              Container(
+                  margin: const EdgeInsets.fromLTRB(15, 5, 15, 15),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      lastFollow.toString(),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ));
   }
 }
