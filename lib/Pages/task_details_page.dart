@@ -64,6 +64,10 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
               setState(() {
                 staClose = listSTACLOSE[0][x]['StaCode'];
               });
+            } else {
+              setState(() {
+                staClose = detailTask[0]['staClose'];
+              });
             }
           }
         });

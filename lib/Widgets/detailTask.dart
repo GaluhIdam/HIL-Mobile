@@ -856,7 +856,6 @@ class _DetailTaskState extends State<DetailTask> {
                                                         contentPadding:
                                                             const EdgeInsets
                                                                 .all(13)),
-                                                    value: widget.reasonNo,
                                                     onChanged:
                                                         (dynamic newValue) {
                                                       setState(() {
@@ -920,9 +919,9 @@ class _DetailTaskState extends State<DetailTask> {
                                                                 .all(13)),
                                                     onChanged:
                                                         (String? newValue) {
-                                                      setState(() {
-                                                        nextUnit = newValue!;
-                                                      });
+                                                      // setState(() {
+                                                      nextUnit = newValue!;
+                                                      // });
                                                     },
                                                     items: listUnit),
                                                 Container(
@@ -1218,7 +1217,6 @@ class _DetailTaskState extends State<DetailTask> {
                                                         contentPadding:
                                                             const EdgeInsets
                                                                 .all(13)),
-                                                    value: widget.optionId,
                                                     onChanged:
                                                         (dynamic newValue) {
                                                       setState(() {
