@@ -18,7 +18,8 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage>
+    with AutomaticKeepAliveClientMixin {
   DateTime? currentBackPressTime;
   final List<DataSeries> data1 = [
     DataSeries(
@@ -123,6 +124,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         body: MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 0.8),
@@ -222,4 +224,7 @@ class _DashboardPageState extends State<DashboardPage> {
     }
     return Future.value(true);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

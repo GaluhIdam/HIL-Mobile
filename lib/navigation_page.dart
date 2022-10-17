@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hil_mobile/Pages/dashboard_page.dart';
 import 'package:hil_mobile/Pages/task_to_do_page.dart';
 
-const String page1 = "Task To Do";
-const String page2 = "HIL Management";
-
 class NavigationPage extends StatefulWidget {
   static const routeName = "/task_to_do_pages";
   const NavigationPage({Key? key}) : super(key: key);
@@ -14,61 +11,56 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  late List<Widget> _pages;
-  late Widget _page1;
-  late Widget _page2;
-  late int _currentIndex;
-  late Widget _currentPage;
+  final PageController _pageController = PageController();
+  final List<Widget> _screen = [TaskToDoPage(), DashboardPage()];
 
-  @override
-  void initState() {
-    super.initState();
-    _page1 = TaskToDoPage();
-    _page2 = DashboardPage();
-    _pages = [_page1, _page2];
-    _currentIndex = 0;
-    _currentPage = _page1;
+  int _selectedIndex = 0;
+
+  void _onPageChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  void _changeTab(int index) {
-    setState(() {
-      _currentIndex = index;
-      _currentPage = _pages[index];
-    });
+  void _onTap(int selectedIndex) {
+    _pageController.jumpToPage(selectedIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _currentPage,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        children: _screen,
+      ),
       bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) {
-            _changeTab(index);
-          },
-          currentIndex: _currentIndex,
-          items: const [
+          currentIndex: _selectedIndex,
+          onTap: _onTap,
+          items: [
             BottomNavigationBarItem(
-                label: page1,
+                label: 'Task To Do',
                 icon: Image(
                   image: AssetImage('assets/task_to_do.png'),
-                  width: 35,
-                  height: 40,
+                  width: 25,
+                  height: 30,
                 ),
                 activeIcon: Image(
                   image: AssetImage('assets/task_to_do_active.png'),
-                  width: 35,
-                  height: 40,
+                  width: 25,
+                  height: 30,
                 )),
             BottomNavigationBarItem(
-                label: page2,
+                label: 'HIL Management',
                 icon: Image(
                   image: AssetImage('assets/hil_management.png'),
-                  width: 35,
+                  width: 25,
+                  height: 30,
                 ),
                 activeIcon: Image(
                   image: AssetImage('assets/hil_management_active.png'),
-                  width: 35,
-                  height: 40,
+                  width: 25,
+                  height: 30,
                 )),
           ],
           selectedItemColor: Color.fromRGBO(1, 98, 153, 1)),
