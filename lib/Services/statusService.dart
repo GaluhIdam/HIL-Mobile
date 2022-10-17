@@ -112,6 +112,19 @@ class StatusService {
     }
   }
 
+  static Future getStationData(String? token) async {
+    String urlStation = getURL() + 'master-station';
+    final response = await http.get(Uri.parse(urlStation),
+        headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data'];
+      return parsed;
+    } else {
+      throw Exception('Failed to load stations');
+    }
+  }
+
   static Future updateStatus(
       dynamic itemId, token, status, staClose, desc) async {
     String urlStatus = getURL() + 'update-status/';

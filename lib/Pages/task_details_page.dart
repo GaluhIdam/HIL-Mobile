@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hil_mobile/Models/taskdetailModel.dart';
 import 'package:hil_mobile/Services/authService.dart';
+import 'package:hil_mobile/Services/followService.dart';
 import 'package:hil_mobile/Services/optionService.dart';
 import 'package:hil_mobile/Services/statusService.dart';
 import 'package:hil_mobile/Services/taskService.dart';
@@ -18,10 +21,15 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
   final _formKey = GlobalKey<FormState>();
 
   String? token;
+  String? reason;
+  String? reasonNo;
+  String? staClose;
 
   List<DropdownMenuItem<String>> dataOption = [];
   List<DropdownMenuItem<String>> dataStatus = [];
   List<DropdownMenuItem<String>> dataStation = [];
+  List<dynamic> listOptions = [];
+  List<dynamic> listSTACLOSE = [];
   List detailTask = [];
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
@@ -37,6 +45,27 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
       TaskService.getTaskDetail(passData['itemId'], token).then((value) {
         setState(() {
           detailTask = value;
+        });
+        FollowService.getReason(token).then((element) {
+          listOptions.add(element);
+          for (var i = 0; i < listOptions[0].length; i++) {
+            if (listOptions[0][i]['reasonNo'] == detailTask[0]['reason']) {
+              setState(() {
+                reason = listOptions[0][i]['reasonDesc'];
+                reasonNo = listOptions[0][i]['reasonNo'];
+              });
+            }
+          }
+        });
+        StatusService.getStationData(token).then((elementx) {
+          listSTACLOSE.add(elementx);
+          for (var x = 0; x < listSTACLOSE[0].length; x++) {
+            if (listSTACLOSE[0][x]['StaID'] == detailTask[0]['staClose']) {
+              setState(() {
+                staClose = listSTACLOSE[0][x]['StaCode'];
+              });
+            }
+          }
         });
       });
       OptionService.getOption(token).then((value) {
@@ -70,63 +99,71 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                     itemBuilder: (context, index) {
                       if (detailTask.isNotEmpty) {
                         return DetailTask(
-                          optionId: detailTask[index].optionId.toString(),
+                          reasonNo: reasonNo,
+                          stationClose: staClose ?? '-',
+                          optionId: detailTask[index]['optionID'],
                           token: token.toString(),
-                          reason: detailTask[index].reason.toString(),
-                          itemId: detailTask[index].itemId == null
+                          reason: reason,
+                          itemId: detailTask[index]['itemID'] == null
                               ? '-'
-                              : detailTask[index].itemId.toString(),
-                          subject: detailTask[index].subject == null
+                              : detailTask[index]['itemID'].toString(),
+                          subject: detailTask[index]['Subject'] == null
                               ? '-'
-                              : detailTask[index].subject.toString(),
-                          flightNumber: detailTask[index].flightNo == null
+                              : detailTask[index]['Subject'].toString(),
+                          flightNumber: detailTask[index]['FlightNo'] == null
                               ? '-'
-                              : detailTask[index].flightNo.toString(),
-                          aircraftType: detailTask[index].acType == null
+                              : detailTask[index]['FlightNo'].toString(),
+                          aircraftType: detailTask[index]['ACType'] == null
                               ? '-'
-                              : detailTask[index].acType.toString(),
-                          aircraftRegistration: detailTask[index].acreg == null
+                              : detailTask[index]['ACType'].toString(),
+                          aircraftRegistration:
+                              detailTask[index]['acreg'] == null
+                                  ? '-'
+                                  : detailTask[index]['acreg'].toString(),
+                          station: detailTask[index]['sta'] == null
                               ? '-'
-                              : detailTask[index].acreg.toString(),
-                          station: detailTask[index].sta == null
+                              : detailTask[index]['sta'].toString(),
+                          ata: detailTask[index]['ATANo'] == null
                               ? '-'
-                              : detailTask[index].sta.toString(),
-                          ata: detailTask[index].ataNo == null
+                              : detailTask[index]['ATANo'].toString(),
+                          sequenceNumber: detailTask[index]['SeqNo'] == null
                               ? '-'
-                              : detailTask[index].ataNo.toString(),
-                          sequenceNumber: detailTask[index].seqNo == null
+                              : detailTask[index]['SeqNo'].toString(),
+                          dateOccured: detailTask[index]['DateOccur'] ?? '-',
+                          dueDate: detailTask[index]['DueDate'] ?? '-',
+                          stationCode: detailTask[index]['StaCode'] == null
                               ? '-'
-                              : detailTask[index].seqNo.toString(),
-                          dateOccured: detailTask[index].dateOccur ?? '-',
-                          dueDate: detailTask[index].dueDate ?? '-',
-                          stationCode: detailTask[index].staCode == null
+                              : detailTask[index]['StaCode'].toString(),
+                          faultCode: detailTask[index]['sub_ata'] == null
                               ? '-'
-                              : detailTask[index].staCode.toString(),
-                          faultCode: detailTask[index].subAta == null
+                              : detailTask[index]['sub_ata'].toString(),
+                          categoryName: detailTask[index]['CategoryDesc'] ==
+                                  null
                               ? '-'
-                              : detailTask[index].subAta.toString(),
-                          categoryName: detailTask[index].categoryDesc == null
+                              : detailTask[index]['CategoryDesc'].toString(),
+                          techlog: detailTask[index]['TECHLOG'] == null
                               ? '-'
-                              : detailTask[index].categoryDesc.toString(),
-                          techlog: detailTask[index].techlog == null
-                              ? '-'
-                              : detailTask[index].techlog.toString(),
+                              : detailTask[index]['TECHLOG'].toString(),
                           ref: 'AML',
-                          refDdg: detailTask[index].ddgRef == null
+                          refDdg: detailTask[index]['DDGRef'] == null
                               ? '-'
-                              : detailTask[index].ddgRef.toString(),
-                          optionStatus: detailTask[index].longName == null
+                              : detailTask[index]['DDGRef'].toString(),
+                          optionStatus: detailTask[index]['long_name'] == null
                               ? '-'
-                              : detailTask[index].longName.toString(),
-                          description: detailTask[index].description == null
+                              : detailTask[index]['long_name'].toString(),
+                          description: detailTask[index]['Description'] == null
                               ? '-'
-                              : detailTask[index].description.toString(),
-                          partNumber: detailTask[index].partNbr == null
+                              : detailTask[index]['Description'].toString(),
+                          partNumber: detailTask[index]['PartNbr'] == null
                               ? '-'
-                              : detailTask[index].partNbr.toString(),
-                          partName: detailTask[index].partName == null
+                              : detailTask[index]['PartNbr'] == ""
+                                  ? '-'
+                                  : detailTask[index]['PartNbr'].toString(),
+                          partName: detailTask[index]['PartName'] == null
                               ? '-'
-                              : detailTask[index].partName.toString(),
+                              : detailTask[index]['PartName'] == ""
+                                  ? '-'
+                                  : detailTask[index]['PartName'].toString(),
                           statusName: dueStatus == "-"
                               ? priority
                               : dueStatus == null
@@ -158,6 +195,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
             height: 60,
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
@@ -246,7 +284,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                       },
                                                       initialValue:
                                                           detailTask[0]
-                                                              .description,
+                                                              ['Description'],
                                                       onChanged:
                                                           (dynamic valueDesc) {
                                                         detailTask[0]
@@ -316,8 +354,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                 ),
                                                                 filled: true,
                                                                 fillColor:
-                                                                    const Color
-                                                                            .fromRGBO(
+                                                                    const Color.fromRGBO(
                                                                         226,
                                                                         234,
                                                                         239,
@@ -327,12 +364,12 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                             .all(
                                                                         13)),
                                                         value: detailTask[0]
-                                                            .statusNo,
+                                                            ['StatusNo'],
                                                         onChanged:
                                                             (dynamic newValue) {
                                                           setState(() {
-                                                            detailTask[0]
-                                                                    .statusNo =
+                                                            detailTask[0][
+                                                                    'StatusNo'] =
                                                                 newValue!;
                                                           });
                                                         },
@@ -388,13 +425,11 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                     const EdgeInsets
                                                                             .all(
                                                                         13)),
-                                                        value: detailTask[0]
-                                                            .staClose,
+                                                        value: staClose,
                                                         onChanged:
                                                             (dynamic newValue) {
                                                           setState(() {
-                                                            detailTask[0]
-                                                                    .staClose =
+                                                            staClose =
                                                                 newValue!;
                                                           });
                                                         },
@@ -436,14 +471,13 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                         );
                                                         StatusService.updateStatus(
                                                                 detailTask[0]
-                                                                    .itemId,
+                                                                    ['itemID'],
                                                                 token,
-                                                                detailTask[0]
-                                                                    .statusNo,
-                                                                detailTask[0]
-                                                                    .staClose,
-                                                                detailTask[0]
-                                                                    .description)
+                                                                detailTask[0][
+                                                                    'StatusNo'],
+                                                                staClose,
+                                                                detailTask[0][
+                                                                    'Description'])
                                                             .then((value) {
                                                           Navigator.pop(
                                                               context);
@@ -512,8 +546,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                     statusName,
                                                                 "itemId":
                                                                     detailTask[
-                                                                            0]
-                                                                        .itemId,
+                                                                            0][
+                                                                        'itemID'],
                                                                 "token": token,
                                                               });
                                                         });
@@ -655,22 +689,23 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                             10),
                                                                   ),
                                                                   filled: true,
-                                                                  fillColor:
-                                                                      const Color.fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
+                                                                  fillColor: const Color
+                                                                          .fromRGBO(
+                                                                      226,
+                                                                      234,
+                                                                      239,
+                                                                      1),
                                                                   contentPadding:
-                                                                      const EdgeInsets.all(
+                                                                      const EdgeInsets
+                                                                              .all(
                                                                           13)),
                                                           value: detailTask[0]
-                                                              .optionId,
+                                                              ['optionID'],
                                                           onChanged: (dynamic
                                                               newValue) {
                                                             setState(() {
-                                                              detailTask[0]
-                                                                      .optionId =
+                                                              detailTask[0][
+                                                                      'optionID'] =
                                                                   newValue!;
                                                             });
                                                           },
@@ -713,11 +748,11 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                     'Updating data...')),
                                                           );
                                                           OptionService.updateOption(
-                                                                  detailTask[0]
-                                                                      .itemId,
+                                                                  detailTask[0][
+                                                                      'itemID'],
                                                                   token,
-                                                                  detailTask[0]
-                                                                      .optionId)
+                                                                  detailTask[0][
+                                                                      'optionID'])
                                                               .then((value) {
                                                             Navigator.pop(
                                                                 context);
@@ -758,10 +793,19 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                   "itemId":
                                                                       detailTask[
                                                                               0]
-                                                                          .itemId,
+                                                                          [
+                                                                          'itemID'],
                                                                   "token":
                                                                       token,
                                                                 });
+                                                          });
+                                                        } else {
+                                                          Timer(
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      1), () {
+                                                            _btnController
+                                                                .reset();
                                                           });
                                                         }
                                                       },
@@ -776,27 +820,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                         style:
                             TextStyle(color: Color.fromRGBO(239, 173, 66, 1)),
                       )),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
-                  width: MediaQuery.of(context).size.width / 3.7,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          side: const BorderSide(
-                              color: Color.fromRGBO(219, 219, 219, 1)),
-                          backgroundColor:
-                              const Color.fromRGBO(219, 219, 219, 1),
-                          minimumSize: const Size.fromHeight(5),
-                          // maximumSize: const Size.fromWidth(50),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      onPressed: () {},
-                      child: const Text(
-                        'Download',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                ),
+                )
               ],
             ),
           ),

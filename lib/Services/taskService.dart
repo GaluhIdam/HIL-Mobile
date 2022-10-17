@@ -27,16 +27,14 @@ class TaskService {
   }
 
 //Get Detail Data
-  static Future<List<TaskDetailData>> getTaskDetail(String id, token) async {
+  static Future getTaskDetail(String id, token) async {
     String urlTask = getURL() + 'task-detail/';
     final response = await http.get(Uri.parse(urlTask + id),
         headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      final parsed = json['data'].cast<Map<String, dynamic>>();
-      return parsed
-          .map<TaskDetailData>((json) => TaskDetailData.fromJson(json))
-          .toList();
+      final parsed = [json['data']];
+      return parsed;
     } else {
       throw Exception('Failed to load task detail');
     }

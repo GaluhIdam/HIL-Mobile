@@ -16,6 +16,7 @@ class DetailTask extends StatefulWidget {
       aircraftType,
       aircraftRegistration,
       station,
+      stationClose,
       ata,
       sequenceNumber,
       dateOccured,
@@ -33,6 +34,7 @@ class DetailTask extends StatefulWidget {
       statusName,
       priority,
       reason,
+      reasonNo,
       token,
       optionId,
       dueStatus;
@@ -45,6 +47,7 @@ class DetailTask extends StatefulWidget {
     required this.aircraftType,
     required this.aircraftRegistration,
     required this.station,
+    required this.stationClose,
     required this.ata,
     required this.sequenceNumber,
     required this.dateOccured,
@@ -62,6 +65,7 @@ class DetailTask extends StatefulWidget {
     required this.statusName,
     required this.priority,
     required this.reason,
+    required this.reasonNo,
     required this.token,
     required this.optionId,
     required this.dueStatus,
@@ -456,7 +460,7 @@ class _DetailTaskState extends State<DetailTask> {
                         height: 7,
                       ),
                       Text(
-                        widget.station,
+                        widget.stationClose,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -701,7 +705,7 @@ class _DetailTaskState extends State<DetailTask> {
                 height: 7,
               ),
               Text(
-                widget.reason.toString() == 'null' ? '-' : widget.reason,
+                widget.reason ?? '-',
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -852,12 +856,13 @@ class _DetailTaskState extends State<DetailTask> {
                                                         contentPadding:
                                                             const EdgeInsets
                                                                 .all(13)),
+                                                    value: widget.reasonNo,
                                                     onChanged:
                                                         (dynamic newValue) {
-                                                      // setState(() {
-                                                      widget.reason = newValue!;
-                                                      // });
-                                                      print(newValue);
+                                                      setState(() {
+                                                        widget.reasonNo =
+                                                            newValue;
+                                                      });
                                                     },
                                                     items: listReason),
                                                 Container(
@@ -1213,11 +1218,12 @@ class _DetailTaskState extends State<DetailTask> {
                                                         contentPadding:
                                                             const EdgeInsets
                                                                 .all(13)),
+                                                    value: widget.optionId,
                                                     onChanged:
-                                                        (String? newValue) {
+                                                        (dynamic newValue) {
                                                       setState(() {
                                                         widget.optionId =
-                                                            newValue!;
+                                                            newValue;
                                                       });
                                                     },
                                                     items: listOption),
@@ -1262,7 +1268,7 @@ class _DetailTaskState extends State<DetailTask> {
                                                             _partName.text,
                                                             _snIn.text,
                                                             _snOut.text,
-                                                            widget.reason,
+                                                            widget.reasonNo,
                                                             widget.optionId)
                                                         .then((value) {
                                                       Navigator.pop(context);
@@ -1299,7 +1305,9 @@ class _DetailTaskState extends State<DetailTask> {
                                                           });
                                                     });
                                                   } else {
-                                                    Timer(Duration(seconds: 1),
+                                                    Timer(
+                                                        Duration(
+                                                            milliseconds: 1),
                                                         () {
                                                       _btnController.reset();
                                                     });
