@@ -17,7 +17,8 @@ class TaskCard extends StatelessWidget {
       description,
       categoryDesc,
       statusDue,
-      lastFollow;
+      lastFollow,
+      option;
 
   const TaskCard({
     super.key,
@@ -37,6 +38,7 @@ class TaskCard extends StatelessWidget {
     required this.categoryDesc,
     required this.statusDue,
     required this.lastFollow,
+    required this.option,
   });
   @override
   Widget build(BuildContext context) {
@@ -126,6 +128,21 @@ class TaskCard extends StatelessWidget {
                             )),
                       ],
                     ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                      child: Text(
+                        option == '1'
+                            ? 'MS'
+                            : option == '2'
+                                ? 'TS'
+                                : option == '3'
+                                    ? 'UMR'
+                                    : option == '4'
+                                        ? 'MAT'
+                                        : '-',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )
                   ],
                 ),
               ),

@@ -779,34 +779,42 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                           if (index < items.length) {
                                             final item = items[index];
                                             return TaskCard(
+                                                option: item.optionId,
                                                 id: item.itemId,
-                                                dueDate: item.status == "1"
+                                                dueDate: item.status
+                                                            .toString() ==
+                                                        "1"
                                                     ? 'OVERDUEJOBS'
-                                                    : item.status == "2"
+                                                    : item.status.toString() ==
+                                                            "2"
                                                         ? 'DUE IN 3 DAY'
-                                                        : item.status == "3"
+                                                        : item.status
+                                                                    .toString() ==
+                                                                "3"
                                                             ? "DUE IN 1 WEEK"
-                                                            : item.status ==
+                                                            : item.status
+                                                                        .toString() ==
                                                                     "4"
                                                                 ? "DUE IN 1 MONTH"
-                                                                : item.status ==
+                                                                : item.status
+                                                                            .toString() ==
                                                                         "5"
                                                                     ? 'DUE IN 3 MONTH'
-                                                                    : item.status ==
+                                                                    : item.status.toString() ==
                                                                             "6"
                                                                         ? "ISSUED LAST 3 DAYS"
-                                                                        : item.status ==
+                                                                        : item.status.toString() ==
                                                                                 "7"
                                                                             ? "OPEN"
-                                                                            : item.status == "8"
+                                                                            : item.status.toString() == "8"
                                                                                 ? "CLOSE"
-                                                                                : item.status == "9"
+                                                                                : item.status.toString() == "9"
                                                                                     ? "EXTENSION 1"
-                                                                                    : item.status == "10"
+                                                                                    : item.status.toString() == "10"
                                                                                         ? "CLOSED BY SWIFT"
-                                                                                        : item.status == "11"
+                                                                                        : item.status.toString() == "11"
                                                                                             ? "NOCATEGORY"
-                                                                                            : item.status == "11"
+                                                                                            : item.status.toString() == "11"
                                                                                                 ? "NAMCLOSE"
                                                                                                 : '-',
                                                 cardBackgroundColor: item.priority,

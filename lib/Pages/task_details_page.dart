@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hil_mobile/Models/taskdetailModel.dart';
 import 'package:hil_mobile/Services/authService.dart';
-import 'package:hil_mobile/Services/followService.dart';
 import 'package:hil_mobile/Services/optionService.dart';
 import 'package:hil_mobile/Services/statusService.dart';
 import 'package:hil_mobile/Services/taskService.dart';
@@ -21,16 +19,12 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
   final _formKey = GlobalKey<FormState>();
 
   String? token;
-  String? reason;
-  String? reasonNo;
-  String? staClose;
 
   List<DropdownMenuItem<String>> dataOption = [];
   List<DropdownMenuItem<String>> dataStatus = [];
   List<DropdownMenuItem<String>> dataStation = [];
-  List<dynamic> listOptions = [];
-  List<dynamic> listSTACLOSE = [];
   List detailTask = [];
+  String? staClose;
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
 
@@ -45,31 +39,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
       TaskService.getTaskDetail(passData['itemId'], token).then((value) {
         setState(() {
           detailTask = value;
-        });
-        FollowService.getReason(token).then((element) {
-          listOptions.add(element);
-          for (var i = 0; i < listOptions[0].length; i++) {
-            if (listOptions[0][i]['reasonNo'] == detailTask[0]['reason']) {
-              setState(() {
-                reason = listOptions[0][i]['reasonDesc'];
-                reasonNo = listOptions[0][i]['reasonNo'];
-              });
-            }
-          }
-        });
-        StatusService.getStationData(token).then((elementx) {
-          listSTACLOSE.add(elementx);
-          for (var x = 0; x < listSTACLOSE[0].length; x++) {
-            if (listSTACLOSE[0][x]['StaID'] == detailTask[0]['staClose']) {
-              setState(() {
-                staClose = listSTACLOSE[0][x]['StaCode'];
-              });
-            } else {
-              setState(() {
-                staClose = detailTask[0]['staClose'];
-              });
-            }
-          }
+          staClose = detailTask[0]['staClose'];
         });
       });
       OptionService.getOption(token).then((value) {
@@ -103,11 +73,10 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                     itemBuilder: (context, index) {
                       if (detailTask.isNotEmpty) {
                         return DetailTask(
-                          reasonNo: reasonNo,
-                          stationClose: staClose ?? '-',
+                          stationClose: detailTask[index]['staClose'] ?? '-',
                           optionId: detailTask[index]['optionID'],
                           token: token.toString(),
-                          reason: reason,
+                          reason: detailTask[index]['reason'],
                           itemId: detailTask[index]['itemID'] == null
                               ? '-'
                               : detailTask[index]['itemID'].toString(),
@@ -358,7 +327,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                 ),
                                                                 filled: true,
                                                                 fillColor:
-                                                                    const Color.fromRGBO(
+                                                                    const Color
+                                                                            .fromRGBO(
                                                                         226,
                                                                         234,
                                                                         239,
@@ -368,7 +338,8 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                             .all(
                                                                         13)),
                                                         value: detailTask[0]
-                                                            ['StatusNo'],
+                                                                ['StatusNo']
+                                                            .toString(),
                                                         onChanged:
                                                             (dynamic newValue) {
                                                           setState(() {
