@@ -69,7 +69,7 @@ class _FollowOnListPageState extends State<FollowOnListPage> {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else {
+                      } else if (snapshot.data!.isNotEmpty) {
                         List<DetailFollowList> listFollow = snapshot.data!;
                         return ListView.builder(
                             itemCount: listFollow.length,
@@ -95,6 +95,10 @@ class _FollowOnListPageState extends State<FollowOnListPage> {
                                 );
                               }
                             });
+                      } else {
+                        return Center(
+                          child: Text('Data not available'),
+                        );
                       }
                     }),
               )

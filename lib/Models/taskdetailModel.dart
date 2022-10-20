@@ -1,4 +1,4 @@
-// To parse required this JSON data, do
+// To parserequired this JSON TaskDetaildata, do
 //
 //     final taskDetail = taskDetailFromJson(jsonString);
 
@@ -18,19 +18,18 @@ class TaskDetail {
 
   String status;
   String message;
-  List<TaskDetailData> data;
+  TaskDetailData data;
 
   factory TaskDetail.fromJson(Map<String, dynamic> json) => TaskDetail(
         status: json["status"],
         message: json["message"],
-        data: List<TaskDetailData>.from(
-            json["data"].map((x) => TaskDetailData.fromJson(x))),
+        data: TaskDetailData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data.toJson(),
       };
 }
 
@@ -68,36 +67,36 @@ class TaskDetailData {
     required this.categoryDesc,
   });
 
-  dynamic itemId;
-  dynamic dateOccur;
-  dynamic dueDate;
-  dynamic dateInsert;
-  dynamic dateClose;
-  dynamic ddgRef;
-  dynamic flightNo;
-  dynamic ataNo;
-  dynamic seqNo;
-  dynamic sta;
-  dynamic staClose;
-  dynamic subject;
-  dynamic description;
-  dynamic category;
-  dynamic subAta;
+  String itemId;
+  String dateOccur;
+  String dueDate;
+  String dateInsert;
+  String dateClose;
+  String ddgRef;
+  String flightNo;
+  String ataNo;
+  String seqNo;
+  String sta;
+  String staClose;
+  String subject;
+  String description;
+  String category;
+  String subAta;
   dynamic insertProblem;
-  dynamic techlog;
-  dynamic status;
-  dynamic acreg;
-  dynamic acType;
-  dynamic statusNo;
-  dynamic statusDesc;
-  dynamic staId;
-  dynamic staCode;
-  dynamic optionId;
-  dynamic longName;
-  dynamic partNbr;
-  dynamic partName;
-  dynamic reason;
-  dynamic categoryDesc;
+  String techlog;
+  String status;
+  String acreg;
+  String acType;
+  String statusNo;
+  String statusDesc;
+  String staId;
+  String staCode;
+  String optionId;
+  String longName;
+  String partNbr;
+  String partName;
+  String reason;
+  String categoryDesc;
 
   factory TaskDetailData.fromJson(Map<String, dynamic> json) => TaskDetailData(
         itemId: json["itemID"],

@@ -16,6 +16,7 @@ class DetailTask extends StatefulWidget {
       aircraftType,
       aircraftRegistration,
       station,
+      stationClose,
       ata,
       sequenceNumber,
       dateOccured,
@@ -45,6 +46,7 @@ class DetailTask extends StatefulWidget {
     required this.aircraftType,
     required this.aircraftRegistration,
     required this.station,
+    required this.stationClose,
     required this.ata,
     required this.sequenceNumber,
     required this.dateOccured,
@@ -91,6 +93,7 @@ class _DetailTaskState extends State<DetailTask> {
 
   String? token;
   String? nextUnit;
+  String? reasonValue;
 
   @override
   void initState() {
@@ -456,7 +459,7 @@ class _DetailTaskState extends State<DetailTask> {
                         height: 7,
                       ),
                       Text(
-                        widget.station,
+                        widget.stationClose,
                         style: TextStyle(
                             fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
                       ),
@@ -701,7 +704,19 @@ class _DetailTaskState extends State<DetailTask> {
                 height: 7,
               ),
               Text(
-                widget.reason.toString() == 'null' ? '-' : widget.reason,
+                widget.reason == '1'
+                    ? 'Lack of Time'
+                    : widget.reason == '2'
+                        ? 'Under Investigation'
+                        : widget.reason == '3'
+                            ? 'Nil Spare'
+                            : widget.reason == '5'
+                                ? 'No facility'
+                                : widget.reason == '6'
+                                    ? 'Monitoring'
+                                    : widget.reason == '7'
+                                        ? 'No Man Power'
+                                        : '-',
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -854,10 +869,9 @@ class _DetailTaskState extends State<DetailTask> {
                                                                 .all(13)),
                                                     onChanged:
                                                         (dynamic newValue) {
-                                                      // setState(() {
-                                                      widget.reason = newValue!;
-                                                      // });
-                                                      print(newValue);
+                                                      setState(() {
+                                                        reasonValue = newValue;
+                                                      });
                                                     },
                                                     items: listReason),
                                                 Container(
@@ -915,9 +929,9 @@ class _DetailTaskState extends State<DetailTask> {
                                                                 .all(13)),
                                                     onChanged:
                                                         (String? newValue) {
-                                                      setState(() {
-                                                        nextUnit = newValue!;
-                                                      });
+                                                      // setState(() {
+                                                      nextUnit = newValue!;
+                                                      // });
                                                     },
                                                     items: listUnit),
                                                 Container(
@@ -1214,10 +1228,10 @@ class _DetailTaskState extends State<DetailTask> {
                                                             const EdgeInsets
                                                                 .all(13)),
                                                     onChanged:
-                                                        (String? newValue) {
+                                                        (dynamic newValue) {
                                                       setState(() {
                                                         widget.optionId =
-                                                            newValue!;
+                                                            newValue;
                                                       });
                                                     },
                                                     items: listOption),
@@ -1262,7 +1276,7 @@ class _DetailTaskState extends State<DetailTask> {
                                                             _partName.text,
                                                             _snIn.text,
                                                             _snOut.text,
-                                                            widget.reason,
+                                                            reasonValue,
                                                             widget.optionId)
                                                         .then((value) {
                                                       Navigator.pop(context);
@@ -1299,7 +1313,9 @@ class _DetailTaskState extends State<DetailTask> {
                                                           });
                                                     });
                                                   } else {
-                                                    Timer(Duration(seconds: 1),
+                                                    Timer(
+                                                        Duration(
+                                                            milliseconds: 1),
                                                         () {
                                                       _btnController.reset();
                                                     });

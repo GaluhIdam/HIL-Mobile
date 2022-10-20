@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:hil_mobile/Models/followlistModel.dart';
 import 'package:hil_mobile/Services/config.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +15,7 @@ class FollowService {
         .get(Uri.parse(urlReason), headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      final parsed = json['data'].cast<Map<String, dynamic>>();
+      final parsed = json['data'];
       return parsed;
     } else {
       throw Exception('Failed to load reasons');
@@ -59,7 +57,18 @@ class FollowService {
   static Future updateFollow(dynamic itemId, token, follow, nextFO, partNum,
       partName, snIn, snOut, reason, option) async {
     String urlFollow = getURL() + 'update-follow';
-
+    print([
+      {'itemid': itemId},
+      {'token': token},
+      {'folow': follow},
+      {'NextFO': nextFO},
+      {'PartName': partNum},
+      {'PartNbr': partName},
+      {'SNIn': snIn},
+      {'SNOut': snOut},
+      {'optionID': option},
+      {'reason': reason},
+    ]);
     final response = await http.post(Uri.parse(urlFollow), headers: {
       'Authorization': 'Bearer $token'
     }, body: {

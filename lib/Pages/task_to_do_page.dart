@@ -779,34 +779,42 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                           if (index < items.length) {
                                             final item = items[index];
                                             return TaskCard(
+                                                option: item.optionId,
                                                 id: item.itemId,
-                                                dueDate: item.status == "1"
+                                                dueDate: item.status
+                                                            .toString() ==
+                                                        "1"
                                                     ? 'OVERDUEJOBS'
-                                                    : item.dueStatus == "2"
+                                                    : item.status.toString() ==
+                                                            "2"
                                                         ? 'DUE IN 3 DAY'
-                                                        : item.dueStatus == "3"
+                                                        : item.status
+                                                                    .toString() ==
+                                                                "3"
                                                             ? "DUE IN 1 WEEK"
-                                                            : item.dueStatus ==
+                                                            : item.status
+                                                                        .toString() ==
                                                                     "4"
                                                                 ? "DUE IN 1 MONTH"
-                                                                : item.dueStatus ==
+                                                                : item.status
+                                                                            .toString() ==
                                                                         "5"
                                                                     ? 'DUE IN 3 MONTH'
-                                                                    : item.dueStatus ==
+                                                                    : item.status.toString() ==
                                                                             "6"
                                                                         ? "ISSUED LAST 3 DAYS"
-                                                                        : item.dueStatus ==
+                                                                        : item.status.toString() ==
                                                                                 "7"
                                                                             ? "OPEN"
-                                                                            : item.dueStatus == "8"
+                                                                            : item.status.toString() == "8"
                                                                                 ? "CLOSE"
-                                                                                : item.dueStatus == "9"
+                                                                                : item.status.toString() == "9"
                                                                                     ? "EXTENSION 1"
-                                                                                    : item.dueStatus == "10"
+                                                                                    : item.status.toString() == "10"
                                                                                         ? "CLOSED BY SWIFT"
-                                                                                        : item.dueStatus == "11"
+                                                                                        : item.status.toString() == "11"
                                                                                             ? "NOCATEGORY"
-                                                                                            : item.dueStatus == "11"
+                                                                                            : item.status.toString() == "11"
                                                                                                 ? "NAMCLOSE"
                                                                                                 : '-',
                                                 cardBackgroundColor: item.priority,
@@ -820,27 +828,27 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                                 dateOccur: item.dateoccur,
                                                 statusDue: item.status == "1"
                                                     ? 'OVERDUEJOBS'
-                                                    : item.dueStatus == "2"
+                                                    : item.status == "2"
                                                         ? 'DUE IN 3 DAY'
-                                                        : item.dueStatus == "3"
+                                                        : item.status == "3"
                                                             ? "DUE IN 1 WEEK"
-                                                            : item.dueStatus == "4"
+                                                            : item.status == "4"
                                                                 ? "DUE IN 1 MONTH"
-                                                                : item.dueStatus == "5"
+                                                                : item.status == "5"
                                                                     ? 'DUE IN 3 MONTH'
-                                                                    : item.dueStatus == "6"
+                                                                    : item.status == "6"
                                                                         ? "ISSUED LAST 3 DAYS"
-                                                                        : item.dueStatus == "7"
+                                                                        : item.status == "7"
                                                                             ? "OPEN"
-                                                                            : item.dueStatus == "8"
+                                                                            : item.status == "8"
                                                                                 ? "CLOSE"
-                                                                                : item.dueStatus == "9"
+                                                                                : item.status == "9"
                                                                                     ? "EXTENSION 1"
-                                                                                    : item.dueStatus == "10"
+                                                                                    : item.status == "10"
                                                                                         ? "CLOSED BY SWIFT"
-                                                                                        : item.dueStatus == "11"
+                                                                                        : item.status == "11"
                                                                                             ? "NOCATEGORY"
-                                                                                            : item.dueStatus == "11"
+                                                                                            : item.status == "11"
                                                                                                 ? "NAMCLOSE"
                                                                                                 : '-',
                                                 dateInsert: DateFormat('d MMM y').format(item.duedate),
