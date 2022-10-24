@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:hil_mobile/Models/taskModel.dart';
-import 'package:hil_mobile/Models/taskdetailModel.dart';
 import 'package:hil_mobile/Services/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +32,7 @@ class TaskService {
         headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      final parsed = [json['data']];
+      final parsed = json['data'];
       return parsed;
     } else {
       throw Exception('Failed to load task detail');
