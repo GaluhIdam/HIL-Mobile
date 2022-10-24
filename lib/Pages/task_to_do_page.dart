@@ -289,7 +289,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
       for (var x = 0; x < filterActype.length; x++) {
         if (actype[i]['ACType'] == filterActype[x]) {
           actypeValueLabel.add(actype[i]['ACType']);
-          actypeValue.add(actype[i]['ACTypeID']);
+          actypeValue.add(actype[i]['ACTypeID'].toString());
         }
       }
     }
@@ -299,7 +299,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
     for (var i = 0; i < category.length; i++) {
       for (var x = 0; x < filterCategory.length; x++) {
         if (category[i]['CategoryDesc'] == filterCategory[x]) {
-          categoryValue.add(category[i]['CategoryNo']);
+          categoryValue.add(category[i]['CategoryNo'].toString());
           categoryValueLabel.add(category[i]['CategoryDesc']);
         }
       }
@@ -362,6 +362,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
     var request = http.Request('GET', Uri.parse(urlTask));
     if (filterList.isNotEmpty) {
       request.body = json.encode(filterList[0]);
+      print(filterList);
     }
     request.headers.addAll(headers);
 
@@ -779,34 +780,43 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                           if (index < items.length) {
                                             final item = items[index];
                                             return TaskCard(
+                                                option: item.optionId,
                                                 id: item.itemId,
-                                                dueDate: item.status == "1"
+                                                dueDate: item.dueStatus
+                                                            .toString() ==
+                                                        "1"
                                                     ? 'OVERDUEJOBS'
-                                                    : item.status == "2"
+                                                    : item.dueStatus
+                                                                .toString() ==
+                                                            "2"
                                                         ? 'DUE IN 3 DAY'
-                                                        : item.status == "3"
+                                                        : item.dueStatus
+                                                                    .toString() ==
+                                                                "3"
                                                             ? "DUE IN 1 WEEK"
-                                                            : item.status ==
+                                                            : item.dueStatus
+                                                                        .toString() ==
                                                                     "4"
                                                                 ? "DUE IN 1 MONTH"
-                                                                : item.status ==
+                                                                : item.dueStatus
+                                                                            .toString() ==
                                                                         "5"
                                                                     ? 'DUE IN 3 MONTH'
-                                                                    : item.status ==
+                                                                    : item.dueStatus.toString() ==
                                                                             "6"
                                                                         ? "ISSUED LAST 3 DAYS"
-                                                                        : item.status ==
+                                                                        : item.dueStatus.toString() ==
                                                                                 "7"
                                                                             ? "OPEN"
-                                                                            : item.status == "8"
+                                                                            : item.dueStatus.toString() == "8"
                                                                                 ? "CLOSE"
-                                                                                : item.status == "9"
+                                                                                : item.dueStatus.toString() == "9"
                                                                                     ? "EXTENSION 1"
-                                                                                    : item.status == "10"
+                                                                                    : item.dueStatus.toString() == "10"
                                                                                         ? "CLOSED BY SWIFT"
-                                                                                        : item.status == "11"
+                                                                                        : item.dueStatus.toString() == "11"
                                                                                             ? "NOCATEGORY"
-                                                                                            : item.status == "11"
+                                                                                            : item.dueStatus.toString() == "11"
                                                                                                 ? "NAMCLOSE"
                                                                                                 : '-',
                                                 cardBackgroundColor: item.priority,
@@ -818,29 +828,29 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                                 info: item.subject,
                                                 itemId: item.itemId,
                                                 dateOccur: item.dateoccur,
-                                                statusDue: item.status == "1"
+                                                statusDue: item.dueStatus == "1"
                                                     ? 'OVERDUEJOBS'
-                                                    : item.status == "2"
+                                                    : item.dueStatus == "2"
                                                         ? 'DUE IN 3 DAY'
-                                                        : item.status == "3"
+                                                        : item.dueStatus == "3"
                                                             ? "DUE IN 1 WEEK"
-                                                            : item.status == "4"
+                                                            : item.dueStatus == "4"
                                                                 ? "DUE IN 1 MONTH"
-                                                                : item.status == "5"
+                                                                : item.dueStatus == "5"
                                                                     ? 'DUE IN 3 MONTH'
-                                                                    : item.status == "6"
+                                                                    : item.dueStatus == "6"
                                                                         ? "ISSUED LAST 3 DAYS"
-                                                                        : item.status == "7"
+                                                                        : item.dueStatus == "7"
                                                                             ? "OPEN"
-                                                                            : item.status == "8"
+                                                                            : item.dueStatus == "8"
                                                                                 ? "CLOSE"
-                                                                                : item.status == "9"
+                                                                                : item.dueStatus == "9"
                                                                                     ? "EXTENSION 1"
-                                                                                    : item.status == "10"
+                                                                                    : item.dueStatus == "10"
                                                                                         ? "CLOSED BY SWIFT"
-                                                                                        : item.status == "11"
+                                                                                        : item.dueStatus == "11"
                                                                                             ? "NOCATEGORY"
-                                                                                            : item.status == "11"
+                                                                                            : item.dueStatus == "11"
                                                                                                 ? "NAMCLOSE"
                                                                                                 : '-',
                                                 dateInsert: DateFormat('d MMM y').format(item.duedate),
@@ -1587,7 +1597,6 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                             refresh();
                           } else {
                             filterList.clear();
-
                             priorityLast.clear();
                             acregLast.clear();
                             acrtypeLast.clear();

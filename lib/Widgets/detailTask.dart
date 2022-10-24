@@ -34,7 +34,6 @@ class DetailTask extends StatefulWidget {
       statusName,
       priority,
       reason,
-      reasonNo,
       token,
       optionId,
       dueStatus;
@@ -65,7 +64,6 @@ class DetailTask extends StatefulWidget {
     required this.statusName,
     required this.priority,
     required this.reason,
-    required this.reasonNo,
     required this.token,
     required this.optionId,
     required this.dueStatus,
@@ -95,6 +93,7 @@ class _DetailTaskState extends State<DetailTask> {
 
   String? token;
   String? nextUnit;
+  String? reasonValue;
 
   @override
   void initState() {
@@ -705,7 +704,19 @@ class _DetailTaskState extends State<DetailTask> {
                 height: 7,
               ),
               Text(
-                widget.reason ?? '-',
+                widget.reason == '1'
+                    ? 'Lack of Time'
+                    : widget.reason == '2'
+                        ? 'Under Investigation'
+                        : widget.reason == '3'
+                            ? 'Nil Spare'
+                            : widget.reason == '5'
+                                ? 'No facility'
+                                : widget.reason == '6'
+                                    ? 'Monitoring'
+                                    : widget.reason == '7'
+                                        ? 'No Man Power'
+                                        : '-',
                 style: TextStyle(
                     fontSize: 16, color: Color.fromRGBO(1, 98, 153, 1)),
               ),
@@ -859,8 +870,7 @@ class _DetailTaskState extends State<DetailTask> {
                                                     onChanged:
                                                         (dynamic newValue) {
                                                       setState(() {
-                                                        widget.reasonNo =
-                                                            newValue;
+                                                        reasonValue = newValue;
                                                       });
                                                     },
                                                     items: listReason),
@@ -1266,7 +1276,7 @@ class _DetailTaskState extends State<DetailTask> {
                                                             _partName.text,
                                                             _snIn.text,
                                                             _snOut.text,
-                                                            widget.reasonNo,
+                                                            reasonValue,
                                                             widget.optionId)
                                                         .then((value) {
                                                       Navigator.pop(context);

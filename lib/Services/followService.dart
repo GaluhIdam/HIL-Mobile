@@ -57,7 +57,18 @@ class FollowService {
   static Future updateFollow(dynamic itemId, token, follow, nextFO, partNum,
       partName, snIn, snOut, reason, option) async {
     String urlFollow = getURL() + 'update-follow';
-
+    print([
+      {'itemid': itemId},
+      {'token': token},
+      {'folow': follow},
+      {'NextFO': nextFO},
+      {'PartName': partNum},
+      {'PartNbr': partName},
+      {'SNIn': snIn},
+      {'SNOut': snOut},
+      {'optionID': option},
+      {'reason': reason},
+    ]);
     final response = await http.post(Uri.parse(urlFollow), headers: {
       'Authorization': 'Bearer $token'
     }, body: {
