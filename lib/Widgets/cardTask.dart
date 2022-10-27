@@ -218,7 +218,7 @@ class TaskCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      'Due Date : $dateInsert',
+                      'Due Date : ' + dateInsert,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
