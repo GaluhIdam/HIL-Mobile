@@ -42,7 +42,6 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
           detailTask = value;
           staClose = detailTask[0]['staClose'];
         });
-        print(staClose);
       });
       OptionService.getOption(token).then((value) {
         dataOption.addAll(value);
@@ -75,7 +74,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                         child: Text('Data not available!'),
                       )
                     : ListView.builder(
-                        itemCount: detailTask.length,
+                        itemCount: 1,
                         itemBuilder: (context, index) {
                           if (detailTask.isNotEmpty) {
                             return DetailTask(

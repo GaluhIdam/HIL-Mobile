@@ -362,7 +362,6 @@ class _TaskToDoPageState extends State<TaskToDoPage>
     var request = http.Request('GET', Uri.parse(urlTask));
     if (filterList.isNotEmpty) {
       request.body = json.encode(filterList[0]);
-      print(filterList);
     }
     request.headers.addAll(headers);
 
