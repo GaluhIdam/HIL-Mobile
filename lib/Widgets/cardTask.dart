@@ -200,7 +200,7 @@ class TaskCard extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                          'Due: ',
+                          'Due : ',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
