@@ -12,76 +12,23 @@ class StatusService {
   //Get Data Status
   static Future<List<DropdownMenuItem<String>>> getStatus(String? token) async {
     String urlStatus = getURL() + 'master-status';
-    try {
-      final response = await http.get(Uri.parse(urlStatus),
-          headers: {'Authorization': 'Bearer $token'});
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-        final parsed = json['data'].cast<Map<String, dynamic>>();
-        List<DropdownMenuItem<String>> dataStatus = [];
-        List<dynamic> status = [
-          {
-            "statusID": "1",
-            "statusDESC": "OVERDUEJOBS",
-          },
-          {
-            "statusID": "2",
-            "statusDESC": "DUE IN 3 DAY",
-          },
-          {
-            "statusID": "3",
-            "statusDESC": "DUE IN 1 WEEK",
-          },
-          {
-            "statusID": "4",
-            "statusDESC": "DUE IN 1 MONTH",
-          },
-          {
-            "statusID": "5",
-            "statusDESC": "DUE IN 3 MONTH",
-          },
-          {
-            "statusID": "6",
-            "statusDESC": "ISSUED LAST 3 DAYS",
-          },
-          {
-            "statusID": "7",
-            "statusDESC": "OPEN",
-          },
-          {
-            "statusID": "8",
-            "statusDESC": "CLOSE",
-          },
-          {
-            "statusID": "9",
-            "statusDESC": "EXTENSION 1",
-          },
-          {
-            "statusID": "10",
-            "statusDESC": "CLOSED BY SWIFT",
-          },
-          {
-            "statusID": "11",
-            "statusDESC": "NOCATEGORY",
-          },
-          {
-            "statusID": "12",
-            "statusDESC": "NAMCLOSE",
-          },
-        ];
-        status.forEach((element) {
-          dataStatus.add(
-            DropdownMenuItem(
-                value: element['statusID'].toString(),
-                child: Text(element['statusDESC'])),
-          );
-        });
-        return dataStatus;
-      } else {
-        throw Exception('Failed to load status');
-      }
-    } catch (e) {
-      throw Exception('Error to load status');
+
+    final response = await http
+        .get(Uri.parse(urlStatus), headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      final parsed = json['data'].cast<Map<String, dynamic>>();
+      List<DropdownMenuItem<String>> dataStatus = [];
+      parsed.forEach((element) {
+        dataStatus.add(
+          DropdownMenuItem(
+              value: element['StatusNo'].toString(),
+              child: Text(element['StatusDesc'])),
+        );
+      });
+      return dataStatus;
+    } else {
+      throw Exception('Failed to load status');
     }
   }
 

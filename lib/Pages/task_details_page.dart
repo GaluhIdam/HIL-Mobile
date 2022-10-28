@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hil_mobile/Services/authService.dart';
 import 'package:hil_mobile/Services/optionService.dart';
 import 'package:hil_mobile/Services/statusService.dart';
@@ -41,6 +42,7 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
           detailTask = value;
           staClose = detailTask[0]['staClose'];
         });
+        print(staClose);
       });
       OptionService.getOption(token).then((value) {
         dataOption.addAll(value);
@@ -68,93 +70,104 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
               data: MediaQuery.of(context).copyWith(textScaleFactor: 0.8),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(25, 5, 25, 0),
-                child: ListView.builder(
-                    itemCount: detailTask.length,
-                    itemBuilder: (context, index) {
-                      if (detailTask.isNotEmpty) {
-                        return DetailTask(
-                          stationClose: detailTask[index]['staClose'] ?? '-',
-                          optionId: detailTask[index]['optionID'],
-                          token: token.toString(),
-                          reason: detailTask[index]['reason'],
-                          itemId: detailTask[index]['itemID'] == null
-                              ? '-'
-                              : detailTask[index]['itemID'].toString(),
-                          subject: detailTask[index]['Subject'] == null
-                              ? '-'
-                              : detailTask[index]['Subject'].toString(),
-                          flightNumber: detailTask[index]['FlightNo'] == null
-                              ? '-'
-                              : detailTask[index]['FlightNo'].toString(),
-                          aircraftType: detailTask[index]['ACType'] == null
-                              ? '-'
-                              : detailTask[index]['ACType'].toString(),
-                          aircraftRegistration:
-                              detailTask[index]['acreg'] == null
+                child: detailTask.isEmpty
+                    ? Center(
+                        child: Text('Data not available!'),
+                      )
+                    : ListView.builder(
+                        itemCount: detailTask.length,
+                        itemBuilder: (context, index) {
+                          if (detailTask.isNotEmpty) {
+                            return DetailTask(
+                              stationClose:
+                                  detailTask[index]['staClose'] ?? '-',
+                              optionId: detailTask[index]['optionID'],
+                              token: token.toString(),
+                              reason: detailTask[index]['reason'],
+                              itemId: detailTask[index]['itemID'] == null
                                   ? '-'
-                                  : detailTask[index]['acreg'].toString(),
-                          station: detailTask[index]['sta'] == null
-                              ? '-'
-                              : detailTask[index]['sta'].toString(),
-                          ata: detailTask[index]['ATANo'] == null
-                              ? '-'
-                              : detailTask[index]['ATANo'].toString(),
-                          sequenceNumber: detailTask[index]['SeqNo'] == null
-                              ? '-'
-                              : detailTask[index]['SeqNo'].toString(),
-                          dateOccured: detailTask[index]['DateOccur'] ?? '-',
-                          dueDate: detailTask[index]['DueDate'] ?? '-',
-                          stationCode: detailTask[index]['StaCode'] == null
-                              ? '-'
-                              : detailTask[index]['StaCode'].toString(),
-                          faultCode: detailTask[index]['sub_ata'] == null
-                              ? '-'
-                              : detailTask[index]['sub_ata'].toString(),
-                          categoryName: detailTask[index]['CategoryDesc'] ==
-                                  null
-                              ? '-'
-                              : detailTask[index]['CategoryDesc'].toString(),
-                          techlog: detailTask[index]['TECHLOG'] == null
-                              ? '-'
-                              : detailTask[index]['TECHLOG'].toString(),
-                          ref: 'AML',
-                          refDdg: detailTask[index]['DDGRef'] == null
-                              ? '-'
-                              : detailTask[index]['DDGRef'].toString(),
-                          optionStatus: detailTask[index]['long_name'] == null
-                              ? '-'
-                              : detailTask[index]['long_name'].toString(),
-                          description: detailTask[index]['Description'] == null
-                              ? '-'
-                              : detailTask[index]['Description'].toString(),
-                          partNumber: detailTask[index]['PartNbr'] == null
-                              ? '-'
-                              : detailTask[index]['PartNbr'] == ""
+                                  : detailTask[index]['itemID'].toString(),
+                              subject: detailTask[index]['Subject'] == null
                                   ? '-'
-                                  : detailTask[index]['PartNbr'].toString(),
-                          partName: detailTask[index]['PartName'] == null
-                              ? '-'
-                              : detailTask[index]['PartName'] == ""
+                                  : detailTask[index]['Subject'].toString(),
+                              flightNumber: detailTask[index]['FlightNo'] ==
+                                      null
                                   ? '-'
-                                  : detailTask[index]['PartName'].toString(),
-                          statusName: dueStatus == "-"
-                              ? priority
-                              : dueStatus == null
-                                  ? statusName
-                                  : priority,
-                          dueStatus:
-                              dueStatus == "" ? '-' : dueStatus.toString(),
-                          priority: priority.toString(),
-                        );
-                      } else {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 350),
-                          child: Center(
-                            child: Text('Data not available'),
-                          ),
-                        );
-                      }
-                    }),
+                                  : detailTask[index]['FlightNo'].toString(),
+                              aircraftType: detailTask[index]['ACType'] == null
+                                  ? '-'
+                                  : detailTask[index]['ACType'].toString(),
+                              aircraftRegistration:
+                                  detailTask[index]['acreg'] == null
+                                      ? '-'
+                                      : detailTask[index]['acreg'].toString(),
+                              station: detailTask[index]['sta'] == null
+                                  ? '-'
+                                  : detailTask[index]['sta'].toString(),
+                              ata: detailTask[index]['ATANo'] == null
+                                  ? '-'
+                                  : detailTask[index]['ATANo'].toString(),
+                              sequenceNumber: detailTask[index]['SeqNo'] == null
+                                  ? '-'
+                                  : detailTask[index]['SeqNo'].toString(),
+                              dateOccured:
+                                  detailTask[index]['DateOccur'] ?? '-',
+                              dueDate: detailTask[index]['DueDate'] ?? '-',
+                              stationCode: detailTask[index]['StaCode'] == null
+                                  ? '-'
+                                  : detailTask[index]['StaCode'].toString(),
+                              faultCode: detailTask[index]['sub_ata'] == null
+                                  ? '-'
+                                  : detailTask[index]['sub_ata'].toString(),
+                              categoryName:
+                                  detailTask[index]['CategoryDesc'] == null
+                                      ? '-'
+                                      : detailTask[index]['CategoryDesc']
+                                          .toString(),
+                              techlog: detailTask[index]['TECHLOG'] == null
+                                  ? '-'
+                                  : detailTask[index]['TECHLOG'].toString(),
+                              ref: 'AML',
+                              refDdg: detailTask[index]['DDGRef'] == null
+                                  ? '-'
+                                  : detailTask[index]['DDGRef'].toString(),
+                              optionStatus: detailTask[index]['long_name'] ==
+                                      null
+                                  ? '-'
+                                  : detailTask[index]['long_name'].toString(),
+                              description: detailTask[index]['Description'] ==
+                                      null
+                                  ? '-'
+                                  : detailTask[index]['Description'].toString(),
+                              partNumber: detailTask[index]['PartNbr'] == null
+                                  ? '-'
+                                  : detailTask[index]['PartNbr'] == ""
+                                      ? '-'
+                                      : detailTask[index]['PartNbr'].toString(),
+                              partName: detailTask[index]['PartName'] == null
+                                  ? '-'
+                                  : detailTask[index]['PartName'] == ""
+                                      ? '-'
+                                      : detailTask[index]['PartName']
+                                          .toString(),
+                              statusName: dueStatus == "-"
+                                  ? priority
+                                  : dueStatus == null
+                                      ? statusName
+                                      : priority,
+                              dueStatus:
+                                  dueStatus == "" ? '-' : dueStatus.toString(),
+                              priority: priority.toString(),
+                            );
+                          } else {
+                            return const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 350),
+                              child: Center(
+                                child: Text('Data not available'),
+                              ),
+                            );
+                          }
+                        }),
               )),
         ),
         bottomNavigationBar: MediaQuery(
@@ -184,286 +197,287 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return MediaQuery(
-                                data: MediaQuery.of(context)
-                                    .copyWith(textScaleFactor: 0.8),
-                                child: SizedBox(
-                                    height: 520,
-                                    child: Container(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 0, 10, 0),
-                                        child: Form(
-                                          key: _formKey,
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                        detailTask.isNotEmpty
+                            ? showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) {
+                                  return MediaQuery(
+                                    data: MediaQuery.of(context)
+                                        .copyWith(textScaleFactor: 0.8),
+                                    child: SizedBox(
+                                        height: 520,
+                                        child: Container(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 0, 10, 0),
+                                            child: Form(
+                                              key: _formKey,
+                                              child: Column(
                                                 children: [
-                                                  Container(
-                                                    margin: const EdgeInsets
-                                                            .fromLTRB(
-                                                        15, 15, 0, 10),
-                                                    child: const Text(
-                                                        'Change HIL Status',
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Color.fromRGBO(
-                                                              1, 98, 153, 1),
-                                                        )),
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Container(
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(
                                                         margin: const EdgeInsets
                                                                 .fromLTRB(
-                                                            0, 15, 15, 10),
-                                                        child: const Icon(
-                                                            Icons.close)),
-                                                  )
-                                                ],
-                                              ),
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.all(15),
-                                                width: double.infinity,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                        margin: const EdgeInsets
-                                                                .fromLTRB(
-                                                            0, 0, 0, 10),
+                                                            15, 15, 0, 10),
                                                         child: const Text(
-                                                            'Change Description')),
-                                                    TextFormField(
-                                                      enabled: false,
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'Please enter description';
-                                                        }
-                                                        return null;
-                                                      },
-                                                      initialValue:
-                                                          detailTask[0]
-                                                              ['Description'],
-                                                      onChanged:
-                                                          (dynamic valueDesc) {
-                                                        detailTask[0]
-                                                                .description =
-                                                            valueDesc!;
-                                                      },
-                                                      keyboardType:
-                                                          TextInputType
-                                                              .multiline,
-                                                      maxLines: 5,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        fillColor:
-                                                            Color.fromRGBO(226,
-                                                                234, 239, 1),
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        hintText:
-                                                            'Type a description',
-                                                        contentPadding:
-                                                            const EdgeInsets
-                                                                .all(15),
+                                                            'Change HIL Status',
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      1,
+                                                                      98,
+                                                                      153,
+                                                                      1),
+                                                            )),
                                                       ),
-                                                    ),
-                                                    Container(
-                                                        margin: const EdgeInsets
-                                                                .fromLTRB(
-                                                            0, 30, 0, 10),
-                                                        child: const Text(
-                                                            'Change Status to')),
-                                                    DropdownButtonFormField(
-                                                        hint: Text(
-                                                            'Please select status'),
-                                                        decoration:
-                                                            InputDecoration(
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide: const BorderSide(
-                                                                      color: Color.fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      width: 2),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                border:
-                                                                    OutlineInputBorder(
-                                                                  borderSide: const BorderSide(
-                                                                      color: Color.fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      width: 2),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                filled: true,
-                                                                fillColor:
-                                                                    const Color
-                                                                            .fromRGBO(
-                                                                        226,
-                                                                        234,
-                                                                        239,
-                                                                        1),
-                                                                contentPadding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        13)),
-                                                        value: detailTask[0]
-                                                                ['StatusNo']
-                                                            .toString(),
-                                                        onChanged:
-                                                            (dynamic newValue) {
-                                                          setState(() {
-                                                            detailTask[0][
-                                                                    'StatusNo'] =
-                                                                newValue!;
-                                                          });
-                                                        },
-                                                        items: dataStatus),
-                                                    Container(
-                                                        margin: const EdgeInsets
-                                                                .fromLTRB(
-                                                            0, 30, 0, 10),
-                                                        child: const Text(
-                                                            'Station Close')),
-                                                    DropdownButtonFormField(
-                                                        hint: Text(
-                                                            'Please select station'),
-                                                        decoration:
-                                                            InputDecoration(
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide: const BorderSide(
-                                                                      color: Color.fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      width: 2),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                border:
-                                                                    OutlineInputBorder(
-                                                                  borderSide: const BorderSide(
-                                                                      color: Color.fromRGBO(
-                                                                          226,
-                                                                          234,
-                                                                          239,
-                                                                          1),
-                                                                      width: 2),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                filled: true,
-                                                                fillColor:
-                                                                    const Color
-                                                                            .fromRGBO(
-                                                                        226,
-                                                                        234,
-                                                                        239,
-                                                                        1),
-                                                                contentPadding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        13)),
-                                                        value: staClose,
-                                                        onChanged:
-                                                            (dynamic newValue) {
-                                                          setState(() {
-                                                            staClose =
-                                                                newValue!;
-                                                          });
-                                                        },
-                                                        items: dataStation),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0, 15, 0, 15),
-                                                  child: RoundedLoadingButton(
-                                                    borderRadius: 10,
-                                                    height: 45,
-                                                    width: 340,
-                                                    color: Color.fromRGBO(
-                                                        1, 98, 153, 1),
-                                                    // ignore: sort_child_properties_last
-                                                    child: Text('Save',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white)),
-                                                    controller: _btnController,
-                                                    onPressed: () {
-                                                      if (_formKey.currentState!
-                                                          .validate()) {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          const SnackBar(
-                                                              duration:
-                                                                  Duration(
-                                                                      seconds:
-                                                                          1),
-                                                              behavior:
-                                                                  SnackBarBehavior
-                                                                      .floating,
-                                                              content: Text(
-                                                                  'Updating data...')),
-                                                        );
-                                                        StatusService.updateStatus(
-                                                                detailTask[0]
-                                                                    ['itemID'],
-                                                                token,
-                                                                detailTask[0][
-                                                                    'StatusNo'],
-                                                                staClose,
-                                                                detailTask[0][
-                                                                    'Description'])
-                                                            .then((value) {
+                                                      GestureDetector(
+                                                        onTap: () {
                                                           Navigator.pop(
                                                               context);
-                                                          if (value['status'] ==
-                                                                  'Error' ||
-                                                              value['status'] ==
-                                                                  'Failed') {
+                                                        },
+                                                        child: Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    0,
+                                                                    15,
+                                                                    15,
+                                                                    10),
+                                                            child: const Icon(
+                                                                Icons.close)),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            15),
+                                                    width: double.infinity,
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    0,
+                                                                    0,
+                                                                    0,
+                                                                    10),
+                                                            child: const Text(
+                                                                'Change Description')),
+                                                        TextFormField(
+                                                          enabled: false,
+                                                          validator: (value) {
+                                                            if (value == null ||
+                                                                value.isEmpty) {
+                                                              return 'Please enter description';
+                                                            }
+                                                            return null;
+                                                          },
+                                                          initialValue:
+                                                              detailTask[0][
+                                                                  'Description'],
+                                                          onChanged: (dynamic
+                                                              valueDesc) {
+                                                            detailTask[0]
+                                                                    .description =
+                                                                valueDesc!;
+                                                          },
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .multiline,
+                                                          maxLines: 5,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            fillColor:
+                                                                Color.fromRGBO(
+                                                                    226,
+                                                                    234,
+                                                                    239,
+                                                                    1),
+                                                            border:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                            hintText:
+                                                                'Type a description',
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                    .all(15),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    0,
+                                                                    30,
+                                                                    0,
+                                                                    10),
+                                                            child: const Text(
+                                                                'Change Status to')),
+                                                        DropdownButtonFormField(
+                                                            hint: Text(
+                                                                'Please select status'),
+                                                            decoration:
+                                                                InputDecoration(
+                                                                    enabledBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide: const BorderSide(
+                                                                          color: Color.fromRGBO(
+                                                                              226,
+                                                                              234,
+                                                                              239,
+                                                                              1),
+                                                                          width:
+                                                                              2),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                    ),
+                                                                    border:
+                                                                        OutlineInputBorder(
+                                                                      borderSide: const BorderSide(
+                                                                          color: Color.fromRGBO(
+                                                                              226,
+                                                                              234,
+                                                                              239,
+                                                                              1),
+                                                                          width:
+                                                                              2),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                    ),
+                                                                    filled:
+                                                                        true,
+                                                                    fillColor:
+                                                                        const Color.fromRGBO(
+                                                                            226,
+                                                                            234,
+                                                                            239,
+                                                                            1),
+                                                                    contentPadding:
+                                                                        const EdgeInsets.all(
+                                                                            13)),
+                                                            value: detailTask[0]
+                                                                    ['StatusNo']
+                                                                .toString(),
+                                                            onChanged: (dynamic
+                                                                newValue) {
+                                                              setState(() {
+                                                                detailTask[0][
+                                                                        'StatusNo'] =
+                                                                    newValue!;
+                                                              });
+                                                            },
+                                                            items: dataStatus),
+                                                        Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    0,
+                                                                    30,
+                                                                    0,
+                                                                    10),
+                                                            child: const Text(
+                                                                'Station Close')),
+                                                        DropdownButtonFormField(
+                                                            hint: Text(
+                                                                'Please select station'),
+                                                            decoration:
+                                                                InputDecoration(
+                                                                    enabledBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide: const BorderSide(
+                                                                          color: Color.fromRGBO(
+                                                                              226,
+                                                                              234,
+                                                                              239,
+                                                                              1),
+                                                                          width:
+                                                                              2),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                    ),
+                                                                    border:
+                                                                        OutlineInputBorder(
+                                                                      borderSide: const BorderSide(
+                                                                          color: Color.fromRGBO(
+                                                                              226,
+                                                                              234,
+                                                                              239,
+                                                                              1),
+                                                                          width:
+                                                                              2),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                    ),
+                                                                    filled:
+                                                                        true,
+                                                                    fillColor:
+                                                                        const Color.fromRGBO(
+                                                                            226,
+                                                                            234,
+                                                                            239,
+                                                                            1),
+                                                                    contentPadding:
+                                                                        const EdgeInsets.all(
+                                                                            13)),
+                                                            value: staClose,
+                                                            onChanged: (dynamic
+                                                                newValue) {
+                                                              setState(() {
+                                                                staClose =
+                                                                    newValue!;
+                                                              });
+                                                            },
+                                                            items: dataStation),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                      margin:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 15, 0, 15),
+                                                      child:
+                                                          RoundedLoadingButton(
+                                                        borderRadius: 10,
+                                                        height: 45,
+                                                        width: 340,
+                                                        color: Color.fromRGBO(
+                                                            1, 98, 153, 1),
+                                                        // ignore: sort_child_properties_last
+                                                        child: Text('Save',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white)),
+                                                        controller:
+                                                            _btnController,
+                                                        onPressed: () {
+                                                          if (_formKey
+                                                              .currentState!
+                                                              .validate()) {
                                                             ScaffoldMessenger
                                                                     .of(context)
                                                                 .showSnackBar(
-                                                              SnackBar(
+                                                              const SnackBar(
                                                                   duration:
                                                                       Duration(
                                                                           seconds:
@@ -471,69 +485,104 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                                                                   behavior:
                                                                       SnackBarBehavior
                                                                           .floating,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .red,
                                                                   content: Text(
-                                                                    value[
-                                                                        'message'],
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  )),
+                                                                      'Updating data...')),
                                                             );
-                                                          } else {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                  duration:
-                                                                      Duration(
+                                                            StatusService.updateStatus(
+                                                                    detailTask[
+                                                                            0][
+                                                                        'itemID'],
+                                                                    token,
+                                                                    detailTask[
+                                                                            0][
+                                                                        'StatusNo'],
+                                                                    staClose,
+                                                                    detailTask[
+                                                                            0][
+                                                                        'Description'])
+                                                                .then((value) {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              if (value['status'] ==
+                                                                      'Error' ||
+                                                                  value['status'] ==
+                                                                      'Failed') {
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  SnackBar(
+                                                                      duration: Duration(
                                                                           seconds:
                                                                               1),
-                                                                  behavior:
-                                                                      SnackBarBehavior
-                                                                          .floating,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .green,
-                                                                  content: Text(
-                                                                    value[
-                                                                        'message'],
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  )),
-                                                            );
-                                                          }
+                                                                      behavior:
+                                                                          SnackBarBehavior
+                                                                              .floating,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .red,
+                                                                      content:
+                                                                          Text(
+                                                                        value[
+                                                                            'message'],
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      )),
+                                                                );
+                                                              } else {
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  SnackBar(
+                                                                      duration: Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                      behavior:
+                                                                          SnackBarBehavior
+                                                                              .floating,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .green,
+                                                                      content:
+                                                                          Text(
+                                                                        value[
+                                                                            'message'],
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      )),
+                                                                );
+                                                              }
 
-                                                          Navigator
-                                                              .pushReplacementNamed(
+                                                              Navigator.pushReplacementNamed(
                                                                   context,
                                                                   TaskDetailsPage
                                                                       .routeName,
                                                                   arguments: {
-                                                                "priority":
-                                                                    priority,
-                                                                "dueStatus":
-                                                                    dueStatus,
-                                                                "statusName":
-                                                                    statusName,
-                                                                "itemId":
-                                                                    detailTask[
-                                                                            0][
-                                                                        'itemID'],
-                                                                "token": token,
-                                                              });
-                                                        });
-                                                      }
-                                                    },
-                                                  )),
-                                            ],
-                                          ),
-                                        ))),
-                              );
-                            });
+                                                                    "priority":
+                                                                        priority,
+                                                                    "dueStatus":
+                                                                        dueStatus,
+                                                                    "statusName":
+                                                                        statusName,
+                                                                    "itemId":
+                                                                        detailTask[0]
+                                                                            [
+                                                                            'itemID'],
+                                                                    "token":
+                                                                        token,
+                                                                  });
+                                                            });
+                                                          }
+                                                        },
+                                                      )),
+                                                ],
+                                              ),
+                                            ))),
+                                  );
+                                })
+                            : Fluttertoast.showToast(
+                                msg: "Data not available!");
                       },
                       child: const Text(
                         'Change Status',
@@ -552,243 +601,260 @@ class _TaskDetailsPage extends State<TaskDetailsPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (BuildContext context) {
-                              return MediaQuery(
-                                  data: MediaQuery.of(context)
-                                      .copyWith(textScaleFactor: 0.8),
-                                  child: SizedBox(
-                                      height: 265,
-                                      child: Container(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 0, 10, 0),
-                                          child: Form(
-                                            key: _formKey,
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                        detailTask.isNotEmpty
+                            ? showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return MediaQuery(
+                                      data: MediaQuery.of(context)
+                                          .copyWith(textScaleFactor: 0.8),
+                                      child: SizedBox(
+                                          height: 265,
+                                          child: Container(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      10, 0, 10, 0),
+                                              child: Form(
+                                                key: _formKey,
+                                                child: Column(
                                                   children: [
-                                                    Container(
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(
-                                                          15, 15, 0, 10),
-                                                      child: const Text(
-                                                          'Change HIL Option',
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    1,
-                                                                    98,
-                                                                    153,
-                                                                    1),
-                                                          )),
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Container(
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
                                                           margin:
                                                               const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  15,
+                                                                  15,
+                                                                  0,
+                                                                  10),
+                                                          child: const Text(
+                                                              'Change HIL Option',
+                                                              style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        1,
+                                                                        98,
+                                                                        153,
+                                                                        1),
+                                                              )),
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Container(
+                                                              margin: const EdgeInsets
                                                                       .fromLTRB(
                                                                   0,
                                                                   15,
                                                                   15,
                                                                   10),
-                                                          child: const Icon(
-                                                              Icons.close)),
-                                                    )
-                                                  ],
-                                                ),
-                                                Container(
-                                                  margin:
-                                                      const EdgeInsets.all(15),
-                                                  width: double.infinity,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Container(
-                                                          margin:
-                                                              const EdgeInsets
+                                                              child: const Icon(
+                                                                  Icons.close)),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      width: double.infinity,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                              margin: const EdgeInsets
                                                                       .fromLTRB(
                                                                   0, 0, 0, 10),
-                                                          child: const Text(
-                                                              'Change Option to')),
-                                                      DropdownButtonFormField(
-                                                          validator: (value) {
-                                                            if (value == null) {
-                                                              return 'Please select option';
-                                                            }
-                                                            return null;
-                                                          },
-                                                          hint: Text(
-                                                              'Please select option'),
-                                                          decoration:
-                                                              InputDecoration(
-                                                                  enabledBorder:
-                                                                      OutlineInputBorder(
-                                                                    borderSide: const BorderSide(
-                                                                        color: Color.fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                        width:
-                                                                            2),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                  border:
-                                                                      OutlineInputBorder(
-                                                                    borderSide: const BorderSide(
-                                                                        color: Color.fromRGBO(
-                                                                            226,
-                                                                            234,
-                                                                            239,
-                                                                            1),
-                                                                        width:
-                                                                            2),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                  filled: true,
-                                                                  fillColor: const Color
-                                                                          .fromRGBO(
-                                                                      226,
-                                                                      234,
-                                                                      239,
-                                                                      1),
-                                                                  contentPadding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          13)),
-                                                          value: detailTask[0]
-                                                              ['optionID'],
-                                                          onChanged: (dynamic
-                                                              newValue) {
-                                                            setState(() {
-                                                              detailTask[0][
-                                                                      'optionID'] =
-                                                                  newValue!;
-                                                            });
-                                                          },
-                                                          items: dataOption),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 15, 0, 15),
-                                                    child: RoundedLoadingButton(
-                                                      borderRadius: 10,
-                                                      height: 45,
-                                                      width: 340,
-                                                      color: Color.fromRGBO(
-                                                          1, 98, 153, 1),
-                                                      // ignore: sort_child_properties_last
-                                                      child: Text('Save',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .white)),
-                                                      controller:
-                                                          _btnController,
-                                                      onPressed: () {
-                                                        if (_formKey
-                                                            .currentState!
-                                                            .validate()) {
-                                                          ScaffoldMessenger.of(
-                                                                  context)
-                                                              .showSnackBar(
-                                                            const SnackBar(
-                                                                duration:
-                                                                    Duration(
+                                                              child: const Text(
+                                                                  'Change Option to')),
+                                                          DropdownButtonFormField(
+                                                              validator:
+                                                                  (value) {
+                                                                if (value ==
+                                                                    null) {
+                                                                  return 'Please select option';
+                                                                }
+                                                                return null;
+                                                              },
+                                                              hint: Text(
+                                                                  'Please select option'),
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: const BorderSide(
+                                                                            color: Color.fromRGBO(
+                                                                                226,
+                                                                                234,
+                                                                                239,
+                                                                                1),
+                                                                            width:
+                                                                                2),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                      ),
+                                                                      border:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: const BorderSide(
+                                                                            color: Color.fromRGBO(
+                                                                                226,
+                                                                                234,
+                                                                                239,
+                                                                                1),
+                                                                            width:
+                                                                                2),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                      ),
+                                                                      filled:
+                                                                          true,
+                                                                      fillColor: const Color
+                                                                              .fromRGBO(
+                                                                          226,
+                                                                          234,
+                                                                          239,
+                                                                          1),
+                                                                      contentPadding:
+                                                                          const EdgeInsets.all(
+                                                                              13)),
+                                                              value: detailTask[
+                                                                      0]
+                                                                  ['optionID'],
+                                                              onChanged: (dynamic
+                                                                  newValue) {
+                                                                setState(() {
+                                                                  detailTask[0][
+                                                                          'optionID'] =
+                                                                      newValue!;
+                                                                });
+                                                              },
+                                                              items:
+                                                                  dataOption),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                        margin:
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 15, 0, 15),
+                                                        child:
+                                                            RoundedLoadingButton(
+                                                          borderRadius: 10,
+                                                          height: 45,
+                                                          width: 340,
+                                                          color: Color.fromRGBO(
+                                                              1, 98, 153, 1),
+                                                          // ignore: sort_child_properties_last
+                                                          child: Text('Save',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white)),
+                                                          controller:
+                                                              _btnController,
+                                                          onPressed: () {
+                                                            if (_formKey
+                                                                .currentState!
+                                                                .validate()) {
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                const SnackBar(
+                                                                    duration: Duration(
                                                                         seconds:
                                                                             1),
-                                                                behavior:
-                                                                    SnackBarBehavior
-                                                                        .floating,
-                                                                content: Text(
-                                                                    'Updating data...')),
-                                                          );
-                                                          OptionService.updateOption(
-                                                                  detailTask[0][
-                                                                      'itemID'],
-                                                                  token,
-                                                                  detailTask[0][
-                                                                      'optionID'])
-                                                              .then((value) {
-                                                            Navigator.pop(
-                                                                context);
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                  duration:
-                                                                      Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                  behavior:
-                                                                      SnackBarBehavior
-                                                                          .floating,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .green,
-                                                                  content: Text(
-                                                                    value[
-                                                                        'message'],
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  )),
-                                                            );
-
-                                                            Navigator.pushReplacementNamed(
-                                                                context,
-                                                                TaskDetailsPage
-                                                                    .routeName,
-                                                                arguments: {
-                                                                  "priority":
-                                                                      priority,
-                                                                  "dueStatus":
-                                                                      dueStatus,
-                                                                  "statusName":
-                                                                      statusName,
-                                                                  "itemId":
+                                                                    behavior:
+                                                                        SnackBarBehavior
+                                                                            .floating,
+                                                                    content: Text(
+                                                                        'Updating data...')),
+                                                              );
+                                                              OptionService.updateOption(
                                                                       detailTask[
                                                                               0]
                                                                           [
                                                                           'itemID'],
-                                                                  "token":
                                                                       token,
-                                                                });
-                                                          });
-                                                        } else {
-                                                          Timer(
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      1), () {
-                                                            _btnController
-                                                                .reset();
-                                                          });
-                                                        }
-                                                      },
-                                                    )),
-                                              ],
-                                            ),
-                                          ))));
-                            });
+                                                                      detailTask[
+                                                                              0]
+                                                                          [
+                                                                          'optionID'])
+                                                                  .then(
+                                                                      (value) {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  SnackBar(
+                                                                      duration: Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                      behavior:
+                                                                          SnackBarBehavior
+                                                                              .floating,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .green,
+                                                                      content:
+                                                                          Text(
+                                                                        value[
+                                                                            'message'],
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      )),
+                                                                );
+
+                                                                Navigator.pushReplacementNamed(
+                                                                    context,
+                                                                    TaskDetailsPage
+                                                                        .routeName,
+                                                                    arguments: {
+                                                                      "priority":
+                                                                          priority,
+                                                                      "dueStatus":
+                                                                          dueStatus,
+                                                                      "statusName":
+                                                                          statusName,
+                                                                      "itemId":
+                                                                          detailTask[0]
+                                                                              [
+                                                                              'itemID'],
+                                                                      "token":
+                                                                          token,
+                                                                    });
+                                                              });
+                                                            } else {
+                                                              Timer(
+                                                                  Duration(
+                                                                      milliseconds:
+                                                                          1),
+                                                                  () {
+                                                                _btnController
+                                                                    .reset();
+                                                              });
+                                                            }
+                                                          },
+                                                        )),
+                                                  ],
+                                                ),
+                                              ))));
+                                })
+                            : Fluttertoast.showToast(
+                                msg: "Data not available!");
                       },
                       child: const Text(
                         'Change Option',

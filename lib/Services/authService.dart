@@ -44,9 +44,9 @@ class AuthService {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final data = json['data'];
-      final status = json['success'];
+      final status = json['status'];
       final message = json['message'];
-      final token = json['data']['accessToken'];
+      final token = json['token'];
       if (token == null) {
         return {'status': status, 'message': message};
       } else {
@@ -60,7 +60,7 @@ class AuthService {
     } else {
       final json = jsonDecode(response.body);
       final message = json['message'];
-      final status = json['success'];
+      final status = json['status'];
       return {'status': status, 'message': message};
     }
   }
