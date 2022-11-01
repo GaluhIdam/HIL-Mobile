@@ -119,7 +119,7 @@ class TaskCard extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(7.5),
                               child: Text(
-                                labelText,
+                                labelText ?? '-',
                                 style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700,

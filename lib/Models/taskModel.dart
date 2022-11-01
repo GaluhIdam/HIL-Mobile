@@ -177,8 +177,8 @@ class TaskListData {
   dynamic itemId;
   dynamic subject;
   dynamic description;
-  DateTime dateoccur;
-  DateTime duedate;
+  dynamic dateoccur;
+  dynamic duedate;
   dynamic flightNo;
   dynamic status;
   dynamic category;
@@ -198,8 +198,8 @@ class TaskListData {
         itemId: json["itemID"],
         subject: json["Subject"],
         description: json["Description"],
-        dateoccur: DateTime.parse(json["Dateoccur"]),
-        duedate: DateTime.parse(json["Duedate"]),
+        dateoccur: json["Dateoccur"],
+        duedate: DateTime.parse(json["DueDate"]),
         flightNo: json["FlightNo"],
         status: json["Status"],
         category: json["Category"],
@@ -208,7 +208,7 @@ class TaskListData {
         optionId: json["optionID"],
         actypeid: json["actypeid"],
         priorityId: json["priorityID"],
-        dueStatus: json["dueStatus"],
+        dueStatus: json["DueStatus"],
         priority: json["priority"],
         lastFollow: json["last_follow"],
         categoryText: json["category_text"],

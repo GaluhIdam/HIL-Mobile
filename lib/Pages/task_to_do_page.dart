@@ -84,52 +84,24 @@ class _TaskToDoPageState extends State<TaskToDoPage>
   List<dynamic> status = [
     {
       "statusID": "1",
-      "statusDESC": "OVERDUEJOBS",
+      "statusDESC": "Due In 3 Days",
     },
     {
       "statusID": "2",
-      "statusDESC": "DUE IN 3 DAY",
+      "statusDESC": "Open In 3 Days",
     },
     {
       "statusID": "3",
-      "statusDESC": "DUE IN 1 WEEK",
+      "statusDESC": "Overdue",
     },
     {
       "statusID": "4",
-      "statusDESC": "DUE IN 1 MONTH",
+      "statusDESC": "Open",
     },
     {
       "statusID": "5",
-      "statusDESC": "DUE IN 3 MONTH",
-    },
-    {
-      "statusID": "6",
-      "statusDESC": "ISSUED LAST 3 DAYS",
-    },
-    {
-      "statusID": "7",
-      "statusDESC": "OPEN",
-    },
-    {
-      "statusID": "8",
-      "statusDESC": "CLOSE",
-    },
-    {
-      "statusID": "9",
-      "statusDESC": "EXTENSION 1",
-    },
-    {
-      "statusID": "10",
-      "statusDESC": "CLOSED BY SWIFT",
-    },
-    {
-      "statusID": "11",
-      "statusDESC": "NOCATEGORY",
-    },
-    {
-      "statusID": "12",
-      "statusDESC": "NAMCLOSE",
-    },
+      "statusDESC": "Close",
+    }
   ];
   List<String> statusFilter = [];
   List<String> statusValue = [];
@@ -176,8 +148,8 @@ class _TaskToDoPageState extends State<TaskToDoPage>
   List<String> statusLast = [];
   List<String> categoryLast = [];
 
-  String? sort = 'Duedate';
-  String? by = 'desc';
+  String? sort = 'priorityID';
+  String? by = 'ASC';
   String? orderSelect;
   String? totalData;
 
@@ -289,7 +261,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
       for (var x = 0; x < filterActype.length; x++) {
         if (actype[i]['ACType'] == filterActype[x]) {
           actypeValueLabel.add(actype[i]['ACType']);
-          actypeValue.add(actype[i]['ACTypeID'].toString());
+          actypeValue.add(actype[i]['ACType'].toString());
         }
       }
     }
@@ -423,8 +395,8 @@ class _TaskToDoPageState extends State<TaskToDoPage>
     categoryValueLabel.clear();
     filterCategory.clear();
     setState(() {
-      sort = 'Duedate';
-      by = 'desc';
+      sort = 'priorityID';
+      by = 'ASC';
       orderSelect = null;
     });
     refresh();
@@ -784,42 +756,30 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                                 dueDate: item.dueStatus
                                                             .toString() ==
                                                         "1"
-                                                    ? 'OVERDUEJOBS'
+                                                    ? 'Due In 3 Days'
                                                     : item.dueStatus
                                                                 .toString() ==
                                                             "2"
-                                                        ? 'DUE IN 3 DAY'
+                                                        ? 'Open In 3 Days'
                                                         : item.dueStatus
                                                                     .toString() ==
                                                                 "3"
-                                                            ? "DUE IN 1 WEEK"
+                                                            ? "Overdue"
                                                             : item.dueStatus
                                                                         .toString() ==
                                                                     "4"
-                                                                ? "DUE IN 1 MONTH"
+                                                                ? "Open"
                                                                 : item.dueStatus
                                                                             .toString() ==
                                                                         "5"
-                                                                    ? 'DUE IN 3 MONTH'
-                                                                    : item.dueStatus.toString() ==
-                                                                            "6"
-                                                                        ? "ISSUED LAST 3 DAYS"
-                                                                        : item.dueStatus.toString() ==
-                                                                                "7"
-                                                                            ? "OPEN"
-                                                                            : item.dueStatus.toString() == "8"
-                                                                                ? "CLOSE"
-                                                                                : item.dueStatus.toString() == "9"
-                                                                                    ? "EXTENSION 1"
-                                                                                    : item.dueStatus.toString() == "10"
-                                                                                        ? "CLOSED BY SWIFT"
-                                                                                        : item.dueStatus.toString() == "11"
-                                                                                            ? "NOCATEGORY"
-                                                                                            : item.dueStatus.toString() == "11"
-                                                                                                ? "NAMCLOSE"
-                                                                                                : '-',
-                                                cardBackgroundColor: item.priority,
-                                                lastFollow: item.lastFollow != null ? item.lastFollow['Follow'] : '-',
+                                                                    ? 'Close'
+                                                                    : '-',
+                                                cardBackgroundColor: item
+                                                    .priority,
+                                                lastFollow: item.lastFollow !=
+                                                        null
+                                                    ? item.lastFollow['Follow']
+                                                    : '-',
                                                 labelColor: item.priority,
                                                 labelText: item.priority,
                                                 title: item.acreg,
@@ -828,31 +788,21 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                                 itemId: item.itemId,
                                                 dateOccur: item.dateoccur,
                                                 statusDue: item.dueStatus == "1"
-                                                    ? 'OVERDUEJOBS'
+                                                    ? 'Due In 3 Days'
                                                     : item.dueStatus == "2"
-                                                        ? 'DUE IN 3 DAY'
+                                                        ? 'Open In 3 Days'
                                                         : item.dueStatus == "3"
-                                                            ? "DUE IN 1 WEEK"
-                                                            : item.dueStatus == "4"
-                                                                ? "DUE IN 1 MONTH"
-                                                                : item.dueStatus == "5"
-                                                                    ? 'DUE IN 3 MONTH'
-                                                                    : item.dueStatus == "6"
-                                                                        ? "ISSUED LAST 3 DAYS"
-                                                                        : item.dueStatus == "7"
-                                                                            ? "OPEN"
-                                                                            : item.dueStatus == "8"
-                                                                                ? "CLOSE"
-                                                                                : item.dueStatus == "9"
-                                                                                    ? "EXTENSION 1"
-                                                                                    : item.dueStatus == "10"
-                                                                                        ? "CLOSED BY SWIFT"
-                                                                                        : item.dueStatus == "11"
-                                                                                            ? "NOCATEGORY"
-                                                                                            : item.dueStatus == "11"
-                                                                                                ? "NAMCLOSE"
-                                                                                                : '-',
-                                                dateInsert: DateFormat('d MMM y').format(item.duedate),
+                                                            ? "Overdue"
+                                                            : item.dueStatus ==
+                                                                    "4"
+                                                                ? "Open"
+                                                                : item.dueStatus ==
+                                                                        "5"
+                                                                    ? 'Close'
+                                                                    : '-',
+                                                dateInsert:
+                                                    DateFormat('d MMM y')
+                                                        .format(item.duedate),
                                                 description: item.description,
                                                 categoryDesc: item.categoryText,
                                                 token: token);
@@ -1529,11 +1479,11 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                         sort = issuedateValue[0] == null
                             ? 'Duedate'
                             : issuedateValue[0];
-                        by = issuedateValue[0] == null ? 'desc' : 'asc';
+                        by = issuedateValue[0] == null ? 'ASC' : 'ASC';
                       } else {
                         orderSelect = null;
-                        sort = 'Duedate';
-                        by = 'desc';
+                        sort = 'priorityID';
+                        by = 'ASC';
                       }
                     },
                   ),
