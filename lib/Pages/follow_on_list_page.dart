@@ -86,7 +86,7 @@ class _FollowOnListPageState extends State<FollowOnListPage> {
                                     unit: listFollow[index].unitFo == "   "
                                         ? '-'
                                         : listFollow[index].unitFo ?? '-',
-                                    byPerson: listFollow[index].by ?? '-',
+                                    byPerson: listFollow[index].nameFo ?? '-',
                                     nextUnit: listFollow[index].nextFo ?? '-',
                                     followOn: listFollow[index].follow ?? '-');
                               } else {
