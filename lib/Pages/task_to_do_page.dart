@@ -1476,7 +1476,11 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                         sort = issuedateValue[0] == null
                             ? 'priorityID'
                             : issuedateValue[0];
-                        by = issuedateValue[0] == null ? 'ASC' : 'ASC';
+                        by = issuedateValue[0] == null
+                            ? 'ASC'
+                            : issuedateValue[0] == 'acreg'
+                                ? 'DESC'
+                                : 'ASC';
                       } else {
                         orderSelect = null;
                         sort = 'priorityID';
