@@ -180,34 +180,38 @@ class _DashboardPageState extends State<DashboardPage>
                     ],
                   ),
                 ),
+                // Container(
+                //   margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                //   height: 400,
+                //   child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         const Text(
+                //           "HIL Open by Follow On",
+                //           style: TextStyle(
+                //               fontSize: 16, fontWeight: FontWeight.w600),
+                //         ),
+                //         Expanded(child: DataChart(data: data1))
+                //       ]),
+                // ),
+                // Container(
+                //   margin: const EdgeInsets.fromLTRB(0, 30, 0, 20),
+                //   height: 400,
+                //   child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         const Text(
+                //           "HIL without Follow On",
+                //           style: TextStyle(
+                //               fontSize: 16, fontWeight: FontWeight.w600),
+                //         ),
+                //         Expanded(child: DataChart(data: data2))
+                //       ]),
+                // )
                 Container(
-                  margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  height: 400,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "HIL Open by Follow On",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        Expanded(child: DataChart(data: data1))
-                      ]),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 30, 0, 20),
-                  height: 400,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "HIL without Follow On",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        Expanded(child: DataChart(data: data2))
-                      ]),
-                )
+                    margin: EdgeInsets.fromLTRB(20, 180, 20, 50),
+                    child: Image(
+                        image: AssetImage('assets/under-construction.jpg'))),
               ],
             ),
           ))),
