@@ -125,10 +125,6 @@ class _TaskToDoPageState extends State<TaskToDoPage>
     {
       "sort": "acreg",
       "date": "A/C Registration",
-    },
-    {
-      "sort": "Duedate",
-      "date": "Issue Date",
     }
   ];
 
@@ -751,6 +747,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                                           if (index < items.length) {
                                             final item = items[index];
                                             return TaskCard(
+                                                statusTest: statusValue,
                                                 option: item.optionId,
                                                 id: item.itemId,
                                                 dueDate: item.dueStatus
@@ -1477,7 +1474,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                         passingSort();
                         orderSelect = value;
                         sort = issuedateValue[0] == null
-                            ? 'Duedate'
+                            ? 'priorityID'
                             : issuedateValue[0];
                         by = issuedateValue[0] == null ? 'ASC' : 'ASC';
                       } else {
@@ -1567,6 +1564,7 @@ class _TaskToDoPageState extends State<TaskToDoPage>
                               'filter_status': statusValue,
                               'filter_category': categoryValue,
                             });
+                            print(statusValue);
                             filterListLast.addAll(filterList);
                             refresh();
                             Navigator.pop(context);
