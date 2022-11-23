@@ -1,3 +1,3 @@
 class Config {
-  static const baseURL = 'http://172.16.40.90/api/';
+  static const baseURL = 'https://hil-api.gmf-aeroasia.co.id/api/';
 }
