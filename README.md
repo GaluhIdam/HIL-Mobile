@@ -1,16 +1,2 @@
-# hil_mobile
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# HIL Mobile
+Adanya finding dari Customer QG mengenai follow on HIL yang tidak sesuai SLA dikarenakan banyaknya data HIL dan tidak adanya indikasi di aplikasi HIL Management yang merepresentasikan status Follow On sudah dibuatkan MSAO, sedang progress troubleshoot, menunggu pembelian (UMR), ataukah materia sudah  tersedia. Maintenance Support harus me-review HIL satu persatu dan berulang ulang untuk setiap shift dan setiap harinya. Sehingga penanganan HIL menjadi terlambat.
