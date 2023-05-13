@@ -1,0 +1,23 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}/windows/flutter",
+  "nuxt.isNuxtApp": false,
+  "[dart]": {
+    "editor.formatOnSave": true,
+
+    "editor.formatOnType": true,
+
+    "editor.rulers": [0],
+
+    "editor.selectionHighlight": false,
+
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+
+    "editor.suggestSelection": "first",
+
+    "editor.tabCompletion": "onlySnippets",
+
+    "editor.wordBasedSuggestions": false,
+
+    "editor.defaultFormatter": "Dart-Code.dart-code"
+  }
+}
