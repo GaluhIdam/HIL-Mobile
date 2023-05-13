@@ -16,3 +16,12 @@ Adanya finding dari Customer QG mengenai follow on HIL yang tidak sesuai SLA dik
 3. Install Open JDK https://docs.microsoft.com/en-us/java/openjdk/download
 4. Masuk ke directory `cd hil-mobile`
 5. Jalankan flutter `flutter run` atau `Ctrl + 5`
+
+## Contact
+
+Sigit Prayoga - sigit.prayoga@opencloud.id \
+Fatur Ridlwan - fatur.ridlwan@opencloud.id\
+Rizky Ibrahim - rizky.ibrahim@opencloud.id \
+Alnuria Vanadia Equila - vanadia.equila@opencloud.id\
+Galuh Idam Danutirto - galuh.danutirto@opencloud.id\
+I Putu Sedana Wijaya - putu.wijaya@opencloud.id
